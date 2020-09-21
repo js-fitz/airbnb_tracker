@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_b775114932c54e4685bfca25ed5352b1 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 8px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:12px;' href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; Return to all hosts</b></a> </div>   
+                
+                <hr style='margin:8px 40px 0 0;'>
+                
+                <div style='margin:15px 0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Marianne</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Clusters
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        2 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+               
+                <div style='margin:10px 0 5px; font-size:14px'><b>Listings by license status</b></div>
+                   
+            <i class="fa fa-circle"
+            style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+            Active - <b>2</b> listings
+            <br>
+                 
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'><b>Cluster locations</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>Triangulated from listing coordinates</div>
+    
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>102, Jamaica Street, Forest Hills, Jamaica Plain</span>
+                (2 listings)
+            </div>
+        
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_b775114932c54e4685bfca25ed5352b1" ></div>
+        
+</body>
+<script>    
+    
+            var map_b775114932c54e4685bfca25ed5352b1 = L.map(
+                "map_b775114932c54e4685bfca25ed5352b1",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_89c04fe1dff14b5ba296826fa2c0e58f = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_b775114932c54e4685bfca25ed5352b1);
+        
+    
+            var feature_group_c842951101a5408582af54b36881824e = L.featureGroup(
+                {}
+            ).addTo(map_b775114932c54e4685bfca25ed5352b1);
+        
+    
+            var circle_c3b6be13dd36464390384ac0c7c1b23d = L.circle(
+                [42.30575500000001, -71.11616500000001],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.20000000000000007, "radius": 196.99999999999997, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c842951101a5408582af54b36881824e);
+        
+    
+        var popup_5dd4fde98203459088a91ec506ffe439 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d3cc6a0dab304de8899930abd0d768d8 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj4xMDIsIEphbWFpY2EgU3RyZWV0LCBGb3Jlc3QgSGlsbHMsIEphbWFpY2EgUGxhaW48L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT0nbWFyZ2luOjRweCAwOyBwYWRkaW5nOjRweCAwOwogICAgICAgICAgICBib3JkZXItdG9wOjFweCBzb2xpZCBibGFjazsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgYmxhY2snPgogICAgICAgICAgICBMb2NhdGlvbiBhY2N1cmFjeTogPGIgc3R5bGU9J2NvbG9yOiM0NDhBRkYnPmxvdyAod2l0aGluIDUwMCBmdC4pPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSdmb250LXNpemU6MTJweCc+CiAgICAgICAgICAgIENlbnRyb2lkOiA8Yj4jNTM3LjA8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+MjwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5NYXJpYW5uZTwvYj48YnI+CiAgICAgICAgTGljZW5zZTogPGI+NDE0Njg5PC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiMyRTdEMzInPkFjdGl2ZTwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMTEyPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_5dd4fde98203459088a91ec506ffe439.setContent(i_frame_d3cc6a0dab304de8899930abd0d768d8);
+        
+
+        circle_c3b6be13dd36464390384ac0c7c1b23d.bindPopup(popup_5dd4fde98203459088a91ec506ffe439)
+        ;
+
+        
+    
+    
+            circle_c3b6be13dd36464390384ac0c7c1b23d.bindTooltip(
+                `<div>
+                     
+            Marianne | License: <span style="color:#2E7D32">414689</span> (Active)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #537.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>102, Jamaica Street, Forest Hills, Jamaica Plain</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7bdfa5c4fd5f45d6b53dbcbc3f2e50b8 = L.circleMarker(
+                [42.30575500000001, -71.11616500000001],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_c842951101a5408582af54b36881824e);
+        
+    
+        var popup_38c81d8c5afa4a1394b5d124843ccaed = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_940ef8a5799048a9abab5907819107d3 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj4xMDIsIEphbWFpY2EgU3RyZWV0LCBGb3Jlc3QgSGlsbHMsIEphbWFpY2EgUGxhaW48L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT0nbWFyZ2luOjRweCAwOyBwYWRkaW5nOjRweCAwOwogICAgICAgICAgICBib3JkZXItdG9wOjFweCBzb2xpZCBibGFjazsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgYmxhY2snPgogICAgICAgICAgICBMb2NhdGlvbiBhY2N1cmFjeTogPGIgc3R5bGU9J2NvbG9yOiM0NDhBRkYnPmxvdyAod2l0aGluIDUwMCBmdC4pPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSdmb250LXNpemU6MTJweCc+CiAgICAgICAgICAgIENlbnRyb2lkOiA8Yj4jNTM3LjA8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+MjwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5NYXJpYW5uZTwvYj48YnI+CiAgICAgICAgTGljZW5zZTogPGI+NDE0Njg5PC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiMyRTdEMzInPkFjdGl2ZTwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMTEyPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_38c81d8c5afa4a1394b5d124843ccaed.setContent(i_frame_940ef8a5799048a9abab5907819107d3);
+        
+
+        circle_marker_7bdfa5c4fd5f45d6b53dbcbc3f2e50b8.bindPopup(popup_38c81d8c5afa4a1394b5d124843ccaed)
+        ;
+
+        
+    
+    
+            circle_marker_7bdfa5c4fd5f45d6b53dbcbc3f2e50b8.bindTooltip(
+                `<div>
+                     
+            Marianne | License: <span style="color:#2E7D32">414689</span> (Active)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #537.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>102, Jamaica Street, Forest Hills, Jamaica Plain</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_56eabb3fcec94d86975f8b928f872ad1 = L.featureGroup(
+                {}
+            ).addTo(map_b775114932c54e4685bfca25ed5352b1);
+        
+    
+            var marker_f0a31b2c32094bd1a8851f654e5bdd4b = L.marker(
+                [42.3033246, -71.1107723],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_56eabb3fcec94d86975f8b928f872ad1);
+        
+    
+            var icon_d28e878d1bb64479a2921315982b568e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_f0a31b2c32094bd1a8851f654e5bdd4b.setIcon(icon_d28e878d1bb64479a2921315982b568e);
+        
+    
+            marker_f0a31b2c32094bd1a8851f654e5bdd4b.bindTooltip(
+                `<div>
+                     3589-3612 Washington St, Jamaica Plain MA 02130 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_cc907e6eb595419ca0182cbba5ac45a7 = L.marker(
+                [42.3170047, -71.11409979999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_56eabb3fcec94d86975f8b928f872ad1);
+        
+    
+            var icon_fa04011f67c64ffb8e4f606721c5be42 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_cc907e6eb595419ca0182cbba5ac45a7.setIcon(icon_fa04011f67c64ffb8e4f606721c5be42);
+        
+    
+            marker_cc907e6eb595419ca0182cbba5ac45a7.bindTooltip(
+                `<div>
+                     539-551 Centre St, Jamaica Plain MA 02130 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_048f995fdfb64c62873ff824a520e773 = L.marker(
+                [42.3219957, -71.1164429],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_56eabb3fcec94d86975f8b928f872ad1);
+        
+    
+            var icon_9427671ac0984260971bfbf8a9a40015 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_048f995fdfb64c62873ff824a520e773.setIcon(icon_9427671ac0984260971bfbf8a9a40015);
+        
+    
+            marker_048f995fdfb64c62873ff824a520e773.bindTooltip(
+                `<div>
+                     111 Perkins St, Jamaica Plain MA 02130 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_a9ec0bbefb294cf6b835c838d8dfcc3e = L.featureGroup(
+                {}
+            ).addTo(map_b775114932c54e4685bfca25ed5352b1);
+        
+    
+            var circle_3f98b25a81aa43df8052897dd201e1cd = L.circle(
+                [42.30584, -71.11605],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_a9ec0bbefb294cf6b835c838d8dfcc3e);
+        
+    
+            circle_3f98b25a81aa43df8052897dd201e1cd.bindTooltip(
+                `<div>
+                     
+            Marianne | License: <span style="color:#2E7D32">414689</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 24265005</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #537.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f968a45869824d6296ed450023a5fc3b = L.circle(
+                [42.30567, -71.11628],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_a9ec0bbefb294cf6b835c838d8dfcc3e);
+        
+    
+            circle_f968a45869824d6296ed450023a5fc3b.bindTooltip(
+                `<div>
+                     
+            Marianne | License: <span style="color:#2E7D32">414689</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 26395595</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #537.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_a37822d0c05a404c85bfcd9f1ab106cf = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eNearby Buildings\u003c/span\u003e" : feature_group_56eabb3fcec94d86975f8b928f872ad1,
+                },
+            };
+            L.control.layers(
+                layer_control_a37822d0c05a404c85bfcd9f1ab106cf.base_layers,
+                layer_control_a37822d0c05a404c85bfcd9f1ab106cf.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_b775114932c54e4685bfca25ed5352b1);
+            feature_group_56eabb3fcec94d86975f8b928f872ad1.remove();
+        
+</script>
