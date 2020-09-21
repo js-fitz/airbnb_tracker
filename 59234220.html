@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f84692069cf04d59ae32e3f8d810662c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 8px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:12px;' href='https://host-maps.onrender.com/home.html#hosts'>
+                    <b>&#8592; Return to all hosts</b></a> </div>   
+                
+                <hr style='margin:8px 40px 0 0;'>
+                
+                <div style='margin:15px 0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Lara</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        2 Clusters
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        7 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+               
+                <div style='margin:10px 0 5px; font-size:14px'><b>Licenses</b></div>
+                   
+            <i class="fa fa-circle"
+            style="font-size:14px; color:#455A64; margin-right:3px"></i>
+            None claimed - <b>7</b> listings
+            <br>
+                 
+                <hr style='margin:8px 0 0;'>
+               <div style='margin:10px 0 3px; font-size:14px'><b>Locations</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>More details on map</div>
+    
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>38, Grove Street, Charles River Square, Beacon Hill</span>
+                (5 listings)
+            </div>
+        
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>53, Charles Street, Charles River Square, Beacon Hill</span>
+                (2 listings)
+            </div>
+        
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_f84692069cf04d59ae32e3f8d810662c" ></div>
+        
+</body>
+<script>    
+    
+            var map_f84692069cf04d59ae32e3f8d810662c = L.map(
+                "map_f84692069cf04d59ae32e3f8d810662c",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ae5e3eedfb65494daae2eddcbc87a09f = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_f84692069cf04d59ae32e3f8d810662c);
+        
+    
+            var feature_group_d6141f9fd538481d8c01928e0d0ba838 = L.featureGroup(
+                {}
+            ).addTo(map_f84692069cf04d59ae32e3f8d810662c);
+        
+    
+            var circle_0f85760f8838437ca7a4dcf0744423c2 = L.circle(
+                [42.359958, -71.06851199999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.2692042281305155, "radius": 132.98608897927318, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d6141f9fd538481d8c01928e0d0ba838);
+        
+    
+        var popup_34af0cb0c4a64755b6fe7247be0ccaab = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_5518d40a51e742ac8449d5f9ce1dfc1b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj4zOCwgR3JvdmUgU3RyZWV0LCBDaGFybGVzIFJpdmVyIFNxdWFyZSwgQmVhY29uIEhpbGw8L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT0nbWFyZ2luOjRweCAwOyBwYWRkaW5nOjRweCAwOwogICAgICAgICAgICBib3JkZXItdG9wOjFweCBzb2xpZCBibGFjazsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgYmxhY2snPgogICAgICAgICAgICBMb2NhdGlvbiBhY2N1cmFjeTogPGIgc3R5bGU9J2NvbG9yOiM0NDhBRkYnPndpdGhpbiAyNTAgZnQuPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSdmb250LXNpemU6MTJweCc+CiAgICAgICAgICAgIENlbnRyb2lkOiA8Yj4jMTA4Ny4wPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjU8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+TGFyYTwvYj48YnI+CiAgICAgICAgTGljZW5zZTogPGI+Tm9uZTwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojNDU1QTY0Jz5ub25lIGNsYWltZWQ8L3NwYW4+KSA8YnI+IAogICAgICAgIEF2ZyBwcmljZS9uaWdodDogPGI+JDE1MDwvYj4gCiAgICA8L2Rpdj4KICAgIA==" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_34af0cb0c4a64755b6fe7247be0ccaab.setContent(i_frame_5518d40a51e742ac8449d5f9ce1dfc1b);
+        
+
+        circle_0f85760f8838437ca7a4dcf0744423c2.bindPopup(popup_34af0cb0c4a64755b6fe7247be0ccaab)
+        ;
+
+        
+    
+    
+            circle_0f85760f8838437ca7a4dcf0744423c2.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #1087.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            5 listings
+            <br><span style='color:#0D47A1;'>38, Grove Street, Charles River Square, Beacon Hill</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0e51861867cf4a188403409d957feb18 = L.circle(
+                [42.357515, -71.07014000000002],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.20000000000000007, "radius": 196.99999999999997, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d6141f9fd538481d8c01928e0d0ba838);
+        
+    
+        var popup_563d8a8173d841ffbb510776e13ec199 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_e3cb45e321d445b493af2ce05083e92c = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj41MywgQ2hhcmxlcyBTdHJlZXQsIENoYXJsZXMgUml2ZXIgU3F1YXJlLCBCZWFjb24gSGlsbDwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IHN0eWxlPSdtYXJnaW46NHB4IDA7IHBhZGRpbmc6NHB4IDA7CiAgICAgICAgICAgIGJvcmRlci10b3A6MXB4IHNvbGlkIGJsYWNrOyBib3JkZXItYm90dG9tOjFweCBzb2xpZCBibGFjayc+CiAgICAgICAgICAgIExvY2F0aW9uIGFjY3VyYWN5OiA8YiBzdHlsZT0nY29sb3I6IzQ0OEFGRic+bG93ICh3aXRoaW4gNTAwIGZ0Lik8L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHNwYW4gc3R5bGU9J2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICAgICAgQ2VudHJvaWQ6IDxiPiMxMDg3LjE8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+MjwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5MYXJhPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMTcyPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_563d8a8173d841ffbb510776e13ec199.setContent(i_frame_e3cb45e321d445b493af2ce05083e92c);
+        
+
+        circle_0e51861867cf4a188403409d957feb18.bindPopup(popup_563d8a8173d841ffbb510776e13ec199)
+        ;
+
+        
+    
+    
+            circle_0e51861867cf4a188403409d957feb18.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #1087.1 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>53, Charles Street, Charles River Square, Beacon Hill</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_bac985f4e93f4ab5a4788467cd015440 = L.circleMarker(
+                [42.359958, -71.06851199999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_d6141f9fd538481d8c01928e0d0ba838);
+        
+    
+        var popup_d48cb40bf7a04ef9860e3b8faec59600 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0657cc64661e44be9269eff44765386d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj4zOCwgR3JvdmUgU3RyZWV0LCBDaGFybGVzIFJpdmVyIFNxdWFyZSwgQmVhY29uIEhpbGw8L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT0nbWFyZ2luOjRweCAwOyBwYWRkaW5nOjRweCAwOwogICAgICAgICAgICBib3JkZXItdG9wOjFweCBzb2xpZCBibGFjazsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgYmxhY2snPgogICAgICAgICAgICBMb2NhdGlvbiBhY2N1cmFjeTogPGIgc3R5bGU9J2NvbG9yOiM0NDhBRkYnPndpdGhpbiAyNTAgZnQuPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSdmb250LXNpemU6MTJweCc+CiAgICAgICAgICAgIENlbnRyb2lkOiA8Yj4jMTA4Ny4wPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjU8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+TGFyYTwvYj48YnI+CiAgICAgICAgTGljZW5zZTogPGI+Tm9uZTwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojNDU1QTY0Jz5ub25lIGNsYWltZWQ8L3NwYW4+KSA8YnI+IAogICAgICAgIEF2ZyBwcmljZS9uaWdodDogPGI+JDE1MDwvYj4gCiAgICA8L2Rpdj4KICAgIA==" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_d48cb40bf7a04ef9860e3b8faec59600.setContent(i_frame_0657cc64661e44be9269eff44765386d);
+        
+
+        circle_marker_bac985f4e93f4ab5a4788467cd015440.bindPopup(popup_d48cb40bf7a04ef9860e3b8faec59600)
+        ;
+
+        
+    
+    
+            circle_marker_bac985f4e93f4ab5a4788467cd015440.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #1087.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            5 listings
+            <br><span style='color:#0D47A1;'>38, Grove Street, Charles River Square, Beacon Hill</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_03ab8232537d4af78066b1018dcc20de = L.circleMarker(
+                [42.357515, -71.07014000000002],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_d6141f9fd538481d8c01928e0d0ba838);
+        
+    
+        var popup_f0a761d67a0e42068851751a3e682fc5 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_aff90a15f30244a0803739c27f36fab5 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj41MywgQ2hhcmxlcyBTdHJlZXQsIENoYXJsZXMgUml2ZXIgU3F1YXJlLCBCZWFjb24gSGlsbDwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IHN0eWxlPSdtYXJnaW46NHB4IDA7IHBhZGRpbmc6NHB4IDA7CiAgICAgICAgICAgIGJvcmRlci10b3A6MXB4IHNvbGlkIGJsYWNrOyBib3JkZXItYm90dG9tOjFweCBzb2xpZCBibGFjayc+CiAgICAgICAgICAgIExvY2F0aW9uIGFjY3VyYWN5OiA8YiBzdHlsZT0nY29sb3I6IzQ0OEFGRic+bG93ICh3aXRoaW4gNTAwIGZ0Lik8L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHNwYW4gc3R5bGU9J2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICAgICAgQ2VudHJvaWQ6IDxiPiMxMDg3LjE8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+MjwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5MYXJhPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMTcyPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_f0a761d67a0e42068851751a3e682fc5.setContent(i_frame_aff90a15f30244a0803739c27f36fab5);
+        
+
+        circle_marker_03ab8232537d4af78066b1018dcc20de.bindPopup(popup_f0a761d67a0e42068851751a3e682fc5)
+        ;
+
+        
+    
+    
+            circle_marker_03ab8232537d4af78066b1018dcc20de.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #1087.1 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>53, Charles Street, Charles River Square, Beacon Hill</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_99669ffbb7194dc7a907a2ab10bf1c02 = L.featureGroup(
+                {}
+            ).addTo(map_f84692069cf04d59ae32e3f8d810662c);
+        
+    
+            var marker_45585364db5240d19fe2f73cc1ead559 = L.marker(
+                [42.35937209999999, -71.0682762],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_99669ffbb7194dc7a907a2ab10bf1c02);
+        
+    
+            var icon_8a48c46e67b041a284c15f2b88b60bed = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_45585364db5240d19fe2f73cc1ead559.setIcon(icon_8a48c46e67b041a284c15f2b88b60bed);
+        
+    
+            marker_45585364db5240d19fe2f73cc1ead559.bindTooltip(
+                `<div>
+                     103 Myrtle Street, Boston MA 02108 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f940fb17d3904f2a861a635c0bb67995 = L.marker(
+                [42.357607, -71.0698019],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_99669ffbb7194dc7a907a2ab10bf1c02);
+        
+    
+            var icon_3907ca90d3b04029b78b56914449ef9f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_f940fb17d3904f2a861a635c0bb67995.setIcon(icon_3907ca90d3b04029b78b56914449ef9f);
+        
+    
+            marker_f940fb17d3904f2a861a635c0bb67995.bindTooltip(
+                `<div>
+                     16 Cedar Ln Way, Boston MA 02108 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2cefea838c034223b0e5e06fad3b3e15 = L.marker(
+                [42.3578576, -71.06985929999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_99669ffbb7194dc7a907a2ab10bf1c02);
+        
+    
+            var icon_de25b25499b844e7902d5c6bbd205f61 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_2cefea838c034223b0e5e06fad3b3e15.setIcon(icon_de25b25499b844e7902d5c6bbd205f61);
+        
+    
+            marker_2cefea838c034223b0e5e06fad3b3e15.bindTooltip(
+                `<div>
+                     28 Cedar Way Lane, Boston MA 02108 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6e6604be33424ca49c7f4c6c5ab48581 = L.marker(
+                [42.358298, -71.07083539999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_99669ffbb7194dc7a907a2ab10bf1c02);
+        
+    
+            var icon_91d539ba1a4049ba89a5ba5cce480759 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_6e6604be33424ca49c7f4c6c5ab48581.setIcon(icon_91d539ba1a4049ba89a5ba5cce480759);
+        
+    
+            marker_6e6604be33424ca49c7f4c6c5ab48581.bindTooltip(
+                `<div>
+                     86 Charles Street, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_706294990fd645b19aecb08fd80b173a = L.marker(
+                [42.3584328, -71.0708555],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_99669ffbb7194dc7a907a2ab10bf1c02);
+        
+    
+            var icon_cf005a7047ad4f838939bb963718e0ee = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_706294990fd645b19aecb08fd80b173a.setIcon(icon_cf005a7047ad4f838939bb963718e0ee);
+        
+    
+            marker_706294990fd645b19aecb08fd80b173a.bindTooltip(
+                `<div>
+                     90 Charles Street, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_34f2a75fd16544a3b8f06e67e3bfc4d4 = L.marker(
+                [42.35846069999999, -71.0709074],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_99669ffbb7194dc7a907a2ab10bf1c02);
+        
+    
+            var icon_8f9d4db2de184f8cb5168dab3d32f36c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_34f2a75fd16544a3b8f06e67e3bfc4d4.setIcon(icon_8f9d4db2de184f8cb5168dab3d32f36c);
+        
+    
+            marker_34f2a75fd16544a3b8f06e67e3bfc4d4.bindTooltip(
+                `<div>
+                     92 Charles Street, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_d03b3ce1ff9549c190dba879e78066f4 = L.featureGroup(
+                {}
+            ).addTo(map_f84692069cf04d59ae32e3f8d810662c);
+        
+    
+            var circle_5e89c6029a8f46ffb23570b3e54881e3 = L.circle(
+                [42.35767, -71.06973],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_5e89c6029a8f46ffb23570b3e54881e3.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 26528105</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_477cadbbce214f1c9d31ae6118819b1c = L.circle(
+                [42.35736, -71.07055],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_477cadbbce214f1c9d31ae6118819b1c.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 28048288</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_27eabce354bd48788841a272be2b12ba = L.circle(
+                [42.3605, -71.06855999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_27eabce354bd48788841a272be2b12ba.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 15767124</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_30f8dfc8cce14ad4a9f95affca089251 = L.circle(
+                [42.3598, -71.06900999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_30f8dfc8cce14ad4a9f95affca089251.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 16392095</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d6dc281b935b4dfeb6c97bd0d67c3d2a = L.circle(
+                [42.35964, -71.06971],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_d6dc281b935b4dfeb6c97bd0d67c3d2a.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 18719421</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2f804951e61a463d9781c924587c30d9 = L.circle(
+                [42.36006, -71.06755],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_2f804951e61a463d9781c924587c30d9.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 19019562</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b7f6f72ffc6d4598ba143335b94ec709 = L.circle(
+                [42.35979, -71.06773000000003],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d03b3ce1ff9549c190dba879e78066f4);
+        
+    
+            circle_b7f6f72ffc6d4598ba143335b94ec709.bindTooltip(
+                `<div>
+                     
+            Lara | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 21818022</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #1087.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_a50326f49569447889fb4863b0908568 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eNearby Buildings\u003c/span\u003e" : feature_group_99669ffbb7194dc7a907a2ab10bf1c02,
+                },
+            };
+            L.control.layers(
+                layer_control_a50326f49569447889fb4863b0908568.base_layers,
+                layer_control_a50326f49569447889fb4863b0908568.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_f84692069cf04d59ae32e3f8d810662c);
+            feature_group_99669ffbb7194dc7a907a2ab10bf1c02.remove();
+        
+</script>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e5eb5f635647468585998703f3134346 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 8px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:12px;' href='https://host-maps.onrender.com/home.html#hosts'>
+                    <b>&#8592; Return to all hosts</b></a> </div>   
+                
+                <hr style='margin:8px 40px 0 0;'>
+                
+                <div style='margin:15px 0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Sonder (Boston)</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        3 Clusters
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        16 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+               
+                <div style='margin:10px 0 5px; font-size:14px'><b>Licenses</b></div>
+                   
+            <i class="fa fa-circle"
+            style="font-size:14px; color:#455A64; margin-right:3px"></i>
+            None claimed - <b>9</b> listings
+            <br>
+            <i class="fa fa-circle"
+            style="font-size:14px; color:#D32F2F; margin-right:3px"></i>
+            Not found (fabricated) - <b>7</b> listings
+            <br>
+                 
+                <hr style='margin:8px 0 0;'>
+               <div style='margin:10px 0 3px; font-size:14px'><b>Locations</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>More details on map</div>
+    
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>56, Broad Street, Waterfront, Financial District</span>
+                (9 listings)
+            </div>
+        
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>The Conrad, 25, Winter Street, Phillips Square, Downtown Crossing, Financial District</span>
+                (5 listings)
+            </div>
+        
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>51, Joy Street, Downtown Crossing, West End</span>
+                (2 listings)
+            </div>
+        
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_e5eb5f635647468585998703f3134346" ></div>
+        
+</body>
+<script>    
+    
+            var map_e5eb5f635647468585998703f3134346 = L.map(
+                "map_e5eb5f635647468585998703f3134346",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_fd46a7f288ac43f98d7ffc71db857b56 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e5eb5f635647468585998703f3134346);
+        
+    
+            var feature_group_4501b64d0d154c27ba141bd9bcd56b14 = L.featureGroup(
+                {}
+            ).addTo(map_e5eb5f635647468585998703f3134346);
+        
+    
+            var circle_64493c75fe024318bb1d00ba0edc7e2b = L.circle(
+                [42.35796444444443, -71.05374666666665],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.2518488731767837, "radius": 149.03979231147508, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4501b64d0d154c27ba141bd9bcd56b14);
+        
+    
+        var popup_3f59d8161852464d8df27405f784c7f5 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_2e9e76cbdf504d1e9b01c689e93ff702 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj41NiwgQnJvYWQgU3RyZWV0LCBXYXRlcmZyb250LCBGaW5hbmNpYWwgRGlzdHJpY3Q8L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT0nbWFyZ2luOjRweCAwOyBwYWRkaW5nOjRweCAwOwogICAgICAgICAgICBib3JkZXItdG9wOjFweCBzb2xpZCBibGFjazsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgYmxhY2snPgogICAgICAgICAgICBMb2NhdGlvbiBhY2N1cmFjeTogPGIgc3R5bGU9J2NvbG9yOiM0NDhBRkYnPndpdGhpbiAzMDAgZnQuPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSdmb250LXNpemU6MTJweCc+CiAgICAgICAgICAgIENlbnRyb2lkOiA8Yj4jMzUuMDwvYj48YnI+CiAgICAgICAgPC9zcGFuPgogICAgICAgIExpc3RpbmdzOiA8Yj45PC9iPiB8IAogICAgICAgIEhvc3Q6IDxiPlNvbmRlciAoQm9zdG9uKTwvYj48YnI+CiAgICAgICAgTGljZW5zZTogPGI+Tm9uZTwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojNDU1QTY0Jz5ub25lIGNsYWltZWQ8L3NwYW4+KSA8YnI+IAogICAgICAgIEF2ZyBwcmljZS9uaWdodDogPGI+JDE4MDwvYj4gCiAgICA8L2Rpdj4KICAgIA==" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_3f59d8161852464d8df27405f784c7f5.setContent(i_frame_2e9e76cbdf504d1e9b01c689e93ff702);
+        
+
+        circle_64493c75fe024318bb1d00ba0edc7e2b.bindPopup(popup_3f59d8161852464d8df27405f784c7f5)
+        ;
+
+        
+    
+    
+            circle_64493c75fe024318bb1d00ba0edc7e2b.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #35.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            9 listings
+            <br><span style='color:#0D47A1;'>56, Broad Street, Waterfront, Financial District</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2c2371b0182c4faba1c363d47b61a297 = L.circle(
+                [42.356058, -71.06132199999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25755675551321555, "radius": 143.7600011502756, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4501b64d0d154c27ba141bd9bcd56b14);
+        
+    
+        var popup_4bf46220d9df41d8823472a7d62a87ae = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c2da69eaf6d247eab74f94f4620c1a3b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj5UaGUgQ29ucmFkLCAyNSwgV2ludGVyIFN0cmVldCwgUGhpbGxpcHMgU3F1YXJlLCBEb3dudG93biBDcm9zc2luZywgRmluYW5jaWFsIERpc3RyaWN0PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMzAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+IzM2LjA8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+NTwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5Tb25kZXIgKEJvc3Rvbik8L2I+PGJyPgogICAgICAgIExpY2Vuc2U6IDxiPjk4ODE4MDwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojRDMyRjJGJz5mYWJyaWNhdGVkPC9zcGFuPikgPGJyPiAKICAgICAgICBBdmcgcHJpY2UvbmlnaHQ6IDxiPiQzNTM8L2I+IAogICAgPC9kaXY+CiAgICA=" width="280px" style="border:none !important;" height="161px"></iframe>`)[0];
+            popup_4bf46220d9df41d8823472a7d62a87ae.setContent(i_frame_c2da69eaf6d247eab74f94f4620c1a3b);
+        
+
+        circle_2c2371b0182c4faba1c363d47b61a297.bindPopup(popup_4bf46220d9df41d8823472a7d62a87ae)
+        ;
+
+        
+    
+    
+            circle_2c2371b0182c4faba1c363d47b61a297.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #36.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            5 listings
+            <br><span style='color:#0D47A1;'>The Conrad, 25, Winter Street, Phillips Square, Downtown Crossing, Financial District</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2b551322ee554cbc81d8f3a057d114d7 = L.circle(
+                [42.36016, -71.06501],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.20000000000000007, "radius": 196.99999999999997, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4501b64d0d154c27ba141bd9bcd56b14);
+        
+    
+        var popup_7444ed34c579440c8ea7128db49d8f31 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d1f78fd4d44d4808b4da07c51750d889 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj41MSwgSm95IFN0cmVldCwgRG93bnRvd24gQ3Jvc3NpbmcsIFdlc3QgRW5kPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz5sb3cgKHdpdGhpbiA1MDAgZnQuKTwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+IzMzLjA8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+MjwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5Tb25kZXIgKEJvc3Rvbik8L2I+PGJyPgogICAgICAgIExpY2Vuc2U6IDxiPjM5Mjc3MzwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojRDMyRjJGJz5mYWJyaWNhdGVkPC9zcGFuPikgPGJyPiAKICAgICAgICBBdmcgcHJpY2UvbmlnaHQ6IDxiPiQyNDQ8L2I+IAogICAgPC9kaXY+CiAgICA=" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_7444ed34c579440c8ea7128db49d8f31.setContent(i_frame_d1f78fd4d44d4808b4da07c51750d889);
+        
+
+        circle_2b551322ee554cbc81d8f3a057d114d7.bindPopup(popup_7444ed34c579440c8ea7128db49d8f31)
+        ;
+
+        
+    
+    
+            circle_2b551322ee554cbc81d8f3a057d114d7.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">392773</span> (fabricated)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #33.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>51, Joy Street, Downtown Crossing, West End</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9ede95d29cca4c1aa6737959c13739bd = L.circleMarker(
+                [42.35796444444443, -71.05374666666665],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_4501b64d0d154c27ba141bd9bcd56b14);
+        
+    
+        var popup_71f6e4d490a34571a160907fc2561158 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_ef271c26994c4c229242673c90eabfd0 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj41NiwgQnJvYWQgU3RyZWV0LCBXYXRlcmZyb250LCBGaW5hbmNpYWwgRGlzdHJpY3Q8L2I+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT0nbWFyZ2luOjRweCAwOyBwYWRkaW5nOjRweCAwOwogICAgICAgICAgICBib3JkZXItdG9wOjFweCBzb2xpZCBibGFjazsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgYmxhY2snPgogICAgICAgICAgICBMb2NhdGlvbiBhY2N1cmFjeTogPGIgc3R5bGU9J2NvbG9yOiM0NDhBRkYnPndpdGhpbiAzMDAgZnQuPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSdmb250LXNpemU6MTJweCc+CiAgICAgICAgICAgIENlbnRyb2lkOiA8Yj4jMzUuMDwvYj48YnI+CiAgICAgICAgPC9zcGFuPgogICAgICAgIExpc3RpbmdzOiA8Yj45PC9iPiB8IAogICAgICAgIEhvc3Q6IDxiPlNvbmRlciAoQm9zdG9uKTwvYj48YnI+CiAgICAgICAgTGljZW5zZTogPGI+Tm9uZTwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojNDU1QTY0Jz5ub25lIGNsYWltZWQ8L3NwYW4+KSA8YnI+IAogICAgICAgIEF2ZyBwcmljZS9uaWdodDogPGI+JDE4MDwvYj4gCiAgICA8L2Rpdj4KICAgIA==" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_71f6e4d490a34571a160907fc2561158.setContent(i_frame_ef271c26994c4c229242673c90eabfd0);
+        
+
+        circle_marker_9ede95d29cca4c1aa6737959c13739bd.bindPopup(popup_71f6e4d490a34571a160907fc2561158)
+        ;
+
+        
+    
+    
+            circle_marker_9ede95d29cca4c1aa6737959c13739bd.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #35.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            9 listings
+            <br><span style='color:#0D47A1;'>56, Broad Street, Waterfront, Financial District</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3fed1ff1761f4ed897a2243408e09889 = L.circleMarker(
+                [42.356058, -71.06132199999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_4501b64d0d154c27ba141bd9bcd56b14);
+        
+    
+        var popup_9945c07d280548768c1876bf49b16dd2 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_04f4c2d0db3649c0aa828b6c5e2525af = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj5UaGUgQ29ucmFkLCAyNSwgV2ludGVyIFN0cmVldCwgUGhpbGxpcHMgU3F1YXJlLCBEb3dudG93biBDcm9zc2luZywgRmluYW5jaWFsIERpc3RyaWN0PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMzAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+IzM2LjA8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+NTwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5Tb25kZXIgKEJvc3Rvbik8L2I+PGJyPgogICAgICAgIExpY2Vuc2U6IDxiPjk4ODE4MDwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojRDMyRjJGJz5mYWJyaWNhdGVkPC9zcGFuPikgPGJyPiAKICAgICAgICBBdmcgcHJpY2UvbmlnaHQ6IDxiPiQzNTM8L2I+IAogICAgPC9kaXY+CiAgICA=" width="280px" style="border:none !important;" height="161px"></iframe>`)[0];
+            popup_9945c07d280548768c1876bf49b16dd2.setContent(i_frame_04f4c2d0db3649c0aa828b6c5e2525af);
+        
+
+        circle_marker_3fed1ff1761f4ed897a2243408e09889.bindPopup(popup_9945c07d280548768c1876bf49b16dd2)
+        ;
+
+        
+    
+    
+            circle_marker_3fed1ff1761f4ed897a2243408e09889.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #36.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            5 listings
+            <br><span style='color:#0D47A1;'>The Conrad, 25, Winter Street, Phillips Square, Downtown Crossing, Financial District</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_1053970f97d1426ca2c2b5c2077de9a0 = L.circleMarker(
+                [42.36016, -71.06501],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_4501b64d0d154c27ba141bd9bcd56b14);
+        
+    
+        var popup_845281f98783479bb6752728f5d90fa0 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_3571ed1fa3f84790a1e4ba45556fadec = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj41MSwgSm95IFN0cmVldCwgRG93bnRvd24gQ3Jvc3NpbmcsIFdlc3QgRW5kPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz5sb3cgKHdpdGhpbiA1MDAgZnQuKTwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+IzMzLjA8L2I+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgICAgICBMaXN0aW5nczogPGI+MjwvYj4gfCAKICAgICAgICBIb3N0OiA8Yj5Tb25kZXIgKEJvc3Rvbik8L2I+PGJyPgogICAgICAgIExpY2Vuc2U6IDxiPjM5Mjc3MzwvYj4gKDxzcGFuIHN0eWxlPSdjb2xvcjojRDMyRjJGJz5mYWJyaWNhdGVkPC9zcGFuPikgPGJyPiAKICAgICAgICBBdmcgcHJpY2UvbmlnaHQ6IDxiPiQyNDQ8L2I+IAogICAgPC9kaXY+CiAgICA=" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_845281f98783479bb6752728f5d90fa0.setContent(i_frame_3571ed1fa3f84790a1e4ba45556fadec);
+        
+
+        circle_marker_1053970f97d1426ca2c2b5c2077de9a0.bindPopup(popup_845281f98783479bb6752728f5d90fa0)
+        ;
+
+        
+    
+    
+            circle_marker_1053970f97d1426ca2c2b5c2077de9a0.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">392773</span> (fabricated)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #33.0 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>51, Joy Street, Downtown Crossing, West End</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_ac230db157504ba189590bd9d93ee043 = L.featureGroup(
+                {}
+            ).addTo(map_e5eb5f635647468585998703f3134346);
+        
+    
+            var marker_8fab5785310f465db4d9bad0f65ed08c = L.marker(
+                [42.3572368, -71.0525633],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_412dd694a2d94ce5a607ddaa6451cce0 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_8fab5785310f465db4d9bad0f65ed08c.setIcon(icon_412dd694a2d94ce5a607ddaa6451cce0);
+        
+    
+            marker_8fab5785310f465db4d9bad0f65ed08c.bindTooltip(
+                `<div>
+                     101 Broad Street, Boston MA 02110 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b277c9572f4a49f4b98fe7f7e0acc8a5 = L.marker(
+                [42.3590653, -71.05421919999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_6db3cac34bb3408eb1e711ee1afe67ee = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_b277c9572f4a49f4b98fe7f7e0acc8a5.setIcon(icon_6db3cac34bb3408eb1e711ee1afe67ee);
+        
+    
+            marker_b277c9572f4a49f4b98fe7f7e0acc8a5.bindTooltip(
+                `<div>
+                     131 State St, Boston MA 02109 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_27bab33ff13e4d4d8aa32889057829b7 = L.marker(
+                [42.3576641, -71.0540946],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_275ec08ef5b94e98b22f0d75705c08d3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_27bab33ff13e4d4d8aa32889057829b7.setIcon(icon_275ec08ef5b94e98b22f0d75705c08d3);
+        
+    
+            marker_27bab33ff13e4d4d8aa32889057829b7.bindTooltip(
+                `<div>
+                     153 Milk Street, Boston MA 02109 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_614e6bd3d1a34775805c69a1a7f7f11c = L.marker(
+                [42.358915, -71.054155],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_ac6321f20849427991145d60c7762fc4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_614e6bd3d1a34775805c69a1a7f7f11c.setIcon(icon_ac6321f20849427991145d60c7762fc4);
+        
+    
+            marker_614e6bd3d1a34775805c69a1a7f7f11c.bindTooltip(
+                `<div>
+                     One India Street, Boston MA 02109 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d96dad5c83084883ae2be0d092994e08 = L.marker(
+                [42.3550474, -71.0622106],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_aaab47b9280f48dea116a7685749b17c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_d96dad5c83084883ae2be0d092994e08.setIcon(icon_aaab47b9280f48dea116a7685749b17c);
+        
+    
+            marker_d96dad5c83084883ae2be0d092994e08.bindTooltip(
+                `<div>
+                     29-35 Temple Pl, Boston MA 02111 <br>(source: AirBPDBjn)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_4a9bf1f79806493f99c4d0bfce30ff20 = L.marker(
+                [42.3548464, -71.0618248],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_3b746ffb492b43c6a4a31c6d10bb2963 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_4a9bf1f79806493f99c4d0bfce30ff20.setIcon(icon_3b746ffb492b43c6a4a31c6d10bb2963);
+        
+    
+            marker_4a9bf1f79806493f99c4d0bfce30ff20.bindTooltip(
+                `<div>
+                     55 Temple Place, Boston MA 02111 <br>(source: AirBPDBjn)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e37192968f9f4dfbb32ab4e7697981e9 = L.marker(
+                [42.35623959999999, -71.06124],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_dc0fb3252a44451cb4e1b4218ee80a5b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_e37192968f9f4dfbb32ab4e7697981e9.setIcon(icon_dc0fb3252a44451cb4e1b4218ee80a5b);
+        
+    
+            marker_e37192968f9f4dfbb32ab4e7697981e9.bindTooltip(
+                `<div>
+                     6 Hamilton Place, Boston MA 02108 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1a14d03e711e4f3abaffe4eba73272af = L.marker(
+                [42.3554762, -71.0615353],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_c0a7bb3f598b46098d4f9fba15d650e5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_1a14d03e711e4f3abaffe4eba73272af.setIcon(icon_c0a7bb3f598b46098d4f9fba15d650e5);
+        
+    
+            marker_1a14d03e711e4f3abaffe4eba73272af.bindTooltip(
+                `<div>
+                     8 Winter Street, Boston MA 02108 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5502f996a03143fb868ceb1e4fc10f7a = L.marker(
+                [42.3607332, -71.06624699999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_d1622dce4c164c6dbd8967d57db37f94 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_5502f996a03143fb868ceb1e4fc10f7a.setIcon(icon_d1622dce4c164c6dbd8967d57db37f94);
+        
+    
+            marker_5502f996a03143fb868ceb1e4fc10f7a.bindTooltip(
+                `<div>
+                     16 Irving Street, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_8d123cf77ce641c08e5eceba0095dd22 = L.marker(
+                [42.360169, -71.063465],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_0eb1f252bd9d4f48aacf90d0630ff870 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_8d123cf77ce641c08e5eceba0095dd22.setIcon(icon_0eb1f252bd9d4f48aacf90d0630ff870);
+        
+    
+            marker_8d123cf77ce641c08e5eceba0095dd22.bindTooltip(
+                `<div>
+                     40 Temple Street  MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_be89c989ba2a43e8a4a0789bdbc120bc = L.marker(
+                [42.3597937, -71.0646416],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_ac230db157504ba189590bd9d93ee043);
+        
+    
+            var icon_2cd3d99e939049f09e4108ff7b8a41fc = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_be89c989ba2a43e8a4a0789bdbc120bc.setIcon(icon_2cd3d99e939049f09e4108ff7b8a41fc);
+        
+    
+            marker_be89c989ba2a43e8a4a0789bdbc120bc.bindTooltip(
+                `<div>
+                     47-49 Hancock St, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_5865f1a2f9a84792b735499eea115599 = L.featureGroup(
+                {}
+            ).addTo(map_e5eb5f635647468585998703f3134346);
+        
+    
+            var circle_1dfe8110da604e369014618ff36febb7 = L.circle(
+                [42.35533, -71.06116999999998],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_1dfe8110da604e369014618ff36febb7.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 39463129</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_788c9a7c378244afa8524d5dfc318e19 = L.circle(
+                [42.35609, -71.06199000000002],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_788c9a7c378244afa8524d5dfc318e19.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 39560366</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9198cb5ea572480f82bc9296ce216044 = L.circle(
+                [42.35534000000001, -71.06061],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_9198cb5ea572480f82bc9296ce216044.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 39560388</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9a9d9fd5364c438bb940595e43e2fba4 = L.circle(
+                [42.35727, -71.06079],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_9a9d9fd5364c438bb940595e43e2fba4.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 39560471</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_770bb540d4ce4540895f66c0d326961a = L.circle(
+                [42.35626, -71.06205],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_770bb540d4ce4540895f66c0d326961a.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">988180</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 39867786</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fcd07728d05f45a297b35157acd684c7 = L.circle(
+                [42.35722, -71.05375],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_fcd07728d05f45a297b35157acd684c7.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38958028</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f482776c6ce045e3a979cde9954b2edc = L.circle(
+                [42.35887, -71.05320999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_f482776c6ce045e3a979cde9954b2edc.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38958123</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9f85d7fdc874469488ef601ec2539520 = L.circle(
+                [42.35882, -71.05385],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_9f85d7fdc874469488ef601ec2539520.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38958155</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1e221c80e11b4c7ab480c5186ba839e6 = L.circle(
+                [42.35822, -71.05438000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_1e221c80e11b4c7ab480c5186ba839e6.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38958340</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_35fc4976e8a04a89a13caa8da28eac18 = L.circle(
+                [42.35694, -71.05363],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_35fc4976e8a04a89a13caa8da28eac18.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38958496</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ec6cc67d1102459ebaba0199e967f08e = L.circle(
+                [42.35803, -71.05471999999997],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_ec6cc67d1102459ebaba0199e967f08e.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40031197</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e8e8c36ebf184540ae76cb15ca79ebfb = L.circle(
+                [42.35691, -71.05298],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_e8e8c36ebf184540ae76cb15ca79ebfb.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40088651</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7628d32f75034c68875fa8b6291be5a1 = L.circle(
+                [42.3583, -71.05389],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_7628d32f75034c68875fa8b6291be5a1.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40134575</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b68396b9ccf146b4a0d86316bc8e4d6f = L.circle(
+                [42.35837, -71.05331],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_b68396b9ccf146b4a0d86316bc8e4d6f.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 41525497</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #35.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e26c46562716432583b8bdfe23d89e33 = L.circle(
+                [42.35951, -71.06504],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_e26c46562716432583b8bdfe23d89e33.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">392773</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 37152036</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #33.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b5f679b1a1584748af7253cfe91d1922 = L.circle(
+                [42.36081, -71.06498],
+                {"bubblingMouseEvents": true, "color": "#D32F2F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5865f1a2f9a84792b735499eea115599);
+        
+    
+            circle_b5f679b1a1584748af7253cfe91d1922.bindTooltip(
+                `<div>
+                     
+            Sonder (Boston) | License: <span style="color:#D32F2F">392773</span> (fabricated)
+            <br> <i class="fa fa-dot-circle-o" style="color:#D32F2F; margin-right:3px;"></i>
+            <b>Listing 38018931</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #33.0<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_24f1e6e0338a4cc4900916f14f46b105 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eNearby Buildings\u003c/span\u003e" : feature_group_ac230db157504ba189590bd9d93ee043,
+                },
+            };
+            L.control.layers(
+                layer_control_24f1e6e0338a4cc4900916f14f46b105.base_layers,
+                layer_control_24f1e6e0338a4cc4900916f14f46b105.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_e5eb5f635647468585998703f3134346);
+            feature_group_ac230db157504ba189590bd9d93ee043.remove();
+        
+</script>

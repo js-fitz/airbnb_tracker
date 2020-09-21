@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_deac030a95194fe59a9d2d25b933cd7d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 8px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:12px;' href='https://host-maps.onrender.com/home.html#hosts'>
+                    <b>&#8592; Return to all hosts</b></a> </div>   
+                
+                <hr style='margin:8px 40px 0 0;'>
+                
+                <div style='margin:15px 0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Ken</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        4 Clusters
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        13 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+               
+                <div style='margin:10px 0 5px; font-size:14px'><b>Licenses</b></div>
+                   
+            <i class="fa fa-circle"
+            style="font-size:14px; color:#455A64; margin-right:3px"></i>
+            None claimed - <b>13</b> listings
+            <br>
+                 
+                <hr style='margin:8px 0 0;'>
+               <div style='margin:10px 0 3px; font-size:14px'><b>Locations</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>More details on map</div>
+    
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>44, Burbank Street, Back Bay</span>
+                (4 listings)
+            </div>
+        
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>Four Longfellow Place, 1, Longfellow Place, Waterfront, West End</span>
+                (4 listings)
+            </div>
+        
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>70, Beach Street, Phillips Square, Chinatown, Financial District</span>
+                (3 listings)
+            </div>
+        
+            <div style='margin: 0 0 8px; font-size:13px'>
+                <span style='color: #0D47A1'>Hynes Convention Center, 900, Boylston Street, Block F, Back Bay</span>
+                (2 listings)
+            </div>
+        
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_deac030a95194fe59a9d2d25b933cd7d" ></div>
+        
+</body>
+<script>    
+    
+            var map_deac030a95194fe59a9d2d25b933cd7d = L.map(
+                "map_deac030a95194fe59a9d2d25b933cd7d",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_cb157cf224d74e208331b54195cb4474 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_deac030a95194fe59a9d2d25b933cd7d);
+        
+    
+            var feature_group_e536377be23b49cf8a2ceb14eff7d5c5 = L.featureGroup(
+                {}
+            ).addTo(map_deac030a95194fe59a9d2d25b933cd7d);
+        
+    
+            var circle_9c7e131fcaed43189092715fb27eea15 = L.circle(
+                [42.3442625, -71.087855],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.28656766116467325, "radius": 116.92491342267729, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_753bf7ea199c4556b63b9a4476964322 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_9daa350eb23246f98cae897f262a7bec = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj40NCwgQnVyYmFuayBTdHJlZXQsIEJhY2sgQmF5PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMjAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC4yPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjQ8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjEwPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="125px"></iframe>`)[0];
+            popup_753bf7ea199c4556b63b9a4476964322.setContent(i_frame_9daa350eb23246f98cae897f262a7bec);
+        
+
+        circle_9c7e131fcaed43189092715fb27eea15.bindPopup(popup_753bf7ea199c4556b63b9a4476964322)
+        ;
+
+        
+    
+    
+            circle_9c7e131fcaed43189092715fb27eea15.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.2 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            4 listings
+            <br><span style='color:#0D47A1;'>44, Burbank Street, Back Bay</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_32daeb5459374a14865ab967a776cf80 = L.circle(
+                [42.3639, -71.0650375],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.24529305243377572, "radius": 155.10392649875746, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_6d009d99957845089182f9e56b0478dd = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_05f830e0e0d04923a47c0719593a4f0b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj5Gb3VyIExvbmdmZWxsb3cgUGxhY2UsIDEsIExvbmdmZWxsb3cgUGxhY2UsIFdhdGVyZnJvbnQsIFdlc3QgRW5kPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMzAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC4zPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjQ8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjEwPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_6d009d99957845089182f9e56b0478dd.setContent(i_frame_05f830e0e0d04923a47c0719593a4f0b);
+        
+
+        circle_32daeb5459374a14865ab967a776cf80.bindPopup(popup_6d009d99957845089182f9e56b0478dd)
+        ;
+
+        
+    
+    
+            circle_32daeb5459374a14865ab967a776cf80.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.3 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            4 listings
+            <br><span style='color:#0D47A1;'>Four Longfellow Place, 1, Longfellow Place, Waterfront, West End</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9483e4d683024164892faa9ee5a278b4 = L.circle(
+                [42.35134, -71.05958333333334],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.3211561790058568, "radius": 84.9305344195825, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_69b2b206fd024d3c8a6456d8feaba3e0 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_637be2576a5f4c56897d2fa5b33542ea = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj43MCwgQmVhY2ggU3RyZWV0LCBQaGlsbGlwcyBTcXVhcmUsIENoaW5hdG93biwgRmluYW5jaWFsIERpc3RyaWN0PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMTAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC4xPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjM8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjI1PC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_69b2b206fd024d3c8a6456d8feaba3e0.setContent(i_frame_637be2576a5f4c56897d2fa5b33542ea);
+        
+
+        circle_9483e4d683024164892faa9ee5a278b4.bindPopup(popup_69b2b206fd024d3c8a6456d8feaba3e0)
+        ;
+
+        
+    
+    
+            circle_9483e4d683024164892faa9ee5a278b4.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.1 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            3 listings
+            <br><span style='color:#0D47A1;'>70, Beach Street, Phillips Square, Chinatown, Financial District</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f3f18405e42b49f08e5ef6b0df5997ae = L.circle(
+                [42.346925, -71.08418499999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.20000000000000007, "radius": 196.99999999999997, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_b39c9a4a20364753b6528d06fc4041c2 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_99002674189349ff82965aa094358104 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj5IeW5lcyBDb252ZW50aW9uIENlbnRlciwgOTAwLCBCb3lsc3RvbiBTdHJlZXQsIEJsb2NrIEYsIEJhY2sgQmF5PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz5sb3cgKHdpdGhpbiA1MDAgZnQuKTwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC40PC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjI8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjE5PC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_b39c9a4a20364753b6528d06fc4041c2.setContent(i_frame_99002674189349ff82965aa094358104);
+        
+
+        circle_f3f18405e42b49f08e5ef6b0df5997ae.bindPopup(popup_b39c9a4a20364753b6528d06fc4041c2)
+        ;
+
+        
+    
+    
+            circle_f3f18405e42b49f08e5ef6b0df5997ae.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.4 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>Hynes Convention Center, 900, Boylston Street, Block F, Back Bay</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_db21780db3a44bc9bd1b4bfdec027626 = L.circleMarker(
+                [42.3442625, -71.087855],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_2ef53fd2de8044b6ba0d2e0a07d0d8ad = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_28741b3be90d4d06913e854e322fce90 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj40NCwgQnVyYmFuayBTdHJlZXQsIEJhY2sgQmF5PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMjAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC4yPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjQ8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjEwPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="125px"></iframe>`)[0];
+            popup_2ef53fd2de8044b6ba0d2e0a07d0d8ad.setContent(i_frame_28741b3be90d4d06913e854e322fce90);
+        
+
+        circle_marker_db21780db3a44bc9bd1b4bfdec027626.bindPopup(popup_2ef53fd2de8044b6ba0d2e0a07d0d8ad)
+        ;
+
+        
+    
+    
+            circle_marker_db21780db3a44bc9bd1b4bfdec027626.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.2 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            4 listings
+            <br><span style='color:#0D47A1;'>44, Burbank Street, Back Bay</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_de5d20f37e5845e39a7838cf05f2f885 = L.circleMarker(
+                [42.3639, -71.0650375],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_2fd9c341abb04194bc3e11d2a71e86d3 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_cef3f474e2414f75a9e9a7acf15f20fc = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj5Gb3VyIExvbmdmZWxsb3cgUGxhY2UsIDEsIExvbmdmZWxsb3cgUGxhY2UsIFdhdGVyZnJvbnQsIFdlc3QgRW5kPC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMzAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC4zPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjQ8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjEwPC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_2fd9c341abb04194bc3e11d2a71e86d3.setContent(i_frame_cef3f474e2414f75a9e9a7acf15f20fc);
+        
+
+        circle_marker_de5d20f37e5845e39a7838cf05f2f885.bindPopup(popup_2fd9c341abb04194bc3e11d2a71e86d3)
+        ;
+
+        
+    
+    
+            circle_marker_de5d20f37e5845e39a7838cf05f2f885.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.3 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            4 listings
+            <br><span style='color:#0D47A1;'>Four Longfellow Place, 1, Longfellow Place, Waterfront, West End</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d97ca7a0095e4621b3d3746ed78f6b09 = L.circleMarker(
+                [42.35134, -71.05958333333334],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_dc534ebc6d844cbca770eb5e54b24428 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_f53ff862b3f04ab7a13ba986365f39eb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj43MCwgQmVhY2ggU3RyZWV0LCBQaGlsbGlwcyBTcXVhcmUsIENoaW5hdG93biwgRmluYW5jaWFsIERpc3RyaWN0PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz53aXRoaW4gMTAwIGZ0LjwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC4xPC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjM8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjI1PC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_dc534ebc6d844cbca770eb5e54b24428.setContent(i_frame_f53ff862b3f04ab7a13ba986365f39eb);
+        
+
+        circle_marker_d97ca7a0095e4621b3d3746ed78f6b09.bindPopup(popup_dc534ebc6d844cbca770eb5e54b24428)
+        ;
+
+        
+    
+    
+            circle_marker_d97ca7a0095e4621b3d3746ed78f6b09.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.1 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            3 listings
+            <br><span style='color:#0D47A1;'>70, Beach Street, Phillips Square, Chinatown, Financial District</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_2bb6f2fff26c4f3aaf4a703bc13bed47 = L.circleMarker(
+                [42.346925, -71.08418499999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_e536377be23b49cf8a2ceb14eff7d5c5);
+        
+    
+        var popup_b117a5cfa9994bc48398c6f7a8f4c14a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_87519d02c3fc428c9884e9c4ec64fbbb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Jz4KICAgICAgICA8ZGl2IHN0eWxlPSdmb250LXNpemU6MTRweDsnPgogICAgICAgICAgICA8Yj5IeW5lcyBDb252ZW50aW9uIENlbnRlciwgOTAwLCBCb3lsc3RvbiBTdHJlZXQsIEJsb2NrIEYsIEJhY2sgQmF5PC9iPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgc3R5bGU9J21hcmdpbjo0cHggMDsgcGFkZGluZzo0cHggMDsKICAgICAgICAgICAgYm9yZGVyLXRvcDoxcHggc29saWQgYmxhY2s7IGJvcmRlci1ib3R0b206MXB4IHNvbGlkIGJsYWNrJz4KICAgICAgICAgICAgTG9jYXRpb24gYWNjdXJhY3k6IDxiIHN0eWxlPSdjb2xvcjojNDQ4QUZGJz5sb3cgKHdpdGhpbiA1MDAgZnQuKTwvYj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8c3BhbiBzdHlsZT0nZm9udC1zaXplOjEycHgnPgogICAgICAgICAgICBDZW50cm9pZDogPGI+Izk2NC40PC9iPjxicj4KICAgICAgICA8L3NwYW4+CiAgICAgICAgTGlzdGluZ3M6IDxiPjI8L2I+IHwgCiAgICAgICAgSG9zdDogPGI+S2VuPC9iPjxicj4KICAgICAgICBMaWNlbnNlOiA8Yj5Ob25lPC9iPiAoPHNwYW4gc3R5bGU9J2NvbG9yOiM0NTVBNjQnPm5vbmUgY2xhaW1lZDwvc3Bhbj4pIDxicj4gCiAgICAgICAgQXZnIHByaWNlL25pZ2h0OiA8Yj4kMjE5PC9iPiAKICAgIDwvZGl2PgogICAg" width="280px" style="border:none !important;" height="143px"></iframe>`)[0];
+            popup_b117a5cfa9994bc48398c6f7a8f4c14a.setContent(i_frame_87519d02c3fc428c9884e9c4ec64fbbb);
+        
+
+        circle_marker_2bb6f2fff26c4f3aaf4a703bc13bed47.bindPopup(popup_b117a5cfa9994bc48398c6f7a8f4c14a)
+        ;
+
+        
+    
+    
+            circle_marker_2bb6f2fff26c4f3aaf4a703bc13bed47.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+            <b>Centroid #964.4 &nbsp;|&nbsp;</b> <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            2 listings
+            <br><span style='color:#0D47A1;'>Hynes Convention Center, 900, Boylston Street, Block F, Back Bay</span><br>
+            <span style='text-align:center; font-size:10px;color#455A64'> click for more details</span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_b8eb1a94887144cb865dc9db20d90030 = L.featureGroup(
+                {}
+            ).addTo(map_deac030a95194fe59a9d2d25b933cd7d);
+        
+    
+            var marker_fb64a319b3bd494ca28550825a6c98ff = L.marker(
+                [42.3449253, -71.08830449999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_2643f3c63d7c46308cadcf46559e3abd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_fb64a319b3bd494ca28550825a6c98ff.setIcon(icon_2643f3c63d7c46308cadcf46559e3abd);
+        
+    
+            marker_fb64a319b3bd494ca28550825a6c98ff.bindTooltip(
+                `<div>
+                     100-112 Norway St, Boston MA 02115 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6d9408e0f2404bcda0324cf97f5f911e = L.marker(
+                [42.3444175, -71.08684149999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_759b0ff444fd416390e914dc6822cc23 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_6d9408e0f2404bcda0324cf97f5f911e.setIcon(icon_759b0ff444fd416390e914dc6822cc23);
+        
+    
+            marker_6d9408e0f2404bcda0324cf97f5f911e.bindTooltip(
+                `<div>
+                     189-277 Massachusetts Av, Boston MA 02115 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2379fec2384f4d8296affbaed5a165d5 = L.marker(
+                [42.344123, -71.0864765],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_a6ba19f167c54a8da6163d61001cb0df = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_2379fec2384f4d8296affbaed5a165d5.setIcon(icon_a6ba19f167c54a8da6163d61001cb0df);
+        
+    
+            marker_2379fec2384f4d8296affbaed5a165d5.bindTooltip(
+                `<div>
+                     221 Massachusetts Ave, Boston MA 02115 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_229c2d85c0bd4de0853548d1f26ef491 = L.marker(
+                [42.3442253, -71.089541],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_753b37cd8f70444f92cbc619e9ccc3fa = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_229c2d85c0bd4de0853548d1f26ef491.setIcon(icon_753b37cd8f70444f92cbc619e9ccc3fa);
+        
+    
+            marker_229c2d85c0bd4de0853548d1f26ef491.bindTooltip(
+                `<div>
+                     91 Westland Av, Boston MA 02115 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f3ba1cd558f74b3a8efadc16367e98d7 = L.marker(
+                [42.3637488, -71.06472649999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_3a997465ebe74cf6a7505edb5fabda4a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_f3ba1cd558f74b3a8efadc16367e98d7.setIcon(icon_3a997465ebe74cf6a7505edb5fabda4a);
+        
+    
+            marker_f3ba1cd558f74b3a8efadc16367e98d7.bindTooltip(
+                `<div>
+                     1-4 Longfellow Pl, Boston MA 02114 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_fa69753d5f984c00a4d506a334e51ae0 = L.marker(
+                [42.364184, -71.06379799999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_f250b3ef3f434655b727eb87eb002970 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_fa69753d5f984c00a4d506a334e51ae0.setIcon(icon_f250b3ef3f434655b727eb87eb002970);
+        
+    
+            marker_fa69753d5f984c00a4d506a334e51ae0.bindTooltip(
+                `<div>
+                     150 Staniford St, Boston MA 02114 <br>(source: BigBldgDB)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e820212edea544b49542b55e4a95f922 = L.marker(
+                [42.3635117, -71.0643486],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_6c05c764d23542d4a7fb97e1cd861356 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_e820212edea544b49542b55e4a95f922.setIcon(icon_6c05c764d23542d4a7fb97e1cd861356);
+        
+    
+            marker_e820212edea544b49542b55e4a95f922.bindTooltip(
+                `<div>
+                     5 Longfellow Place, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9e3f7b14d9b74233abb09af68d598c1b = L.marker(
+                [42.3631806, -71.06416829999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_7aa09fe5a2004f43bd70f7c2f9cdc855 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_9e3f7b14d9b74233abb09af68d598c1b.setIcon(icon_7aa09fe5a2004f43bd70f7c2f9cdc855);
+        
+    
+            marker_9e3f7b14d9b74233abb09af68d598c1b.bindTooltip(
+                `<div>
+                     72 Staniford Street, Boston MA 02114 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d9da5799317740ae821e1fb0684ce657 = L.marker(
+                [42.3522851, -71.05910879999999],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_9ab176cdd3864cdeb9bef2d42388d43e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_d9da5799317740ae821e1fb0684ce657.setIcon(icon_9ab176cdd3864cdeb9bef2d42388d43e);
+        
+    
+            marker_d9da5799317740ae821e1fb0684ce657.bindTooltip(
+                `<div>
+                     120 Kingston Street, Boston MA 02111 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3c191edf12ec44e78cd2ef4b4b0bc14a = L.marker(
+                [42.3459685, -71.0847361],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_f051997cb37d4ead8715537b5276c4c5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_3c191edf12ec44e78cd2ef4b4b0bc14a.setIcon(icon_f051997cb37d4ead8715537b5276c4c5);
+        
+    
+            marker_3c191edf12ec44e78cd2ef4b4b0bc14a.bindTooltip(
+                `<div>
+                     30 Dalton Street, Boston MA 02115 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_264ed65d560b45848273e1bec4a3f512 = L.marker(
+                [42.3459685, -71.0847361],
+                {"color": "black", "fillColor": "yellow"}
+            ).addTo(feature_group_b8eb1a94887144cb865dc9db20d90030);
+        
+    
+            var icon_581944ed34e54869a5c98c7d65984f3a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_264ed65d560b45848273e1bec4a3f512.setIcon(icon_581944ed34e54869a5c98c7d65984f3a);
+        
+    
+            marker_264ed65d560b45848273e1bec4a3f512.bindTooltip(
+                `<div>
+                     30 Dalton Stret, Boston MA 02115 <br>(source: RichCorpSS)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_ad2625b1173e4b5dad362603e68ba450 = L.featureGroup(
+                {}
+            ).addTo(map_deac030a95194fe59a9d2d25b933cd7d);
+        
+    
+            var circle_32eb9a2a146142c99f599566fe0f99ce = L.circle(
+                [42.34388, -71.08736],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_32eb9a2a146142c99f599566fe0f99ce.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 13650313</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.2<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9a0e24118c3d480482523543861df3a5 = L.circle(
+                [42.34405, -71.08801],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_9a0e24118c3d480482523543861df3a5.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 17042433</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.2<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_75be0f68a13d42c7812a0053dfcc5724 = L.circle(
+                [42.34529000000001, -71.08800000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_75be0f68a13d42c7812a0053dfcc5724.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 17585989</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.2<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1a5c8628fa1e4ba4b05184941583894d = L.circle(
+                [42.34383, -71.08805],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_1a5c8628fa1e4ba4b05184941583894d.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 18032982</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.2<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ee69ddc098544931ba8f27eeae5b1d05 = L.circle(
+                [42.34699000000001, -71.08419],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_ee69ddc098544931ba8f27eeae5b1d05.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 18035633</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.4<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_dcc52799c5824f3689c9c2abb449732b = L.circle(
+                [42.34686, -71.08418],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_dcc52799c5824f3689c9c2abb449732b.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 19291138</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.4<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_dbe17f4a28174bef94aa63cb71e18005 = L.circle(
+                [42.35157, -71.05931],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_dbe17f4a28174bef94aa63cb71e18005.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 12899321</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6297582efe344aaa987d1d74ac0f9e94 = L.circle(
+                [42.35108, -71.0599],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_6297582efe344aaa987d1d74ac0f9e94.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 16962193</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_417c05dedb6340618023e7478f6c67e9 = L.circle(
+                [42.35137, -71.05954],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_417c05dedb6340618023e7478f6c67e9.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40747299</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_909cd0ad95844df9b99693e40fb0f1cf = L.circle(
+                [42.36262, -71.06591],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_909cd0ad95844df9b99693e40fb0f1cf.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 14216000</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.3<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2ad5720384da4c0bbd19d4277bd512ad = L.circle(
+                [42.36454000000001, -71.06529],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_2ad5720384da4c0bbd19d4277bd512ad.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 14216691</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.3<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7a924a32e1484640be6eab1519c94e66 = L.circle(
+                [42.36456, -71.0637],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_7a924a32e1484640be6eab1519c94e66.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 16960812</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.3<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a827e800d12540b28d6747ab5d768543 = L.circle(
+                [42.36388, -71.06525],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad2625b1173e4b5dad362603e68ba450);
+        
+    
+            circle_a827e800d12540b28d6747ab5d768543.bindTooltip(
+                `<div>
+                     
+            Ken | License: <span style="color:#455A64">None</span> (none claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 17006890</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #964.3<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_ef1b6fced6b1401bb9856a0806e81f45 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eNearby Buildings\u003c/span\u003e" : feature_group_b8eb1a94887144cb865dc9db20d90030,
+                },
+            };
+            L.control.layers(
+                layer_control_ef1b6fced6b1401bb9856a0806e81f45.base_layers,
+                layer_control_ef1b6fced6b1401bb9856a0806e81f45.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_deac030a95194fe59a9d2d25b933cd7d);
+            feature_group_b8eb1a94887144cb865dc9db20d90030.remove();
+        
+</script>
