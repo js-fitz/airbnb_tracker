@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5ad19c52d99f44bb82c209c540a26f8b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Huggy</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        6 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>6</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>90, Mount Pleasant Terrace, Nubian Square, Roxbury</b>
+                    <span style='color:black'>(6 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 200 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_5ad19c52d99f44bb82c209c540a26f8b" ></div>
+        
+</body>
+<script>    
+    
+            var map_5ad19c52d99f44bb82c209c540a26f8b = L.map(
+                "map_5ad19c52d99f44bb82c209c540a26f8b",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1dd9b18f102e4b989e8c98ba5949df8b = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_5ad19c52d99f44bb82c209c540a26f8b);
+        
+    
+            var feature_group_b34a5718638b4bbd8e62f16d5c7df2dc = L.featureGroup(
+                {}
+            ).addTo(map_5ad19c52d99f44bb82c209c540a26f8b);
+        
+    
+            var circle_4fc0136c9c6b42aa9c24c39c76049c9c = L.circle(
+                [42.326605, -71.07988166666667],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 63.7032, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b34a5718638b4bbd8e62f16d5c7df2dc);
+        
+    
+            circle_4fc0136c9c6b42aa9c24c39c76049c9c.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #49.1 | 6 listings | Huggy</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>90, Mount Pleasant Terrace, Nubian Square, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_01302c28bcc8428a93c30b49f53f692e = L.circleMarker(
+                [42.326605, -71.07988166666667],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_b34a5718638b4bbd8e62f16d5c7df2dc);
+        
+    
+            circle_marker_01302c28bcc8428a93c30b49f53f692e.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #49.1 | 6 listings | Huggy</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>90, Mount Pleasant Terrace, Nubian Square, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_c1db2cf28d3d4762a7b2e4a7f38b0088 = L.featureGroup(
+                {}
+            ).addTo(map_5ad19c52d99f44bb82c209c540a26f8b);
+        
+    
+            var feature_group_30fd716be71f465bb92dad47996eddfe = L.featureGroup(
+                {}
+            ).addTo(map_5ad19c52d99f44bb82c209c540a26f8b);
+        
+    
+            var circle_c6d80f1fa5eb4a8ea0f9cc9207bf2ccb = L.circle(
+                [42.32652, -71.0799],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_30fd716be71f465bb92dad47996eddfe);
+        
+    
+        var popup_b6eab143972a4d1ebb348654834abc79 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_5b474bc6a235439d8bb233ed0ae3445d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA0NDU5NzknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA0NDU5Nzk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_b6eab143972a4d1ebb348654834abc79.setContent(i_frame_5b474bc6a235439d8bb233ed0ae3445d);
+        
+
+        circle_c6d80f1fa5eb4a8ea0f9cc9207bf2ccb.bindPopup(popup_b6eab143972a4d1ebb348654834abc79)
+        ;
+
+        
+    
+    
+            circle_c6d80f1fa5eb4a8ea0f9cc9207bf2ccb.bindTooltip(
+                `<div>
+                     
+            Huggy | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 20445979</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #49.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1f79dd887633465aa3e724bf3abbe80e = L.circle(
+                [42.3273, -71.07918000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_30fd716be71f465bb92dad47996eddfe);
+        
+    
+        var popup_ca124e4ce64c4491943f0c858131228a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_7d76f9f4fa8a45fb8fcc2656aabd8c6c = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA2ODc4MDInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA2ODc4MDI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_ca124e4ce64c4491943f0c858131228a.setContent(i_frame_7d76f9f4fa8a45fb8fcc2656aabd8c6c);
+        
+
+        circle_1f79dd887633465aa3e724bf3abbe80e.bindPopup(popup_ca124e4ce64c4491943f0c858131228a)
+        ;
+
+        
+    
+    
+            circle_1f79dd887633465aa3e724bf3abbe80e.bindTooltip(
+                `<div>
+                     
+            Huggy | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 20687802</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #49.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2680b6bc391e4fb49042615c24e9b523 = L.circle(
+                [42.32591, -71.07934],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_30fd716be71f465bb92dad47996eddfe);
+        
+    
+        var popup_79c7d60812e24d9c88d2cecd9f8ff136 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_7cb8053e939c4263a284976c42ad74df = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjEyNTM1NjQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjEyNTM1NjQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_79c7d60812e24d9c88d2cecd9f8ff136.setContent(i_frame_7cb8053e939c4263a284976c42ad74df);
+        
+
+        circle_2680b6bc391e4fb49042615c24e9b523.bindPopup(popup_79c7d60812e24d9c88d2cecd9f8ff136)
+        ;
+
+        
+    
+    
+            circle_2680b6bc391e4fb49042615c24e9b523.bindTooltip(
+                `<div>
+                     
+            Huggy | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 21253564</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #49.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f441f77b9e7a4bf1a9b58fc22ef41946 = L.circle(
+                [42.32707, -71.07964],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_30fd716be71f465bb92dad47996eddfe);
+        
+    
+        var popup_c342b32fadbb40e1a95c195e58abb1d6 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d0ac9c9d775e42b681ef35e66f15d8e1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjE1OTc4NzgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjE1OTc4Nzg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_c342b32fadbb40e1a95c195e58abb1d6.setContent(i_frame_d0ac9c9d775e42b681ef35e66f15d8e1);
+        
+
+        circle_f441f77b9e7a4bf1a9b58fc22ef41946.bindPopup(popup_c342b32fadbb40e1a95c195e58abb1d6)
+        ;
+
+        
+    
+    
+            circle_f441f77b9e7a4bf1a9b58fc22ef41946.bindTooltip(
+                `<div>
+                     
+            Huggy | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 21597878</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #49.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e4781d22ca6049f1acfea12cc23a6239 = L.circle(
+                [42.32646, -71.08006],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_30fd716be71f465bb92dad47996eddfe);
+        
+    
+        var popup_610756df24f84b06a419c2471d6a5db0 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_f23605cdf27d47f5acf83421fc155f89 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjMyNTE5MTAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjMyNTE5MTA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_610756df24f84b06a419c2471d6a5db0.setContent(i_frame_f23605cdf27d47f5acf83421fc155f89);
+        
+
+        circle_e4781d22ca6049f1acfea12cc23a6239.bindPopup(popup_610756df24f84b06a419c2471d6a5db0)
+        ;
+
+        
+    
+    
+            circle_e4781d22ca6049f1acfea12cc23a6239.bindTooltip(
+                `<div>
+                     
+            Huggy | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 23251910</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #49.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_00989692495e4529928856dd20c78713 = L.circle(
+                [42.32637, -71.08117],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_30fd716be71f465bb92dad47996eddfe);
+        
+    
+        var popup_427a5c37f2fb402e96dad50becc26947 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_4cee1d149b5944498dc2743365248aae = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjMzMTExMjMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjMzMTExMjM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_427a5c37f2fb402e96dad50becc26947.setContent(i_frame_4cee1d149b5944498dc2743365248aae);
+        
+
+        circle_00989692495e4529928856dd20c78713.bindPopup(popup_427a5c37f2fb402e96dad50becc26947)
+        ;
+
+        
+    
+    
+            circle_00989692495e4529928856dd20c78713.bindTooltip(
+                `<div>
+                     
+            Huggy | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 23311123</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #49.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_2ecf540c31684a8b8e4a067a0b2a8195 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_c1db2cf28d3d4762a7b2e4a7f38b0088,
+                },
+            };
+            L.control.layers(
+                layer_control_2ecf540c31684a8b8e4a067a0b2a8195.base_layers,
+                layer_control_2ecf540c31684a8b8e4a067a0b2a8195.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_5ad19c52d99f44bb82c209c540a26f8b);
+            feature_group_c1db2cf28d3d4762a7b2e4a7f38b0088.remove();
+        
+</script>

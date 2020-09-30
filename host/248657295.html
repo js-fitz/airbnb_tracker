@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4aac1b29c9dd496497656b99d6c7788b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Shahnaz</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        8 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>8</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>92, Auckland Street, Savin Hill, South Boston</b>
+                    <span style='color:black'>(8 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 300 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_4aac1b29c9dd496497656b99d6c7788b" ></div>
+        
+</body>
+<script>    
+    
+            var map_4aac1b29c9dd496497656b99d6c7788b = L.map(
+                "map_4aac1b29c9dd496497656b99d6c7788b",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b851f0c2c72d49baa1e3613834a2aafe = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_4aac1b29c9dd496497656b99d6c7788b);
+        
+    
+            var feature_group_5225d0dbcf164e3784e59f247eb398d7 = L.featureGroup(
+                {}
+            ).addTo(map_4aac1b29c9dd496497656b99d6c7788b);
+        
+    
+            var circle_7ee19203e1634a41b72ac1a9f3ccd0f2 = L.circle(
+                [42.31159875, -71.056175],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 95.7072, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5225d0dbcf164e3784e59f247eb398d7);
+        
+    
+            circle_7ee19203e1634a41b72ac1a9f3ccd0f2.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #36.1 | 8 listings | Shahnaz</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (8 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (8 listings)</li></ul>
+            <span style='color:#0D47A1;'>92, Auckland Street, Savin Hill, South Boston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3005d28259df4a41b78ab46123c59c2c = L.circleMarker(
+                [42.31159875, -71.056175],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_5225d0dbcf164e3784e59f247eb398d7);
+        
+    
+            circle_marker_3005d28259df4a41b78ab46123c59c2c.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #36.1 | 8 listings | Shahnaz</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (8 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (8 listings)</li></ul>
+            <span style='color:#0D47A1;'>92, Auckland Street, Savin Hill, South Boston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_295a85beeb114f368de1c65dbc4866d1 = L.featureGroup(
+                {}
+            ).addTo(map_4aac1b29c9dd496497656b99d6c7788b);
+        
+    
+            var feature_group_b2a77614210f4c6d9f3994c08b8aa5f9 = L.featureGroup(
+                {}
+            ).addTo(map_4aac1b29c9dd496497656b99d6c7788b);
+        
+    
+            var circle_03d5a9107785413cabeb316009113cb1 = L.circle(
+                [42.31222, -71.05646],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_b1ad37b42ca44e1a964502feb6f36a86 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_4e9f755c02354d7a9dad02d1c5764e40 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMwMzg2MjMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMwMzg2MjM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_b1ad37b42ca44e1a964502feb6f36a86.setContent(i_frame_4e9f755c02354d7a9dad02d1c5764e40);
+        
+
+        circle_03d5a9107785413cabeb316009113cb1.bindPopup(popup_b1ad37b42ca44e1a964502feb6f36a86)
+        ;
+
+        
+    
+    
+            circle_03d5a9107785413cabeb316009113cb1.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33038623</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1144d18c467142eda410655e2a728cde = L.circle(
+                [42.31233, -71.05575],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_448b9a16829c464aaf6b41cc26624e41 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_3f23743f89784175a31c8c0d7192d506 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzMTc2MjEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzMTc2MjE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_448b9a16829c464aaf6b41cc26624e41.setContent(i_frame_3f23743f89784175a31c8c0d7192d506);
+        
+
+        circle_1144d18c467142eda410655e2a728cde.bindPopup(popup_448b9a16829c464aaf6b41cc26624e41)
+        ;
+
+        
+    
+    
+            circle_1144d18c467142eda410655e2a728cde.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33317621</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cf21945b9db14b5cba9d4b1291f6dbc9 = L.circle(
+                [42.31085, -71.05542],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_53516e844f4d4d8eb7822f2ba79029b0 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_cfdc69d663504997858242ad3862e481 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzMTgzOTInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzMTgzOTI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_53516e844f4d4d8eb7822f2ba79029b0.setContent(i_frame_cfdc69d663504997858242ad3862e481);
+        
+
+        circle_cf21945b9db14b5cba9d4b1291f6dbc9.bindPopup(popup_53516e844f4d4d8eb7822f2ba79029b0)
+        ;
+
+        
+    
+    
+            circle_cf21945b9db14b5cba9d4b1291f6dbc9.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33318392</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_bf7acba5b646412ea4794447c3ced282 = L.circle(
+                [42.31132, -71.05715],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_8fc73827d96b4cc3983c84522ca2c8b7 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_ece3cbacb666433babb1bccd9d2fecc3 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzMTk3NzQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzMTk3NzQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_8fc73827d96b4cc3983c84522ca2c8b7.setContent(i_frame_ece3cbacb666433babb1bccd9d2fecc3);
+        
+
+        circle_bf7acba5b646412ea4794447c3ced282.bindPopup(popup_8fc73827d96b4cc3983c84522ca2c8b7)
+        ;
+
+        
+    
+    
+            circle_bf7acba5b646412ea4794447c3ced282.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33319774</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a2d01a3247e34d3285bde22dc5c755c4 = L.circle(
+                [42.31222, -71.0557],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_02cfa601dc394efd948c40443323b653 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_922fd20e4d7f4db892ac844d37649ccf = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNDc4NjAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNDc4NjA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_02cfa601dc394efd948c40443323b653.setContent(i_frame_922fd20e4d7f4db892ac844d37649ccf);
+        
+
+        circle_a2d01a3247e34d3285bde22dc5c755c4.bindPopup(popup_02cfa601dc394efd948c40443323b653)
+        ;
+
+        
+    
+    
+            circle_a2d01a3247e34d3285bde22dc5c755c4.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33347860</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_30341c3faba34a1392c722fedc63fd8f = L.circle(
+                [42.31053, -71.05656],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_b4aacc6c6cfb4c1f8d9441d4fa9a6e80 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_6c1c91b6f1cb421ba3a158367418f85c = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNDg1ODUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNDg1ODU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_b4aacc6c6cfb4c1f8d9441d4fa9a6e80.setContent(i_frame_6c1c91b6f1cb421ba3a158367418f85c);
+        
+
+        circle_30341c3faba34a1392c722fedc63fd8f.bindPopup(popup_b4aacc6c6cfb4c1f8d9441d4fa9a6e80)
+        ;
+
+        
+    
+    
+            circle_30341c3faba34a1392c722fedc63fd8f.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33348585</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_813bc3207c5a441db846821262cf2fe8 = L.circle(
+                [42.3125, -71.05556],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_c31339c2b4b144e8868eb4cc3a8f57c7 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_cdf190f3369646c095a10ec772914975 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNTA5MjInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNTA5MjI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_c31339c2b4b144e8868eb4cc3a8f57c7.setContent(i_frame_cdf190f3369646c095a10ec772914975);
+        
+
+        circle_813bc3207c5a441db846821262cf2fe8.bindPopup(popup_c31339c2b4b144e8868eb4cc3a8f57c7)
+        ;
+
+        
+    
+    
+            circle_813bc3207c5a441db846821262cf2fe8.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33350922</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6143a1d4060f46c2a1179ce2c69135ab = L.circle(
+                [42.31082, -71.0568],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b2a77614210f4c6d9f3994c08b8aa5f9);
+        
+    
+        var popup_478841b2e79647faad64e3fcc4e37fa4 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_f8d4324214b94a4fa1fb84fac278e131 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNTEyNjEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzMzNTEyNjE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_478841b2e79647faad64e3fcc4e37fa4.setContent(i_frame_f8d4324214b94a4fa1fb84fac278e131);
+        
+
+        circle_6143a1d4060f46c2a1179ce2c69135ab.bindPopup(popup_478841b2e79647faad64e3fcc4e37fa4)
+        ;
+
+        
+    
+    
+            circle_6143a1d4060f46c2a1179ce2c69135ab.bindTooltip(
+                `<div>
+                     
+            Shahnaz | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 33351261</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #36.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_b4fbc0e6ccd84529ac6f1293f0bd6eda = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_295a85beeb114f368de1c65dbc4866d1,
+                },
+            };
+            L.control.layers(
+                layer_control_b4fbc0e6ccd84529ac6f1293f0bd6eda.base_layers,
+                layer_control_b4fbc0e6ccd84529ac6f1293f0bd6eda.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_4aac1b29c9dd496497656b99d6c7788b);
+            feature_group_295a85beeb114f368de1c65dbc4866d1.remove();
+        
+</script>

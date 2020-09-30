@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e2caa06f5e064d588717dd2529a844e3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Vitanur</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#E65100; margin-right:3px;"></i>
+                        6 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#E65100; margin-right:3px"></i>
+                Not verified - <b>6</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>1, Mark Street, Roxbury</b>
+                    <span style='color:black'>(6 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 250 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_e2caa06f5e064d588717dd2529a844e3" ></div>
+        
+</body>
+<script>    
+    
+            var map_e2caa06f5e064d588717dd2529a844e3 = L.map(
+                "map_e2caa06f5e064d588717dd2529a844e3",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_38d625d5accc486abb35cd2a0116a935 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e2caa06f5e064d588717dd2529a844e3);
+        
+    
+            var feature_group_367968ca224645319118758e34881d46 = L.featureGroup(
+                {}
+            ).addTo(map_e2caa06f5e064d588717dd2529a844e3);
+        
+    
+            var circle_bfa2c4fc612a4f46a0b2b11467a959cc = L.circle(
+                [42.32283, -71.10940000000002],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 83.51520000000001, "stroke": true, "weight": 3}
+            ).addTo(feature_group_367968ca224645319118758e34881d46);
+        
+    
+            circle_bfa2c4fc612a4f46a0b2b11467a959cc.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #55.1 | 6 listings | Vitanur</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: executive suite (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>1, Mark Street, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9759779bef6e4f74a7ac892e6335c0ce = L.circleMarker(
+                [42.32283, -71.10940000000002],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_367968ca224645319118758e34881d46);
+        
+    
+            circle_marker_9759779bef6e4f74a7ac892e6335c0ce.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #55.1 | 6 listings | Vitanur</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: executive suite (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>1, Mark Street, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_548ac1c4ce984465affa7b961f62094d = L.featureGroup(
+                {}
+            ).addTo(map_e2caa06f5e064d588717dd2529a844e3);
+        
+    
+            var feature_group_73aef72ac9a64a368cc09e5f51f0e709 = L.featureGroup(
+                {}
+            ).addTo(map_e2caa06f5e064d588717dd2529a844e3);
+        
+    
+            var circle_410671904a0d441cb65e21f314321e73 = L.circle(
+                [42.32362, -71.1087],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73aef72ac9a64a368cc09e5f51f0e709);
+        
+    
+        var popup_5eb9161ba85e45959fa142a592244725 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0fd32c241ef24dcb8e3b00df1eb5dc4e = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODI4OTknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODI4OTk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_5eb9161ba85e45959fa142a592244725.setContent(i_frame_0fd32c241ef24dcb8e3b00df1eb5dc4e);
+        
+
+        circle_410671904a0d441cb65e21f314321e73.bindPopup(popup_5eb9161ba85e45959fa142a592244725)
+        ;
+
+        
+    
+    
+            circle_410671904a0d441cb65e21f314321e73.bindTooltip(
+                `<div>
+                     
+            Vitanur | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38382899</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #55.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_70a7ca77b70a48eea237db9f649cf0f7 = L.circle(
+                [42.32308, -71.10892],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73aef72ac9a64a368cc09e5f51f0e709);
+        
+    
+        var popup_0402b9c103ca4f0099b71d999ff5f8a9 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_61b6cbada2694f959ef8a360f5e87b03 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODQ4OTUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODQ4OTU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0402b9c103ca4f0099b71d999ff5f8a9.setContent(i_frame_61b6cbada2694f959ef8a360f5e87b03);
+        
+
+        circle_70a7ca77b70a48eea237db9f649cf0f7.bindPopup(popup_0402b9c103ca4f0099b71d999ff5f8a9)
+        ;
+
+        
+    
+    
+            circle_70a7ca77b70a48eea237db9f649cf0f7.bindTooltip(
+                `<div>
+                     
+            Vitanur | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38384895</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #55.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6a6acc4b7ef44aac904e5a41dbbc3f9c = L.circle(
+                [42.32354, -71.11],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73aef72ac9a64a368cc09e5f51f0e709);
+        
+    
+        var popup_a79791a5023d4e5dbf8ff08b63623907 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_80b1a9cdb10f47c383f5a10eb0828d29 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODUxNTcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODUxNTc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_a79791a5023d4e5dbf8ff08b63623907.setContent(i_frame_80b1a9cdb10f47c383f5a10eb0828d29);
+        
+
+        circle_6a6acc4b7ef44aac904e5a41dbbc3f9c.bindPopup(popup_a79791a5023d4e5dbf8ff08b63623907)
+        ;
+
+        
+    
+    
+            circle_6a6acc4b7ef44aac904e5a41dbbc3f9c.bindTooltip(
+                `<div>
+                     
+            Vitanur | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38385157</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #55.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_054656e8341a472b904182a8d4ef94fc = L.circle(
+                [42.32189, -71.10998000000002],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73aef72ac9a64a368cc09e5f51f0e709);
+        
+    
+        var popup_c2b89153a3d345f0be2dff825471bd58 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_78ec3b1c87a545d29431e96558a6b70d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODUzMDAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODUzMDA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_c2b89153a3d345f0be2dff825471bd58.setContent(i_frame_78ec3b1c87a545d29431e96558a6b70d);
+        
+
+        circle_054656e8341a472b904182a8d4ef94fc.bindPopup(popup_c2b89153a3d345f0be2dff825471bd58)
+        ;
+
+        
+    
+    
+            circle_054656e8341a472b904182a8d4ef94fc.bindTooltip(
+                `<div>
+                     
+            Vitanur | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38385300</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #55.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3ab02682fd424be6b2dc65a96b474c75 = L.circle(
+                [42.32254, -71.11004],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73aef72ac9a64a368cc09e5f51f0e709);
+        
+    
+        var popup_5d00b42c50ac4012b3938073306fd7b1 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_fa51ab2c96c1474d95f4e09845aa6856 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODU1MTMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzODU1MTM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_5d00b42c50ac4012b3938073306fd7b1.setContent(i_frame_fa51ab2c96c1474d95f4e09845aa6856);
+        
+
+        circle_3ab02682fd424be6b2dc65a96b474c75.bindPopup(popup_5d00b42c50ac4012b3938073306fd7b1)
+        ;
+
+        
+    
+    
+            circle_3ab02682fd424be6b2dc65a96b474c75.bindTooltip(
+                `<div>
+                     
+            Vitanur | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38385513</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #55.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8664586c802c4bb2b04151048fa9284d = L.circle(
+                [42.32231, -71.10876],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73aef72ac9a64a368cc09e5f51f0e709);
+        
+    
+        var popup_6d24f048c70a4c48957a767d39825dbe = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_da1063baa684474fb6a1b6f076d60828 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDI0MDQ4MTgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDI0MDQ4MTg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6d24f048c70a4c48957a767d39825dbe.setContent(i_frame_da1063baa684474fb6a1b6f076d60828);
+        
+
+        circle_8664586c802c4bb2b04151048fa9284d.bindPopup(popup_6d24f048c70a4c48957a767d39825dbe)
+        ;
+
+        
+    
+    
+            circle_8664586c802c4bb2b04151048fa9284d.bindTooltip(
+                `<div>
+                     
+            Vitanur | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 42404818</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #55.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_47c53c05f1ad448db89880462c8a5844 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_548ac1c4ce984465affa7b961f62094d,
+                },
+            };
+            L.control.layers(
+                layer_control_47c53c05f1ad448db89880462c8a5844.base_layers,
+                layer_control_47c53c05f1ad448db89880462c8a5844.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_e2caa06f5e064d588717dd2529a844e3);
+            feature_group_548ac1c4ce984465affa7b961f62094d.remove();
+        
+</script>

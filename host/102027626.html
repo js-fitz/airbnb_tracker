@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_87ca6b42f9694fb08b0319107d6bc272 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Eddie & Nayeli</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        6 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+                Active - <b>6</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>65, Welles Avenue, Dorchester Center, Dorchester</b>
+                    <span style='color:black'>(6 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 250 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_87ca6b42f9694fb08b0319107d6bc272" ></div>
+        
+</body>
+<script>    
+    
+            var map_87ca6b42f9694fb08b0319107d6bc272 = L.map(
+                "map_87ca6b42f9694fb08b0319107d6bc272",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a2c7ea7d6c6449e5a7beb169669e23ac = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_87ca6b42f9694fb08b0319107d6bc272);
+        
+    
+            var feature_group_37671a69676848f9a5701bfdb164218e = L.featureGroup(
+                {}
+            ).addTo(map_87ca6b42f9694fb08b0319107d6bc272);
+        
+    
+            var circle_53ddd8fa57cb427c9ba89b53696fccf9 = L.circle(
+                [42.28868, -71.06809666666666],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 73.4568, "stroke": true, "weight": 3}
+            ).addTo(feature_group_37671a69676848f9a5701bfdb164218e);
+        
+    
+            circle_53ddd8fa57cb427c9ba89b53696fccf9.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #131.1 | 6 listings | Eddie & Nayeli</b> 
+            </span>
+            <br><b>Licenses (multiple):</b><ul style='margin:0'><li>398049 (3 listings) </li><li>386945 (3 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>65, Welles Avenue, Dorchester Center, Dorchester</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7661db4ae74643fbb63a0ed7dfca88d2 = L.circleMarker(
+                [42.28868, -71.06809666666666],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_37671a69676848f9a5701bfdb164218e);
+        
+    
+            circle_marker_7661db4ae74643fbb63a0ed7dfca88d2.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #131.1 | 6 listings | Eddie & Nayeli</b> 
+            </span>
+            <br><b>Licenses (multiple):</b><ul style='margin:0'><li>398049 (3 listings) </li><li>386945 (3 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>65, Welles Avenue, Dorchester Center, Dorchester</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_a4c635770e3f4b2285dcc293c4f2129c = L.featureGroup(
+                {}
+            ).addTo(map_87ca6b42f9694fb08b0319107d6bc272);
+        
+    
+            var feature_group_ad9a860cea80475b8d848dcdd01ba97b = L.featureGroup(
+                {}
+            ).addTo(map_87ca6b42f9694fb08b0319107d6bc272);
+        
+    
+            var circle_8c58f3e24d5147389aa80abc0f92e392 = L.circle(
+                [42.28901, -71.06819],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad9a860cea80475b8d848dcdd01ba97b);
+        
+    
+        var popup_fc86c00d280b4a29be48c4a280ac414b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_8756dff3f8a6483fbf5ada561606b55b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTczMDAzMTYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTczMDAzMTY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_fc86c00d280b4a29be48c4a280ac414b.setContent(i_frame_8756dff3f8a6483fbf5ada561606b55b);
+        
+
+        circle_8c58f3e24d5147389aa80abc0f92e392.bindPopup(popup_fc86c00d280b4a29be48c4a280ac414b)
+        ;
+
+        
+    
+    
+            circle_8c58f3e24d5147389aa80abc0f92e392.bindTooltip(
+                `<div>
+                     
+            Eddie & Nayeli | License: <span style="color:#2E7D32">386945</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 17300316</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #131.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8afdc4582c55412ca99e22d0c2dfd90d = L.circle(
+                [42.28901, -71.06819],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad9a860cea80475b8d848dcdd01ba97b);
+        
+    
+        var popup_1e2a85184ea64d52a91c343857c34958 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a2954b44d77b4bb396999dae0a622a27 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTc4MTAxNzYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTc4MTAxNzY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1e2a85184ea64d52a91c343857c34958.setContent(i_frame_a2954b44d77b4bb396999dae0a622a27);
+        
+
+        circle_8afdc4582c55412ca99e22d0c2dfd90d.bindPopup(popup_1e2a85184ea64d52a91c343857c34958)
+        ;
+
+        
+    
+    
+            circle_8afdc4582c55412ca99e22d0c2dfd90d.bindTooltip(
+                `<div>
+                     
+            Eddie & Nayeli | License: <span style="color:#2E7D32">386945</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 17810176</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #131.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_80338f271ba74c8488ef4af157ccec20 = L.circle(
+                [42.28798, -71.06854],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad9a860cea80475b8d848dcdd01ba97b);
+        
+    
+        var popup_be9587435eec439099d1aee70302811e = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_8d5c25e645eb4f2b80cbeb85d121d150 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI4OTQ1MTYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI4OTQ1MTY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_be9587435eec439099d1aee70302811e.setContent(i_frame_8d5c25e645eb4f2b80cbeb85d121d150);
+        
+
+        circle_80338f271ba74c8488ef4af157ccec20.bindPopup(popup_be9587435eec439099d1aee70302811e)
+        ;
+
+        
+    
+    
+            circle_80338f271ba74c8488ef4af157ccec20.bindTooltip(
+                `<div>
+                     
+            Eddie & Nayeli | License: <span style="color:#2E7D32">398049</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 32894516</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #131.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_632b5b811a894566b00323f0fd926f89 = L.circle(
+                [42.28817, -71.06854],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad9a860cea80475b8d848dcdd01ba97b);
+        
+    
+        var popup_39e1ba4897e7476b98757ea00702f881 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_90cf63e8623d43249d834d46f4614355 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI4OTU5MTUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI4OTU5MTU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_39e1ba4897e7476b98757ea00702f881.setContent(i_frame_90cf63e8623d43249d834d46f4614355);
+        
+
+        circle_632b5b811a894566b00323f0fd926f89.bindPopup(popup_39e1ba4897e7476b98757ea00702f881)
+        ;
+
+        
+    
+    
+            circle_632b5b811a894566b00323f0fd926f89.bindTooltip(
+                `<div>
+                     
+            Eddie & Nayeli | License: <span style="color:#2E7D32">398049</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 32895915</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #131.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_eb505ff071b640f39a5030f835d485aa = L.circle(
+                [42.28809, -71.06764],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad9a860cea80475b8d848dcdd01ba97b);
+        
+    
+        var popup_6d24dc055e644796827e5f934bcbf2d5 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_dbfc5e1f18b0470fb76583ce11cb4c25 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzQ0MjIyNzYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzQ0MjIyNzY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6d24dc055e644796827e5f934bcbf2d5.setContent(i_frame_dbfc5e1f18b0470fb76583ce11cb4c25);
+        
+
+        circle_eb505ff071b640f39a5030f835d485aa.bindPopup(popup_6d24dc055e644796827e5f934bcbf2d5)
+        ;
+
+        
+    
+    
+            circle_eb505ff071b640f39a5030f835d485aa.bindTooltip(
+                `<div>
+                     
+            Eddie & Nayeli | License: <span style="color:#2E7D32">386945</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 34422276</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #131.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7608d23c8de547d5a6be8375cdb5a228 = L.circle(
+                [42.28982, -71.06748],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ad9a860cea80475b8d848dcdd01ba97b);
+        
+    
+        var popup_28231af8b7dc4524bdfdff0acb3e86a3 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_62c02ff687c944ba915eda986a74c613 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk4OTM3MzgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk4OTM3Mzg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_28231af8b7dc4524bdfdff0acb3e86a3.setContent(i_frame_62c02ff687c944ba915eda986a74c613);
+        
+
+        circle_7608d23c8de547d5a6be8375cdb5a228.bindPopup(popup_28231af8b7dc4524bdfdff0acb3e86a3)
+        ;
+
+        
+    
+    
+            circle_7608d23c8de547d5a6be8375cdb5a228.bindTooltip(
+                `<div>
+                     
+            Eddie & Nayeli | License: <span style="color:#2E7D32">398049</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 39893738</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #131.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_00bd147adc7c485c9574d3fa2eb76f80 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_a4c635770e3f4b2285dcc293c4f2129c,
+                },
+            };
+            L.control.layers(
+                layer_control_00bd147adc7c485c9574d3fa2eb76f80.base_layers,
+                layer_control_00bd147adc7c485c9574d3fa2eb76f80.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_87ca6b42f9694fb08b0319107d6bc272);
+            feature_group_a4c635770e3f4b2285dcc293c4f2129c.remove();
+        
+</script>

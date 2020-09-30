@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1f2c7b5ea7364c79a516cfd7c3e3a800 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Copley</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+                        6 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#E65100; margin-right:3px"></i>
+                Not verified - <b>6</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>90, Saint Botolph Street, Back Bay</b>
+                    <span style='color:black'>(6 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 250 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>118 Huntington Av</li><li style='margin:2px 0;'>99 Saint Botolph St</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_1f2c7b5ea7364c79a516cfd7c3e3a800" ></div>
+        
+</body>
+<script>    
+    
+            var map_1f2c7b5ea7364c79a516cfd7c3e3a800 = L.map(
+                "map_1f2c7b5ea7364c79a516cfd7c3e3a800",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_31dbac378ec447759570e2f441d82163 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1f2c7b5ea7364c79a516cfd7c3e3a800);
+        
+    
+            var feature_group_5973b9a6b95d433aa5957b56fb2f0f71 = L.featureGroup(
+                {}
+            ).addTo(map_1f2c7b5ea7364c79a516cfd7c3e3a800);
+        
+    
+            var circle_da4596b13bc94b3f926a5eafc0685b0e = L.circle(
+                [42.345118333333346, -71.080415],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 80.4672, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5973b9a6b95d433aa5957b56fb2f0f71);
+        
+    
+            circle_da4596b13bc94b3f926a5eafc0685b0e.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #45.1 | 6 listings | Copley</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hotel/motel (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>90, Saint Botolph Street, Back Bay</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_e9cb0c98cd7348b391348a7a70f438d8 = L.circleMarker(
+                [42.345118333333346, -71.080415],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_5973b9a6b95d433aa5957b56fb2f0f71);
+        
+    
+            circle_marker_e9cb0c98cd7348b391348a7a70f438d8.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #45.1 | 6 listings | Copley</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hotel/motel (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>90, Saint Botolph Street, Back Bay</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_670f6d449ea7488db9dfe3ac179cf900 = L.featureGroup(
+                {}
+            ).addTo(map_1f2c7b5ea7364c79a516cfd7c3e3a800);
+        
+    
+            var marker_15b0949565aa471890d8482b3b938905 = L.marker(
+                [42.3460992, -71.0802793],
+                {"opacity": 0.7}
+            ).addTo(feature_group_670f6d449ea7488db9dfe3ac179cf900);
+        
+    
+            var icon_087130a8982c4d8ca10e643bce5811bb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_15b0949565aa471890d8482b3b938905.setIcon(icon_087130a8982c4d8ca10e643bce5811bb);
+        
+    
+            marker_15b0949565aa471890d8482b3b938905.bindTooltip(
+                `<div>
+                     118 Huntington Av, Boston MA 02116</b><br>Units: nan | Floors: 20.0 | Source: RichCorpSS<br><b>Hosts: </b>Oakwood Worldwide
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5bb8917a55044cccb9d9551ccca9df15 = L.marker(
+                [42.345032, -71.080845],
+                {"opacity": 0.7}
+            ).addTo(feature_group_670f6d449ea7488db9dfe3ac179cf900);
+        
+    
+            var icon_286e0626ffb143e28ca45dc95fca5ac3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_5bb8917a55044cccb9d9551ccca9df15.setIcon(icon_286e0626ffb143e28ca45dc95fca5ac3);
+        
+    
+            marker_5bb8917a55044cccb9d9551ccca9df15.bindTooltip(
+                `<div>
+                     99 Saint Botolph St, Boston MA 02116</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Seamless Transitions
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_983312b2cc7c45ccb08ab7cdc0c9d368 = L.featureGroup(
+                {}
+            ).addTo(map_1f2c7b5ea7364c79a516cfd7c3e3a800);
+        
+    
+            var circle_1b3205c7bd3b4122976c6344c6026ba2 = L.circle(
+                [42.34558, -71.0793],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_983312b2cc7c45ccb08ab7cdc0c9d368);
+        
+    
+        var popup_cc25c4b934a6474c8289a8bb30fd30db = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_119a4d2a3d8b4f8fbec061adcbaf0c1d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjIxOTUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjIxOTU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_cc25c4b934a6474c8289a8bb30fd30db.setContent(i_frame_119a4d2a3d8b4f8fbec061adcbaf0c1d);
+        
+
+        circle_1b3205c7bd3b4122976c6344c6026ba2.bindPopup(popup_cc25c4b934a6474c8289a8bb30fd30db)
+        ;
+
+        
+    
+    
+            circle_1b3205c7bd3b4122976c6344c6026ba2.bindTooltip(
+                `<div>
+                     
+            Copley | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 22195</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #45.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d086fc8d29e84cdb8567605f50d6e5f9 = L.circle(
+                [42.34571, -71.08135],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_983312b2cc7c45ccb08ab7cdc0c9d368);
+        
+    
+        var popup_ed5374fb7e994ef5b71cfc01ded9233c = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a954c0eef8c54290a3c511fb164cf8bb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjk5ODI0MjknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjk5ODI0Mjk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_ed5374fb7e994ef5b71cfc01ded9233c.setContent(i_frame_a954c0eef8c54290a3c511fb164cf8bb);
+        
+
+        circle_d086fc8d29e84cdb8567605f50d6e5f9.bindPopup(popup_ed5374fb7e994ef5b71cfc01ded9233c)
+        ;
+
+        
+    
+    
+            circle_d086fc8d29e84cdb8567605f50d6e5f9.bindTooltip(
+                `<div>
+                     
+            Copley | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 29982429</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #45.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ecc98abcb13746b3be1881d76ebd3ef4 = L.circle(
+                [42.34459, -71.08019],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_983312b2cc7c45ccb08ab7cdc0c9d368);
+        
+    
+        var popup_1da27c3680b54c5b91e8c8c48b8b5c8f = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_96a6fc9cfcbc4132a15c33453151d321 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzAxMDQzOTYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzAxMDQzOTY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1da27c3680b54c5b91e8c8c48b8b5c8f.setContent(i_frame_96a6fc9cfcbc4132a15c33453151d321);
+        
+
+        circle_ecc98abcb13746b3be1881d76ebd3ef4.bindPopup(popup_1da27c3680b54c5b91e8c8c48b8b5c8f)
+        ;
+
+        
+    
+    
+            circle_ecc98abcb13746b3be1881d76ebd3ef4.bindTooltip(
+                `<div>
+                     
+            Copley | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 30104396</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #45.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4fbe43a46cc842788baf2cf763652123 = L.circle(
+                [42.34459, -71.08019],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_983312b2cc7c45ccb08ab7cdc0c9d368);
+        
+    
+        var popup_fc37623981054d6993128a453177bcc9 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_72519f51d69e4c79b44209059c0c8793 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzU5MTUwNDcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzU5MTUwNDc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_fc37623981054d6993128a453177bcc9.setContent(i_frame_72519f51d69e4c79b44209059c0c8793);
+        
+
+        circle_4fbe43a46cc842788baf2cf763652123.bindPopup(popup_fc37623981054d6993128a453177bcc9)
+        ;
+
+        
+    
+    
+            circle_4fbe43a46cc842788baf2cf763652123.bindTooltip(
+                `<div>
+                     
+            Copley | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 35915047</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #45.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0a2815fbf9b44a439bfa9817c7ba316b = L.circle(
+                [42.34565, -71.08126999999998],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_983312b2cc7c45ccb08ab7cdc0c9d368);
+        
+    
+        var popup_68402de8ed4f4404be3c23c8980a76a1 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_f809b20080084a2c9e477e12c3deef9f = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzU5MTUyMDcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzU5MTUyMDc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_68402de8ed4f4404be3c23c8980a76a1.setContent(i_frame_f809b20080084a2c9e477e12c3deef9f);
+        
+
+        circle_0a2815fbf9b44a439bfa9817c7ba316b.bindPopup(popup_68402de8ed4f4404be3c23c8980a76a1)
+        ;
+
+        
+    
+    
+            circle_0a2815fbf9b44a439bfa9817c7ba316b.bindTooltip(
+                `<div>
+                     
+            Copley | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 35915207</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #45.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3d6429be1bf34ab39afcbf4adc26865a = L.circle(
+                [42.34459, -71.08019],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_983312b2cc7c45ccb08ab7cdc0c9d368);
+        
+    
+        var popup_898767f1134b471a9c44155b18390d63 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0864b2ffc87944e9a22ade15af35daa5 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzU5MTYxOTYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzU5MTYxOTY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_898767f1134b471a9c44155b18390d63.setContent(i_frame_0864b2ffc87944e9a22ade15af35daa5);
+        
+
+        circle_3d6429be1bf34ab39afcbf4adc26865a.bindPopup(popup_898767f1134b471a9c44155b18390d63)
+        ;
+
+        
+    
+    
+            circle_3d6429be1bf34ab39afcbf4adc26865a.bindTooltip(
+                `<div>
+                     
+            Copley | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 35916196</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #45.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_931835284c1748478ace057cf423a6a8 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_670f6d449ea7488db9dfe3ac179cf900,
+                },
+            };
+            L.control.layers(
+                layer_control_931835284c1748478ace057cf423a6a8.base_layers,
+                layer_control_931835284c1748478ace057cf423a6a8.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_1f2c7b5ea7364c79a516cfd7c3e3a800);
+            feature_group_670f6d449ea7488db9dfe3ac179cf900.remove();
+        
+</script>

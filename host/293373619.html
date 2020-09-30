@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c9a0a0ee168c4aaa9832e5c18b829a9b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Jihane</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        10 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>10</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>99, Chestnut Hill Avenue, Aberdeen, Brighton</b>
+                    <span style='color:black'>(10 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 350 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>30 Wallingford Rd</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_c9a0a0ee168c4aaa9832e5c18b829a9b" ></div>
+        
+</body>
+<script>    
+    
+            var map_c9a0a0ee168c4aaa9832e5c18b829a9b = L.map(
+                "map_c9a0a0ee168c4aaa9832e5c18b829a9b",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_557d4807c46f4c53be235c26ebc80647 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_c9a0a0ee168c4aaa9832e5c18b829a9b);
+        
+    
+            var feature_group_f8e15e61fa514c44b8efa2723452661e = L.featureGroup(
+                {}
+            ).addTo(map_c9a0a0ee168c4aaa9832e5c18b829a9b);
+        
+    
+            var circle_3073b72344f4410083ff8039ab86e849 = L.circle(
+                [42.34342600000001, -71.153566],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 104.5464, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f8e15e61fa514c44b8efa2723452661e);
+        
+    
+            circle_3073b72344f4410083ff8039ab86e849.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #21.1 | 10 listings | Jihane</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (10 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (10 listings)</li></ul>
+            <span style='color:#0D47A1;'>99, Chestnut Hill Avenue, Aberdeen, Brighton</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_53edd1cdda7442eb906cda891db24503 = L.circleMarker(
+                [42.34342600000001, -71.153566],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_f8e15e61fa514c44b8efa2723452661e);
+        
+    
+            circle_marker_53edd1cdda7442eb906cda891db24503.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #21.1 | 10 listings | Jihane</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (10 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (10 listings)</li></ul>
+            <span style='color:#0D47A1;'>99, Chestnut Hill Avenue, Aberdeen, Brighton</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_27f32fb652c04047b5a042c38efadd66 = L.featureGroup(
+                {}
+            ).addTo(map_c9a0a0ee168c4aaa9832e5c18b829a9b);
+        
+    
+            var marker_8e554a563ee647d99dd505215fc5b212 = L.marker(
+                [42.34197289999999, -71.1526497],
+                {"opacity": 0.7}
+            ).addTo(feature_group_27f32fb652c04047b5a042c38efadd66);
+        
+    
+            var icon_97aeca844ed64369b3fab3d3b444a98d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_8e554a563ee647d99dd505215fc5b212.setIcon(icon_97aeca844ed64369b3fab3d3b444a98d);
+        
+    
+            marker_8e554a563ee647d99dd505215fc5b212.bindTooltip(
+                `<div>
+                     30 Wallingford Rd, Brighton MA 02135</b><br>Units: nan | Floors: 10.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c = L.featureGroup(
+                {}
+            ).addTo(map_c9a0a0ee168c4aaa9832e5c18b829a9b);
+        
+    
+            var circle_03b25d0f6c134ee6bc701d13d544f981 = L.circle(
+                [42.34208, -71.15436],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_bf4a6e955fd548b8b19e37c3a3b55a7a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_55f7826ed0c34ff8ae26dc0b47b248ee = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg0Nzg0MjknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg0Nzg0Mjk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_bf4a6e955fd548b8b19e37c3a3b55a7a.setContent(i_frame_55f7826ed0c34ff8ae26dc0b47b248ee);
+        
+
+        circle_03b25d0f6c134ee6bc701d13d544f981.bindPopup(popup_bf4a6e955fd548b8b19e37c3a3b55a7a)
+        ;
+
+        
+    
+    
+            circle_03b25d0f6c134ee6bc701d13d544f981.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38478429</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4a3e99aa67cb4d69ab0a313f195d9538 = L.circle(
+                [42.34418, -71.1544],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_34a333eaa4234ec981b06159863200d6 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_8a5945f89af9422d86415754df747d3b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg4NDM4NjQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg4NDM4NjQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_34a333eaa4234ec981b06159863200d6.setContent(i_frame_8a5945f89af9422d86415754df747d3b);
+        
+
+        circle_4a3e99aa67cb4d69ab0a313f195d9538.bindPopup(popup_34a333eaa4234ec981b06159863200d6)
+        ;
+
+        
+    
+    
+            circle_4a3e99aa67cb4d69ab0a313f195d9538.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 38843864</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d8c5f67ac60545979ce0d31090f164f7 = L.circle(
+                [42.34251, -71.15373000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_819cf4ba9ccb41739674bb313324ebfb = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a23d9ba394cc44d2a93152791015d8ba = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDAyNTg5MDgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDAyNTg5MDg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_819cf4ba9ccb41739674bb313324ebfb.setContent(i_frame_a23d9ba394cc44d2a93152791015d8ba);
+        
+
+        circle_d8c5f67ac60545979ce0d31090f164f7.bindPopup(popup_819cf4ba9ccb41739674bb313324ebfb)
+        ;
+
+        
+    
+    
+            circle_d8c5f67ac60545979ce0d31090f164f7.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40258908</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_96d38fd7506c48808748859406580789 = L.circle(
+                [42.34202, -71.1538],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_535f149141e343179b9a5b75a33a6320 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_146b9120859e4c289535742f02cb673b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA0ODM0MTUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA0ODM0MTU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_535f149141e343179b9a5b75a33a6320.setContent(i_frame_146b9120859e4c289535742f02cb673b);
+        
+
+        circle_96d38fd7506c48808748859406580789.bindPopup(popup_535f149141e343179b9a5b75a33a6320)
+        ;
+
+        
+    
+    
+            circle_96d38fd7506c48808748859406580789.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40483415</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_23a9c99605614026823522480cb15d5d = L.circle(
+                [42.34405, -71.15406999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_1e508ecdefb34c94b16870a2b5cb685b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_2f009c52132042c780016a3f2e93acf2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA1NDAwMzgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA1NDAwMzg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1e508ecdefb34c94b16870a2b5cb685b.setContent(i_frame_2f009c52132042c780016a3f2e93acf2);
+        
+
+        circle_23a9c99605614026823522480cb15d5d.bindPopup(popup_1e508ecdefb34c94b16870a2b5cb685b)
+        ;
+
+        
+    
+    
+            circle_23a9c99605614026823522480cb15d5d.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40540038</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_04515f9c7f8c4fa99963d6a9aac17c10 = L.circle(
+                [42.34387, -71.15268],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_d659452215744bce9927f7dbdd3759c1 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_bb46b564660c453ab485ad22b6b25cae = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA5NzM3OTInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA5NzM3OTI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_d659452215744bce9927f7dbdd3759c1.setContent(i_frame_bb46b564660c453ab485ad22b6b25cae);
+        
+
+        circle_04515f9c7f8c4fa99963d6a9aac17c10.bindPopup(popup_d659452215744bce9927f7dbdd3759c1)
+        ;
+
+        
+    
+    
+            circle_04515f9c7f8c4fa99963d6a9aac17c10.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40973792</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_558d73d355ac4a1481a161180e4a65d4 = L.circle(
+                [42.34343, -71.15250999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_dd6282ee889c4e80a2be88790bc0f5fb = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_2ae39779a6054409816ab016c26a8320 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA5ODg1NTQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA5ODg1NTQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_dd6282ee889c4e80a2be88790bc0f5fb.setContent(i_frame_2ae39779a6054409816ab016c26a8320);
+        
+
+        circle_558d73d355ac4a1481a161180e4a65d4.bindPopup(popup_dd6282ee889c4e80a2be88790bc0f5fb)
+        ;
+
+        
+    
+    
+            circle_558d73d355ac4a1481a161180e4a65d4.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 40988554</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f379a73c757d4c91acf28abc311f87c5 = L.circle(
+                [42.34388, -71.15382],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_8a226f426f644ac9bb0db7e368fcfcc5 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_731422598bef4574b7536d571e45516b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE3NDUzOTUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE3NDUzOTU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_8a226f426f644ac9bb0db7e368fcfcc5.setContent(i_frame_731422598bef4574b7536d571e45516b);
+        
+
+        circle_f379a73c757d4c91acf28abc311f87c5.bindPopup(popup_8a226f426f644ac9bb0db7e368fcfcc5)
+        ;
+
+        
+    
+    
+            circle_f379a73c757d4c91acf28abc311f87c5.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 41745395</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_222751faf4904f6e9c0c59bd6779b192 = L.circle(
+                [42.34424, -71.15382],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_baded92dc37f4868bf873de34cb4852d = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_502bf3afd8ab4baaa0968a50841e69a2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzMDcyNjQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzMDcyNjQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_baded92dc37f4868bf873de34cb4852d.setContent(i_frame_502bf3afd8ab4baaa0968a50841e69a2);
+        
+
+        circle_222751faf4904f6e9c0c59bd6779b192.bindPopup(popup_baded92dc37f4868bf873de34cb4852d)
+        ;
+
+        
+    
+    
+            circle_222751faf4904f6e9c0c59bd6779b192.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 42307264</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_99d0eb3d06034e54b86adc0037fe8a43 = L.circle(
+                [42.344, -71.15247],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5fd41bbc8dbe44bb83fb4190d662bb1c);
+        
+    
+        var popup_a2d1c5e8a86945d49a93cd267b7a59a7 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_e88b44e4c12c4d629f885d1391e8c321 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDM2MTAzNzQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDM2MTAzNzQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_a2d1c5e8a86945d49a93cd267b7a59a7.setContent(i_frame_e88b44e4c12c4d629f885d1391e8c321);
+        
+
+        circle_99d0eb3d06034e54b86adc0037fe8a43.bindPopup(popup_a2d1c5e8a86945d49a93cd267b7a59a7)
+        ;
+
+        
+    
+    
+            circle_99d0eb3d06034e54b86adc0037fe8a43.bindTooltip(
+                `<div>
+                     
+            Jihane | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 43610374</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #21.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_4af96c93d4a94dfabdd3e7cf5dfae668 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_27f32fb652c04047b5a042c38efadd66,
+                },
+            };
+            L.control.layers(
+                layer_control_4af96c93d4a94dfabdd3e7cf5dfae668.base_layers,
+                layer_control_4af96c93d4a94dfabdd3e7cf5dfae668.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_c9a0a0ee168c4aaa9832e5c18b829a9b);
+            feature_group_27f32fb652c04047b5a042c38efadd66.remove();
+        
+</script>

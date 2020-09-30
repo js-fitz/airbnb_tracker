@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c538c458aff141dfad0d5a06aa5f3d69 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Henry</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#E65100; margin-right:3px;"></i>
+                        5 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#E65100; margin-right:3px"></i>
+                Not verified - <b>5</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>18;20, Shelby Street, Day Square, East Boston</b>
+                    <span style='color:black'>(5 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 300 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_c538c458aff141dfad0d5a06aa5f3d69" ></div>
+        
+</body>
+<script>    
+    
+            var map_c538c458aff141dfad0d5a06aa5f3d69 = L.map(
+                "map_c538c458aff141dfad0d5a06aa5f3d69",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_62496feedcec47708bb28999e7d831c2 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_c538c458aff141dfad0d5a06aa5f3d69);
+        
+    
+            var feature_group_c5a4e9c2298d455aacb4b4a2e0861821 = L.featureGroup(
+                {}
+            ).addTo(map_c538c458aff141dfad0d5a06aa5f3d69);
+        
+    
+            var circle_553b8c30fe64465994264ebd89e9e85e = L.circle(
+                [42.380628, -71.0278],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 96.3168, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c5a4e9c2298d455aacb4b4a2e0861821);
+        
+    
+            circle_553b8c30fe64465994264ebd89e9e85e.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #84.1 | 5 listings | Henry</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: executive suite (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>18;20, Shelby Street, Day Square, East Boston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3b2226b652614848bcd436292d6f3975 = L.circleMarker(
+                [42.380628, -71.0278],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_c5a4e9c2298d455aacb4b4a2e0861821);
+        
+    
+            circle_marker_3b2226b652614848bcd436292d6f3975.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #84.1 | 5 listings | Henry</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: executive suite (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>18;20, Shelby Street, Day Square, East Boston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_eca6ab390c7a4a55b9b095a2cb9f3a82 = L.featureGroup(
+                {}
+            ).addTo(map_c538c458aff141dfad0d5a06aa5f3d69);
+        
+    
+            var feature_group_f436588b6f8744958a0ea5a5b249ac4a = L.featureGroup(
+                {}
+            ).addTo(map_c538c458aff141dfad0d5a06aa5f3d69);
+        
+    
+            var circle_aa7ce1b548d4493f843e77f3a2cb6fed = L.circle(
+                [42.38019, -71.0272],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f436588b6f8744958a0ea5a5b249ac4a);
+        
+    
+        var popup_c305426df1164748a350691d00fbf7e5 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_58f41e30da1e4f4e98d8f095aa861503 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzYxNDMyODYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzYxNDMyODY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_c305426df1164748a350691d00fbf7e5.setContent(i_frame_58f41e30da1e4f4e98d8f095aa861503);
+        
+
+        circle_aa7ce1b548d4493f843e77f3a2cb6fed.bindPopup(popup_c305426df1164748a350691d00fbf7e5)
+        ;
+
+        
+    
+    
+            circle_aa7ce1b548d4493f843e77f3a2cb6fed.bindTooltip(
+                `<div>
+                     
+            Henry | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 36143286</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #84.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3881363f8beb41c7be375de90cdcaed8 = L.circle(
+                [42.37988, -71.02709],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f436588b6f8744958a0ea5a5b249ac4a);
+        
+    
+        var popup_849f4d8fa733428e86205575df1333ab = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_f68f2ca946d242f881ce8e66f9301771 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg5NDczMjEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg5NDczMjE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_849f4d8fa733428e86205575df1333ab.setContent(i_frame_f68f2ca946d242f881ce8e66f9301771);
+        
+
+        circle_3881363f8beb41c7be375de90cdcaed8.bindPopup(popup_849f4d8fa733428e86205575df1333ab)
+        ;
+
+        
+    
+    
+            circle_3881363f8beb41c7be375de90cdcaed8.bindTooltip(
+                `<div>
+                     
+            Henry | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38947321</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #84.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fbeb004d63ce4090a6d85fc3877a2b84 = L.circle(
+                [42.38057, -71.02713],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f436588b6f8744958a0ea5a5b249ac4a);
+        
+    
+        var popup_7018d1aa61e6434d892967b7468a3243 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_bb518b7f70b14d5abacdc3693271f032 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk4ODU2MzInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk4ODU2MzI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_7018d1aa61e6434d892967b7468a3243.setContent(i_frame_bb518b7f70b14d5abacdc3693271f032);
+        
+
+        circle_fbeb004d63ce4090a6d85fc3877a2b84.bindPopup(popup_7018d1aa61e6434d892967b7468a3243)
+        ;
+
+        
+    
+    
+            circle_fbeb004d63ce4090a6d85fc3877a2b84.bindTooltip(
+                `<div>
+                     
+            Henry | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 39885632</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #84.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a2c9f3024e644806a1d5b4dd00b13058 = L.circle(
+                [42.38207, -71.02904000000002],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f436588b6f8744958a0ea5a5b249ac4a);
+        
+    
+        var popup_f33589074eb045c1b87a467d69644bb2 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_6592b1055c3042ec88e70188ce68c05e = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDAzMjk5NTgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDAzMjk5NTg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_f33589074eb045c1b87a467d69644bb2.setContent(i_frame_6592b1055c3042ec88e70188ce68c05e);
+        
+
+        circle_a2c9f3024e644806a1d5b4dd00b13058.bindPopup(popup_f33589074eb045c1b87a467d69644bb2)
+        ;
+
+        
+    
+    
+            circle_a2c9f3024e644806a1d5b4dd00b13058.bindTooltip(
+                `<div>
+                     
+            Henry | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 40329958</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #84.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5fa2229fc04448ccb352a00a619da1b1 = L.circle(
+                [42.38043, -71.02854],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f436588b6f8744958a0ea5a5b249ac4a);
+        
+    
+        var popup_185dc463b2524526bbf556a36fa62d40 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0168211ee9cb406bb3735fe060379cb2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDEyMjg0MDcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDEyMjg0MDc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_185dc463b2524526bbf556a36fa62d40.setContent(i_frame_0168211ee9cb406bb3735fe060379cb2);
+        
+
+        circle_5fa2229fc04448ccb352a00a619da1b1.bindPopup(popup_185dc463b2524526bbf556a36fa62d40)
+        ;
+
+        
+    
+    
+            circle_5fa2229fc04448ccb352a00a619da1b1.bindTooltip(
+                `<div>
+                     
+            Henry | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 41228407</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #84.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_585f4c42046e4598bc830a415be036aa = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_eca6ab390c7a4a55b9b095a2cb9f3a82,
+                },
+            };
+            L.control.layers(
+                layer_control_585f4c42046e4598bc830a415be036aa.base_layers,
+                layer_control_585f4c42046e4598bc830a415be036aa.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_c538c458aff141dfad0d5a06aa5f3d69);
+            feature_group_eca6ab390c7a4a55b9b095a2cb9f3a82.remove();
+        
+</script>

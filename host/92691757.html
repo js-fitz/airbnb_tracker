@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_7d10a1e7133f42bc9ac30e450fbdd21e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Melissa</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        8 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+                Active - <b>8</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>44, Charles River Avenue, Waterfront, Charlestown</b>
+                    <span style='color:black'>(8 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 350 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>131-131A Beverly St</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_7d10a1e7133f42bc9ac30e450fbdd21e" ></div>
+        
+</body>
+<script>    
+    
+            var map_7d10a1e7133f42bc9ac30e450fbdd21e = L.map(
+                "map_7d10a1e7133f42bc9ac30e450fbdd21e",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f2d925c997c3451ba8f8d6884589d5d1 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_7d10a1e7133f42bc9ac30e450fbdd21e);
+        
+    
+            var feature_group_951d659bbd4f4dd6a3278c2d0772204a = L.featureGroup(
+                {}
+            ).addTo(map_7d10a1e7133f42bc9ac30e450fbdd21e);
+        
+    
+            var circle_4c55360b4eba48b8ac568cc039999847 = L.circle(
+                [42.37072375, -71.06086499999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 104.2416, "stroke": true, "weight": 3}
+            ).addTo(feature_group_951d659bbd4f4dd6a3278c2d0772204a);
+        
+    
+            circle_4c55360b4eba48b8ac568cc039999847.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #31.1 | 8 listings | Melissa</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>420570 (8 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (8 listings)</li></ul>
+            <span style='color:#0D47A1;'>44, Charles River Avenue, Waterfront, Charlestown</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_eddc19dcb12e4f4d9fb0809004c34152 = L.circleMarker(
+                [42.37072375, -71.06086499999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_951d659bbd4f4dd6a3278c2d0772204a);
+        
+    
+            circle_marker_eddc19dcb12e4f4d9fb0809004c34152.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #31.1 | 8 listings | Melissa</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>420570 (8 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (8 listings)</li></ul>
+            <span style='color:#0D47A1;'>44, Charles River Avenue, Waterfront, Charlestown</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_ab6df5df2b9240898f44fe0dd3e983b1 = L.featureGroup(
+                {}
+            ).addTo(map_7d10a1e7133f42bc9ac30e450fbdd21e);
+        
+    
+            var marker_2bd5c7283db84d24a222292574e99835 = L.marker(
+                [42.367028, -71.060084],
+                {"opacity": 0.7}
+            ).addTo(feature_group_ab6df5df2b9240898f44fe0dd3e983b1);
+        
+    
+            var icon_53883b4d64c349aebd50332595c3f7f7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_2bd5c7283db84d24a222292574e99835.setIcon(icon_53883b4d64c349aebd50332595c3f7f7);
+        
+    
+            marker_2bd5c7283db84d24a222292574e99835.bindTooltip(
+                `<div>
+                     131-131A Beverly St, Boston MA 02114</b><br>Units: nan | Floors: 15.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_b4917f3ff8714debafab2115b54b8b86 = L.featureGroup(
+                {}
+            ).addTo(map_7d10a1e7133f42bc9ac30e450fbdd21e);
+        
+    
+            var circle_161e722f561a4627a623a0cbf73096e1 = L.circle(
+                [42.36992, -71.06126],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_0e6b6bc0bd234fdf921e065772b037f1 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_2f1903e80d95419eb50002bd39baa1b5 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5MjgwODEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5MjgwODE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0e6b6bc0bd234fdf921e065772b037f1.setContent(i_frame_2f1903e80d95419eb50002bd39baa1b5);
+        
+
+        circle_161e722f561a4627a623a0cbf73096e1.bindPopup(popup_0e6b6bc0bd234fdf921e065772b037f1)
+        ;
+
+        
+    
+    
+            circle_161e722f561a4627a623a0cbf73096e1.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 14928081</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_205b8677b19f4959a31d8e4577050521 = L.circle(
+                [42.3715, -71.05983],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_08473888c4974431a7ceca686b40bd27 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_de3a17b7ff374b3bba451c67e09de559 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTAwODknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTAwODk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_08473888c4974431a7ceca686b40bd27.setContent(i_frame_de3a17b7ff374b3bba451c67e09de559);
+        
+
+        circle_205b8677b19f4959a31d8e4577050521.bindPopup(popup_08473888c4974431a7ceca686b40bd27)
+        ;
+
+        
+    
+    
+            circle_205b8677b19f4959a31d8e4577050521.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 14950089</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8ef03405eebb44d9b7e2a5c795288274 = L.circle(
+                [42.36993, -71.06139],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_6a57f62790e240f3a0bb57bde5db6bb9 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_41dd3284f0744c009c4bea87b07eef7d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTAzMjgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTAzMjg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6a57f62790e240f3a0bb57bde5db6bb9.setContent(i_frame_41dd3284f0744c009c4bea87b07eef7d);
+        
+
+        circle_8ef03405eebb44d9b7e2a5c795288274.bindPopup(popup_6a57f62790e240f3a0bb57bde5db6bb9)
+        ;
+
+        
+    
+    
+            circle_8ef03405eebb44d9b7e2a5c795288274.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 14950328</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c60dc7a2b291490d897df812702ccc01 = L.circle(
+                [42.37164, -71.06092],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_1be7c981860e4b6f94a8a6c70f61af21 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_dd681a440f374113baa7fe8b52fb6818 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTAzNzgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTAzNzg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1be7c981860e4b6f94a8a6c70f61af21.setContent(i_frame_dd681a440f374113baa7fe8b52fb6818);
+        
+
+        circle_c60dc7a2b291490d897df812702ccc01.bindPopup(popup_1be7c981860e4b6f94a8a6c70f61af21)
+        ;
+
+        
+    
+    
+            circle_c60dc7a2b291490d897df812702ccc01.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 14950378</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_36c62c9fe0d0452ca4a512af2d475265 = L.circle(
+                [42.37208, -71.06134],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_78d6eefe84c14af6bcda41e87fe938dc = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c4d61228f9304210a6cd7179f2ebcfe4 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTA0NzYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ5NTA0NzY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_78d6eefe84c14af6bcda41e87fe938dc.setContent(i_frame_c4d61228f9304210a6cd7179f2ebcfe4);
+        
+
+        circle_36c62c9fe0d0452ca4a512af2d475265.bindPopup(popup_78d6eefe84c14af6bcda41e87fe938dc)
+        ;
+
+        
+    
+    
+            circle_36c62c9fe0d0452ca4a512af2d475265.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 14950476</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3a1bb9cc2291483e8f72e286031665cd = L.circle(
+                [42.36992, -71.06161],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_7c3e73d6a7a7460f90436c0bfb5ffa90 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_09c29b0156d8486e9f69da0c94aa2c41 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI4MjY5ODUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI4MjY5ODU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_7c3e73d6a7a7460f90436c0bfb5ffa90.setContent(i_frame_09c29b0156d8486e9f69da0c94aa2c41);
+        
+
+        circle_3a1bb9cc2291483e8f72e286031665cd.bindPopup(popup_7c3e73d6a7a7460f90436c0bfb5ffa90)
+        ;
+
+        
+    
+    
+            circle_3a1bb9cc2291483e8f72e286031665cd.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 32826985</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8e8d5cab56a449fab8c280da6ecab7f1 = L.circle(
+                [42.37067, -71.05981],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_6dc1b8c89ec74d24b092ede4ccbef6c4 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_7a3af88a7e674349b3a1bcb773974a1a = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDAyODMzMTEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDAyODMzMTE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6dc1b8c89ec74d24b092ede4ccbef6c4.setContent(i_frame_7a3af88a7e674349b3a1bcb773974a1a);
+        
+
+        circle_8e8d5cab56a449fab8c280da6ecab7f1.bindPopup(popup_6dc1b8c89ec74d24b092ede4ccbef6c4)
+        ;
+
+        
+    
+    
+            circle_8e8d5cab56a449fab8c280da6ecab7f1.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 40283311</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ed611e7e465c4e6381947ce6c1cf9d01 = L.circle(
+                [42.37013, -71.06076],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4917f3ff8714debafab2115b54b8b86);
+        
+    
+        var popup_57a58548e53a48d68be5ceeccbd22ca1 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0ace25063d5c4fb6b6f0cc32ea0a2605 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIwNjUzMDQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIwNjUzMDQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_57a58548e53a48d68be5ceeccbd22ca1.setContent(i_frame_0ace25063d5c4fb6b6f0cc32ea0a2605);
+        
+
+        circle_ed611e7e465c4e6381947ce6c1cf9d01.bindPopup(popup_57a58548e53a48d68be5ceeccbd22ca1)
+        ;
+
+        
+    
+    
+            circle_ed611e7e465c4e6381947ce6c1cf9d01.bindTooltip(
+                `<div>
+                     
+            Melissa | License: <span style="color:#2E7D32">420570</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42065304</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #31.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_2d355dc1410c4ea493c3750bc87e2b91 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_ab6df5df2b9240898f44fe0dd3e983b1,
+                },
+            };
+            L.control.layers(
+                layer_control_2d355dc1410c4ea493c3750bc87e2b91.base_layers,
+                layer_control_2d355dc1410c4ea493c3750bc87e2b91.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_7d10a1e7133f42bc9ac30e450fbdd21e);
+            feature_group_ab6df5df2b9240898f44fe0dd3e983b1.remove();
+        
+</script>

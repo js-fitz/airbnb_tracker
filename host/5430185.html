@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fe29117f6e42419cbafa53362a5ca000 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Laura And Olivia</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+                        7 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#E65100; margin-right:3px"></i>
+                Not verified - <b>7</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>594, Tremont Street, Anthony C. Aveni Square, South End</b>
+                    <span style='color:black'>(7 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>unknown</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>2 Clarendon St</li><li style='margin:2px 0;'>33 Gray Street</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_fe29117f6e42419cbafa53362a5ca000" ></div>
+        
+</body>
+<script>    
+    
+            var map_fe29117f6e42419cbafa53362a5ca000 = L.map(
+                "map_fe29117f6e42419cbafa53362a5ca000",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_de8bbfb4af224992bf7e35631191d9ef = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_fe29117f6e42419cbafa53362a5ca000);
+        
+    
+            var feature_group_e67195bf5b244bc3b42aa2153e4c9666 = L.featureGroup(
+                {}
+            ).addTo(map_fe29117f6e42419cbafa53362a5ca000);
+        
+    
+            var circle_4805fee2a6214a5bb8f215a9b3a25ab5 = L.circle(
+                [42.34300714285714, -71.07307285714286],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 45.72, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e67195bf5b244bc3b42aa2153e4c9666);
+        
+    
+            circle_4805fee2a6214a5bb8f215a9b3a25ab5.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #42.1 | 7 listings | Laura And Olivia</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hotel/motel (7 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (7 listings)</li></ul>
+            <span style='color:#0D47A1;'>594, Tremont Street, Anthony C. Aveni Square, South End</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_af98db280d2a4078a62b81f0ef787cd5 = L.circleMarker(
+                [42.34300714285714, -71.07307285714286],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_e67195bf5b244bc3b42aa2153e4c9666);
+        
+    
+            circle_marker_af98db280d2a4078a62b81f0ef787cd5.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #42.1 | 7 listings | Laura And Olivia</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hotel/motel (7 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (7 listings)</li></ul>
+            <span style='color:#0D47A1;'>594, Tremont Street, Anthony C. Aveni Square, South End</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_f98c47faf35c475081b082dce6ba610a = L.featureGroup(
+                {}
+            ).addTo(map_fe29117f6e42419cbafa53362a5ca000);
+        
+    
+            var marker_1c9872e01b6e42e7a585f895166a36c5 = L.marker(
+                [42.3442481, -71.0724798],
+                {"opacity": 0.7}
+            ).addTo(feature_group_f98c47faf35c475081b082dce6ba610a);
+        
+    
+            var icon_1095ddf2ad9d49f0b93e8393ff7d1308 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_1c9872e01b6e42e7a585f895166a36c5.setIcon(icon_1095ddf2ad9d49f0b93e8393ff7d1308);
+        
+    
+            marker_1c9872e01b6e42e7a585f895166a36c5.bindTooltip(
+                `<div>
+                     2 Clarendon St, Boston MA 02116</b><br>Units: nan | Floors: 6.0 | Source: AirBPDBjn<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0bf0774f5efc434c8f54349ee95ed271 = L.marker(
+                [42.3456343, -71.0715745],
+                {"opacity": 0.7}
+            ).addTo(feature_group_f98c47faf35c475081b082dce6ba610a);
+        
+    
+            var icon_77d537a58b5e4b798a94fe127984b4f7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_0bf0774f5efc434c8f54349ee95ed271.setIcon(icon_77d537a58b5e4b798a94fe127984b4f7);
+        
+    
+            marker_0bf0774f5efc434c8f54349ee95ed271.bindTooltip(
+                `<div>
+                     33 Gray Street, Boston MA 02116</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Seamless Transitions
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_8c817910a6824f67a1399700a2c0dc98 = L.featureGroup(
+                {}
+            ).addTo(map_fe29117f6e42419cbafa53362a5ca000);
+        
+    
+            var circle_f377839825424fac8aabcd33c74a18ed = L.circle(
+                [42.34308, -71.07316],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_8db5f9b620d54bcf9f0f2c0da86b8d21 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_1127d6cabbff41e2807430366e25fc48 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvOTg5MTYzJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzk4OTE2MzwvYT4KICAgIDwvZGl2PgogICAg" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_8db5f9b620d54bcf9f0f2c0da86b8d21.setContent(i_frame_1127d6cabbff41e2807430366e25fc48);
+        
+
+        circle_f377839825424fac8aabcd33c74a18ed.bindPopup(popup_8db5f9b620d54bcf9f0f2c0da86b8d21)
+        ;
+
+        
+    
+    
+            circle_f377839825424fac8aabcd33c74a18ed.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 989163</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a4e32b1e850045d6a27cc890d4d4bb45 = L.circle(
+                [42.34294000000001, -71.07304],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_20d03e5c85704783bae06389dbc040ac = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_9e457efa24844c1a937a6a0e549bd893 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTI3NTQ5OCc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy8xMjc1NDk4PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_20d03e5c85704783bae06389dbc040ac.setContent(i_frame_9e457efa24844c1a937a6a0e549bd893);
+        
+
+        circle_a4e32b1e850045d6a27cc890d4d4bb45.bindPopup(popup_20d03e5c85704783bae06389dbc040ac)
+        ;
+
+        
+    
+    
+            circle_a4e32b1e850045d6a27cc890d4d4bb45.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 1275498</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_255ca830270a4518b650e7309ab69e9b = L.circle(
+                [42.34303, -71.07305],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_e77daacdcabb4638b65f49f48c03bfbf = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c576f7b79dad4194a85790b1fc96be72 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjIxNTc2Mic+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy8yMjE1NzYyPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_e77daacdcabb4638b65f49f48c03bfbf.setContent(i_frame_c576f7b79dad4194a85790b1fc96be72);
+        
+
+        circle_255ca830270a4518b650e7309ab69e9b.bindPopup(popup_e77daacdcabb4638b65f49f48c03bfbf)
+        ;
+
+        
+    
+    
+            circle_255ca830270a4518b650e7309ab69e9b.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 2215762</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0094473d5ea34153950dd832215e13d5 = L.circle(
+                [42.34309, -71.07316],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_7dac6d7744c04fdb921ee83bcade0c10 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_36591fe69e9a4ba0b62bb64bd6ddf737 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjQ5NTA0Nyc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy8yNDk1MDQ3PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_7dac6d7744c04fdb921ee83bcade0c10.setContent(i_frame_36591fe69e9a4ba0b62bb64bd6ddf737);
+        
+
+        circle_0094473d5ea34153950dd832215e13d5.bindPopup(popup_7dac6d7744c04fdb921ee83bcade0c10)
+        ;
+
+        
+    
+    
+            circle_0094473d5ea34153950dd832215e13d5.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 2495047</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_584a6fc9fed84df18c9efb2700b0fe3b = L.circle(
+                [42.34301, -71.07304],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_6516cb9589244642a0bb138e3cee6849 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c5729b164c304eff809d9caac8664a17 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDU2NjA5NSc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy80NTY2MDk1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6516cb9589244642a0bb138e3cee6849.setContent(i_frame_c5729b164c304eff809d9caac8664a17);
+        
+
+        circle_584a6fc9fed84df18c9efb2700b0fe3b.bindPopup(popup_6516cb9589244642a0bb138e3cee6849)
+        ;
+
+        
+    
+    
+            circle_584a6fc9fed84df18c9efb2700b0fe3b.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 4566095</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_49f3a7c85a3343c9bcf09ed8fae6c9b2 = L.circle(
+                [42.34299, -71.07305],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_8daec297b8344568af8cf7438814dc99 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_2b46ced7d40f46298782605cf822023d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvOTE0ODc4MSc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy85MTQ4NzgxPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_8daec297b8344568af8cf7438814dc99.setContent(i_frame_2b46ced7d40f46298782605cf822023d);
+        
+
+        circle_49f3a7c85a3343c9bcf09ed8fae6c9b2.bindPopup(popup_8daec297b8344568af8cf7438814dc99)
+        ;
+
+        
+    
+    
+            circle_49f3a7c85a3343c9bcf09ed8fae6c9b2.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 9148781</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_523df1ae91914ce1bb9c18c6ab2b242b = L.circle(
+                [42.34291, -71.07301],
+                {"bubblingMouseEvents": true, "color": "#FF8F00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_8c817910a6824f67a1399700a2c0dc98);
+        
+    
+        var popup_0308c1f350e44ded80c8a50189bf32ae = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_5019365a47a44709a0e5da1b71079474 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjY3Nzg3MTQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjY3Nzg3MTQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0308c1f350e44ded80c8a50189bf32ae.setContent(i_frame_5019365a47a44709a0e5da1b71079474);
+        
+
+        circle_523df1ae91914ce1bb9c18c6ab2b242b.bindPopup(popup_0308c1f350e44ded80c8a50189bf32ae)
+        ;
+
+        
+    
+    
+            circle_523df1ae91914ce1bb9c18c6ab2b242b.bindTooltip(
+                `<div>
+                     
+            Laura And Olivia | License: <span style="color:#FF8F00">Exemption claimed: hotel/motel</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#FF8F00; margin-right:3px;"></i>
+            <b>Listing 26778714</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #42.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_43804d86576a4ea3b41b896a2a49606c = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_f98c47faf35c475081b082dce6ba610a,
+                },
+            };
+            L.control.layers(
+                layer_control_43804d86576a4ea3b41b896a2a49606c.base_layers,
+                layer_control_43804d86576a4ea3b41b896a2a49606c.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_fe29117f6e42419cbafa53362a5ca000);
+            feature_group_f98c47faf35c475081b082dce6ba610a.remove();
+        
+</script>

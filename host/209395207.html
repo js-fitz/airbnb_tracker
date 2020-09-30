@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_496fe378e13e4e71a076d225810ba16d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Belkis</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        12 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>12</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>15, Egleston Street, Roxbury</b>
+                    <span style='color:black'>(12 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 350 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_496fe378e13e4e71a076d225810ba16d" ></div>
+        
+</body>
+<script>    
+    
+            var map_496fe378e13e4e71a076d225810ba16d = L.map(
+                "map_496fe378e13e4e71a076d225810ba16d",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_912f0e160b4d4bef94876d9cc1fd555a = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_496fe378e13e4e71a076d225810ba16d);
+        
+    
+            var feature_group_142c9901e24d42699fbdc0f0db37e323 = L.featureGroup(
+                {}
+            ).addTo(map_496fe378e13e4e71a076d225810ba16d);
+        
+    
+            var circle_8f601eaca24740ed96bede6805599bbb = L.circle(
+                [42.3146375, -71.1003241666667],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 103.632, "stroke": true, "weight": 3}
+            ).addTo(feature_group_142c9901e24d42699fbdc0f0db37e323);
+        
+    
+            circle_8f601eaca24740ed96bede6805599bbb.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #19.1 | 12 listings | Belkis</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (12 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (12 listings)</li></ul>
+            <span style='color:#0D47A1;'>15, Egleston Street, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_6d01c1d2b8e64ee2ab1a5dd8432a5cd6 = L.circleMarker(
+                [42.3146375, -71.1003241666667],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_142c9901e24d42699fbdc0f0db37e323);
+        
+    
+            circle_marker_6d01c1d2b8e64ee2ab1a5dd8432a5cd6.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #19.1 | 12 listings | Belkis</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (12 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (12 listings)</li></ul>
+            <span style='color:#0D47A1;'>15, Egleston Street, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_e8d390a697244c5aa2835e65ebe47596 = L.featureGroup(
+                {}
+            ).addTo(map_496fe378e13e4e71a076d225810ba16d);
+        
+    
+            var feature_group_246c2bd47321433e9244d76e15a4f17b = L.featureGroup(
+                {}
+            ).addTo(map_496fe378e13e4e71a076d225810ba16d);
+        
+    
+            var circle_0d023f5acf314d75ba9f052ce2636c56 = L.circle(
+                [42.31432, -71.10133],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_4e7568777ea34acd94d43eb51a95de01 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_14bb37891e61493fa6682ea7fa23d94d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc3MzQ1MjMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc3MzQ1MjM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_4e7568777ea34acd94d43eb51a95de01.setContent(i_frame_14bb37891e61493fa6682ea7fa23d94d);
+        
+
+        circle_0d023f5acf314d75ba9f052ce2636c56.bindPopup(popup_4e7568777ea34acd94d43eb51a95de01)
+        ;
+
+        
+    
+    
+            circle_0d023f5acf314d75ba9f052ce2636c56.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 27734523</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_768b30698c6d479fa01e8344a43ac347 = L.circle(
+                [42.31371, -71.1007],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_4361c0a31fe446378071ed5ec108a570 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c8d0f07261af40528200e31e9012ac3a = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc4NTQxMDknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc4NTQxMDk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_4361c0a31fe446378071ed5ec108a570.setContent(i_frame_c8d0f07261af40528200e31e9012ac3a);
+        
+
+        circle_768b30698c6d479fa01e8344a43ac347.bindPopup(popup_4361c0a31fe446378071ed5ec108a570)
+        ;
+
+        
+    
+    
+            circle_768b30698c6d479fa01e8344a43ac347.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 27854109</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_05f64d581f2a47f4a7d57e6a7281ff06 = L.circle(
+                [42.3135, -71.09928000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_475360392ea64a79820c8c20b19f70b4 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d3800c6362d5472ea44f30a6a472bea4 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjAyNDcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjAyNDc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_475360392ea64a79820c8c20b19f70b4.setContent(i_frame_d3800c6362d5472ea44f30a6a472bea4);
+        
+
+        circle_05f64d581f2a47f4a7d57e6a7281ff06.bindPopup(popup_475360392ea64a79820c8c20b19f70b4)
+        ;
+
+        
+    
+    
+            circle_05f64d581f2a47f4a7d57e6a7281ff06.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 27920247</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e2b619b9496f4aeea6a27b4c2a97cad8 = L.circle(
+                [42.31536, -71.09966999999997],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_6fe01efcfc3547eaad84e076e2900e8f = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_01b0ec3d4647480f8afddafc1cd1f74b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjA0MzMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjA0MzM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6fe01efcfc3547eaad84e076e2900e8f.setContent(i_frame_01b0ec3d4647480f8afddafc1cd1f74b);
+        
+
+        circle_e2b619b9496f4aeea6a27b4c2a97cad8.bindPopup(popup_6fe01efcfc3547eaad84e076e2900e8f)
+        ;
+
+        
+    
+    
+            circle_e2b619b9496f4aeea6a27b4c2a97cad8.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 27920433</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_86b4c21115d34b06bc05151c599097ff = L.circle(
+                [42.3155, -71.10068000000003],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_0ec8767de139418a942384c19190e0a7 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d52723aa690f48a899cad05793c8d3a9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjE1OTcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjE1OTc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0ec8767de139418a942384c19190e0a7.setContent(i_frame_d52723aa690f48a899cad05793c8d3a9);
+        
+
+        circle_86b4c21115d34b06bc05151c599097ff.bindPopup(popup_0ec8767de139418a942384c19190e0a7)
+        ;
+
+        
+    
+    
+            circle_86b4c21115d34b06bc05151c599097ff.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 27921597</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2f0ce3b01e394692b07c706fdf367212 = L.circle(
+                [42.3139, -71.09963],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_f9b71d3a95cd4f16bc06aca2f8f062c6 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_17171e7313c4422fbc941ff6d7761467 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjIzODcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjc5MjIzODc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_f9b71d3a95cd4f16bc06aca2f8f062c6.setContent(i_frame_17171e7313c4422fbc941ff6d7761467);
+        
+
+        circle_2f0ce3b01e394692b07c706fdf367212.bindPopup(popup_f9b71d3a95cd4f16bc06aca2f8f062c6)
+        ;
+
+        
+    
+    
+            circle_2f0ce3b01e394692b07c706fdf367212.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 27922387</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_86a4c95ec21c4220905a2ba8c06ac7f8 = L.circle(
+                [42.31555, -71.09971],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_020fe987c7314b9c860e27ef75bf0d38 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_923ca92320df4ea4a98a9704a04952e1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzY0Mzk5MjEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzY0Mzk5MjE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_020fe987c7314b9c860e27ef75bf0d38.setContent(i_frame_923ca92320df4ea4a98a9704a04952e1);
+        
+
+        circle_86a4c95ec21c4220905a2ba8c06ac7f8.bindPopup(popup_020fe987c7314b9c860e27ef75bf0d38)
+        ;
+
+        
+    
+    
+            circle_86a4c95ec21c4220905a2ba8c06ac7f8.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 36439921</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_546386146b8c434db1b39b2059545187 = L.circle(
+                [42.31379, -71.09924000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_de120ffcde7c45a7841fe39592d72fce = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_4ea36b228e5b4694982ba7ca040c05bf = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzc5MzExMzAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzc5MzExMzA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_de120ffcde7c45a7841fe39592d72fce.setContent(i_frame_4ea36b228e5b4694982ba7ca040c05bf);
+        
+
+        circle_546386146b8c434db1b39b2059545187.bindPopup(popup_de120ffcde7c45a7841fe39592d72fce)
+        ;
+
+        
+    
+    
+            circle_546386146b8c434db1b39b2059545187.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 37931130</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c80b9dd913e34560a83457b2de56c915 = L.circle(
+                [42.31441, -71.10113],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_68c4ceed0e6244c488f15f6dcc18b76b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_40c98319692e45b48180bbe4de3882e1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDEzNzc3MjQnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDEzNzc3MjQ8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_68c4ceed0e6244c488f15f6dcc18b76b.setContent(i_frame_40c98319692e45b48180bbe4de3882e1);
+        
+
+        circle_c80b9dd913e34560a83457b2de56c915.bindPopup(popup_68c4ceed0e6244c488f15f6dcc18b76b)
+        ;
+
+        
+    
+    
+            circle_c80b9dd913e34560a83457b2de56c915.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 41377724</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2e299295b42c4498b40f11f4da7aa989 = L.circle(
+                [42.31533, -71.0999],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_77d0247f23184adeac536ba03f16efd8 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_6457ff9858004da1bfd241cf6968b866 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE0MDUyMDknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE0MDUyMDk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_77d0247f23184adeac536ba03f16efd8.setContent(i_frame_6457ff9858004da1bfd241cf6968b866);
+        
+
+        circle_2e299295b42c4498b40f11f4da7aa989.bindPopup(popup_77d0247f23184adeac536ba03f16efd8)
+        ;
+
+        
+    
+    
+            circle_2e299295b42c4498b40f11f4da7aa989.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 41405209</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5663776078f143f293a3292fd6d7ebd1 = L.circle(
+                [42.31523, -71.10139000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_f5e8cc9d0a0245018f5ae76bd3146619 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_dd6d0020a4bd4b3c9fc55f217b50ec0f = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE0MDU0MTknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE0MDU0MTk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_f5e8cc9d0a0245018f5ae76bd3146619.setContent(i_frame_dd6d0020a4bd4b3c9fc55f217b50ec0f);
+        
+
+        circle_5663776078f143f293a3292fd6d7ebd1.bindPopup(popup_f5e8cc9d0a0245018f5ae76bd3146619)
+        ;
+
+        
+    
+    
+            circle_5663776078f143f293a3292fd6d7ebd1.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 41405419</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_37cacc00915c49efaa99d95b188c8da6 = L.circle(
+                [42.31505, -71.10123],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_246c2bd47321433e9244d76e15a4f17b);
+        
+    
+        var popup_af2474e9860b45c69cfcd022f585599b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_83610cc873f445a5a8ebcaa998f52154 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE0MDU1NTAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE0MDU1NTA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_af2474e9860b45c69cfcd022f585599b.setContent(i_frame_83610cc873f445a5a8ebcaa998f52154);
+        
+
+        circle_37cacc00915c49efaa99d95b188c8da6.bindPopup(popup_af2474e9860b45c69cfcd022f585599b)
+        ;
+
+        
+    
+    
+            circle_37cacc00915c49efaa99d95b188c8da6.bindTooltip(
+                `<div>
+                     
+            Belkis | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 41405550</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #19.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_69fb38bbd5d941e1890f603bc8ca217e = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_e8d390a697244c5aa2835e65ebe47596,
+                },
+            };
+            L.control.layers(
+                layer_control_69fb38bbd5d941e1890f603bc8ca217e.base_layers,
+                layer_control_69fb38bbd5d941e1890f603bc8ca217e.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_496fe378e13e4e71a076d225810ba16d);
+            feature_group_e8d390a697244c5aa2835e65ebe47596.remove();
+        
+</script>

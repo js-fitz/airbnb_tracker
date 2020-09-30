@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_587120cfbca843798294ca20363f837d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Marco</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        5 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+                Active - <b>5</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>11, Trull Street, Kane Square, Dorchester</b>
+                    <span style='color:black'>(5 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 250 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_587120cfbca843798294ca20363f837d" ></div>
+        
+</body>
+<script>    
+    
+            var map_587120cfbca843798294ca20363f837d = L.map(
+                "map_587120cfbca843798294ca20363f837d",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_606b7f77e4d147feb970c93eb4ef850e = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_587120cfbca843798294ca20363f837d);
+        
+    
+            var feature_group_234d0b4dad704f2abe44cdd7453e350f = L.featureGroup(
+                {}
+            ).addTo(map_587120cfbca843798294ca20363f837d);
+        
+    
+            var circle_94b6fa3a9080410aa0820842f1c9388c = L.circle(
+                [42.312721999999994, -71.065822],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 81.0768, "stroke": true, "weight": 3}
+            ).addTo(feature_group_234d0b4dad704f2abe44cdd7453e350f);
+        
+    
+            circle_94b6fa3a9080410aa0820842f1c9388c.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #78.1 | 5 listings | Marco</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>415977 (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>11, Trull Street, Kane Square, Dorchester</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_47dbd9effce3442885a3d92c2633a693 = L.circleMarker(
+                [42.312721999999994, -71.065822],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_234d0b4dad704f2abe44cdd7453e350f);
+        
+    
+            circle_marker_47dbd9effce3442885a3d92c2633a693.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #78.1 | 5 listings | Marco</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>415977 (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>11, Trull Street, Kane Square, Dorchester</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_f16fcd65be5e427ea9ad5627ae1f2db6 = L.featureGroup(
+                {}
+            ).addTo(map_587120cfbca843798294ca20363f837d);
+        
+    
+            var feature_group_7a48c7515e134616b6aa6f1d72ba183d = L.featureGroup(
+                {}
+            ).addTo(map_587120cfbca843798294ca20363f837d);
+        
+    
+            var circle_6be66747e15745cc976ebcb65fc8b7bc = L.circle(
+                [42.3123, -71.06555999999998],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7a48c7515e134616b6aa6f1d72ba183d);
+        
+    
+        var popup_b01f4bc41e0b4fff9187ec7e0c5e7006 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_7859b9166e0749ba9292a71af9ce27b2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIwNzQ4OTYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIwNzQ4OTY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_b01f4bc41e0b4fff9187ec7e0c5e7006.setContent(i_frame_7859b9166e0749ba9292a71af9ce27b2);
+        
+
+        circle_6be66747e15745cc976ebcb65fc8b7bc.bindPopup(popup_b01f4bc41e0b4fff9187ec7e0c5e7006)
+        ;
+
+        
+    
+    
+            circle_6be66747e15745cc976ebcb65fc8b7bc.bindTooltip(
+                `<div>
+                     
+            Marco | License: <span style="color:#2E7D32">415977</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42074896</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #78.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_52beac75d8114aa79829c98b3bd30f89 = L.circle(
+                [42.31263, -71.06506999999998],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7a48c7515e134616b6aa6f1d72ba183d);
+        
+    
+        var popup_6b72b1db2cee4ae79a978a5c02322069 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_7ae92d6f5e664e5d8136ecf14dd65d26 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjM4NjUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjM4NjU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_6b72b1db2cee4ae79a978a5c02322069.setContent(i_frame_7ae92d6f5e664e5d8136ecf14dd65d26);
+        
+
+        circle_52beac75d8114aa79829c98b3bd30f89.bindPopup(popup_6b72b1db2cee4ae79a978a5c02322069)
+        ;
+
+        
+    
+    
+            circle_52beac75d8114aa79829c98b3bd30f89.bindTooltip(
+                `<div>
+                     
+            Marco | License: <span style="color:#2E7D32">415977</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42363865</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #78.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9b5a2088ae934b72a88d1ce787227106 = L.circle(
+                [42.31273, -71.06555],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7a48c7515e134616b6aa6f1d72ba183d);
+        
+    
+        var popup_5d1f26a9db5840e6a59ff8d88441e802 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_cb9e5ee9c72b45b4ac3419f1e7739660 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjQwOTcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjQwOTc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_5d1f26a9db5840e6a59ff8d88441e802.setContent(i_frame_cb9e5ee9c72b45b4ac3419f1e7739660);
+        
+
+        circle_9b5a2088ae934b72a88d1ce787227106.bindPopup(popup_5d1f26a9db5840e6a59ff8d88441e802)
+        ;
+
+        
+    
+    
+            circle_9b5a2088ae934b72a88d1ce787227106.bindTooltip(
+                `<div>
+                     
+            Marco | License: <span style="color:#2E7D32">415977</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42364097</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #78.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_175e5b45d51a44d8a9d6f66ace109e4a = L.circle(
+                [42.31191, -71.06679],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7a48c7515e134616b6aa6f1d72ba183d);
+        
+    
+        var popup_068e8f0f31fb4bd18088751a9fcc678a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_e57621c8fedc4e27a592d5749fe1a86d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjQzMjMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjQzMjM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_068e8f0f31fb4bd18088751a9fcc678a.setContent(i_frame_e57621c8fedc4e27a592d5749fe1a86d);
+        
+
+        circle_175e5b45d51a44d8a9d6f66ace109e4a.bindPopup(popup_068e8f0f31fb4bd18088751a9fcc678a)
+        ;
+
+        
+    
+    
+            circle_175e5b45d51a44d8a9d6f66ace109e4a.bindTooltip(
+                `<div>
+                     
+            Marco | License: <span style="color:#2E7D32">415977</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42364323</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #78.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b633ec2a0aa94934accf2b518fbc1225 = L.circle(
+                [42.31404000000001, -71.06614],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7a48c7515e134616b6aa6f1d72ba183d);
+        
+    
+        var popup_1f6ec76fe2484b0c9a7646995128388a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_b85a53347ed741dfa00116666e08e472 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjQ0NjgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIzNjQ0Njg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1f6ec76fe2484b0c9a7646995128388a.setContent(i_frame_b85a53347ed741dfa00116666e08e472);
+        
+
+        circle_b633ec2a0aa94934accf2b518fbc1225.bindPopup(popup_1f6ec76fe2484b0c9a7646995128388a)
+        ;
+
+        
+    
+    
+            circle_b633ec2a0aa94934accf2b518fbc1225.bindTooltip(
+                `<div>
+                     
+            Marco | License: <span style="color:#2E7D32">415977</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42364468</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #78.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_b97ecf63b7c142f88f5c3092aef6a1fa = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_f16fcd65be5e427ea9ad5627ae1f2db6,
+                },
+            };
+            L.control.layers(
+                layer_control_b97ecf63b7c142f88f5c3092aef6a1fa.base_layers,
+                layer_control_b97ecf63b7c142f88f5c3092aef6a1fa.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_587120cfbca843798294ca20363f837d);
+            feature_group_f16fcd65be5e427ea9ad5627ae1f2db6.remove();
+        
+</script>

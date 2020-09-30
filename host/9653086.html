@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_658c3f060e124544aef220a6fc305e5f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Glenn</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        6 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>6</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>Jorge Hernandez Cultural Center, West Newton Street, South End</b>
+                    <span style='color:black'>(6 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 250 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>45 Worcester Street</li><li style='margin:2px 0;'>677 Tremont Street</li><li style='margin:2px 0;'>725-743 Tremont St</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_658c3f060e124544aef220a6fc305e5f" ></div>
+        
+</body>
+<script>    
+    
+            var map_658c3f060e124544aef220a6fc305e5f = L.map(
+                "map_658c3f060e124544aef220a6fc305e5f",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6816622f2f7e440089ee95cb8b9983b0 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_658c3f060e124544aef220a6fc305e5f);
+        
+    
+            var feature_group_a4d9d66a31944d2d9a08aa81aabe83bb = L.featureGroup(
+                {}
+            ).addTo(map_658c3f060e124544aef220a6fc305e5f);
+        
+    
+            var circle_b34c7b0fa6c64a839ba238ba36aee03f = L.circle(
+                [42.340918333333335, -71.07602833333333],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 77.724, "stroke": true, "weight": 3}
+            ).addTo(feature_group_a4d9d66a31944d2d9a08aa81aabe83bb);
+        
+    
+            circle_b34c7b0fa6c64a839ba238ba36aee03f.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #47.1 | 6 listings | Glenn</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>Jorge Hernandez Cultural Center, West Newton Street, South End</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a9d4897bffa54b93bb0e9d1d3ab40200 = L.circleMarker(
+                [42.340918333333335, -71.07602833333333],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_a4d9d66a31944d2d9a08aa81aabe83bb);
+        
+    
+            circle_marker_a9d4897bffa54b93bb0e9d1d3ab40200.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #47.1 | 6 listings | Glenn</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>Jorge Hernandez Cultural Center, West Newton Street, South End</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_1bcf34d66b2d49c2a7bef7a1f267980d = L.featureGroup(
+                {}
+            ).addTo(map_658c3f060e124544aef220a6fc305e5f);
+        
+    
+            var marker_ab7784ca1cea43379c7451b9c576bdad = L.marker(
+                [42.3388008, -71.07694830000001],
+                {"opacity": 0.7}
+            ).addTo(feature_group_1bcf34d66b2d49c2a7bef7a1f267980d);
+        
+    
+            var icon_b70c40ec36bf40bb87e4714319c08a43 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_ab7784ca1cea43379c7451b9c576bdad.setIcon(icon_b70c40ec36bf40bb87e4714319c08a43);
+        
+    
+            marker_ab7784ca1cea43379c7451b9c576bdad.bindTooltip(
+                `<div>
+                     45 Worcester Street, Boston MA 02118</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Seamless Transitions
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1a0d4e82e2dc4bb299bd60c051070241 = L.marker(
+                [42.3416617, -71.07641439999999],
+                {"opacity": 0.7}
+            ).addTo(feature_group_1bcf34d66b2d49c2a7bef7a1f267980d);
+        
+    
+            var icon_2ce04c5f6e0f4448b01ce1d10418b86b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_1a0d4e82e2dc4bb299bd60c051070241.setIcon(icon_2ce04c5f6e0f4448b01ce1d10418b86b);
+        
+    
+            marker_1a0d4e82e2dc4bb299bd60c051070241.bindTooltip(
+                `<div>
+                     <b>CAJ House<br>677 Tremont Street, Boston MA 02118</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Seamless Transitions
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6db02ab09f6f4fb29d1f3070a4d0b8ee = L.marker(
+                [42.3406976, -71.0789771],
+                {"opacity": 0.7}
+            ).addTo(feature_group_1bcf34d66b2d49c2a7bef7a1f267980d);
+        
+    
+            var icon_b0e0445c5bfe400d808bd4fde8866a0f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_6db02ab09f6f4fb29d1f3070a4d0b8ee.setIcon(icon_b0e0445c5bfe400d808bd4fde8866a0f);
+        
+    
+            marker_6db02ab09f6f4fb29d1f3070a4d0b8ee.bindTooltip(
+                `<div>
+                     725-743 Tremont St, Boston MA 02118</b><br>Units: nan | Floors: 7.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_c3f64937a65940cea9ee4867e5afb896 = L.featureGroup(
+                {}
+            ).addTo(map_658c3f060e124544aef220a6fc305e5f);
+        
+    
+            var circle_9c91ee67f1b2436fa23eb974d19558f8 = L.circle(
+                [42.34032, -71.07571999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c3f64937a65940cea9ee4867e5afb896);
+        
+    
+        var popup_f467fc306e074112a5d646e79a06cc74 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c45f9b4315c744ce867f1b25bffa89cb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjI5MjQ5NSc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy8yMjkyNDk1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_f467fc306e074112a5d646e79a06cc74.setContent(i_frame_c45f9b4315c744ce867f1b25bffa89cb);
+        
+
+        circle_9c91ee67f1b2436fa23eb974d19558f8.bindPopup(popup_f467fc306e074112a5d646e79a06cc74)
+        ;
+
+        
+    
+    
+            circle_9c91ee67f1b2436fa23eb974d19558f8.bindTooltip(
+                `<div>
+                     
+            Glenn | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 2292495</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #47.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_56a5712a6cbd4c55ab0d421589f0dec7 = L.circle(
+                [42.34067, -71.0769],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c3f64937a65940cea9ee4867e5afb896);
+        
+    
+        var popup_9edecae3d1284940b84e4fdc7e26dd54 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a33f653298094db69acd2b6fca5bcd43 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDI3ODA2Nyc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy80Mjc4MDY3PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_9edecae3d1284940b84e4fdc7e26dd54.setContent(i_frame_a33f653298094db69acd2b6fca5bcd43);
+        
+
+        circle_56a5712a6cbd4c55ab0d421589f0dec7.bindPopup(popup_9edecae3d1284940b84e4fdc7e26dd54)
+        ;
+
+        
+    
+    
+            circle_56a5712a6cbd4c55ab0d421589f0dec7.bindTooltip(
+                `<div>
+                     
+            Glenn | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 4278067</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #47.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fcfd46c57bf543218c96041bcb0afde5 = L.circle(
+                [42.34094, -71.07704],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c3f64937a65940cea9ee4867e5afb896);
+        
+    
+        var popup_069f5847e8464a08ae00a53e452c3c99 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_5e9fd3167f794ead850c0bc3d8ed6022 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDM2NDkyNSc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy80MzY0OTI1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_069f5847e8464a08ae00a53e452c3c99.setContent(i_frame_5e9fd3167f794ead850c0bc3d8ed6022);
+        
+
+        circle_fcfd46c57bf543218c96041bcb0afde5.bindPopup(popup_069f5847e8464a08ae00a53e452c3c99)
+        ;
+
+        
+    
+    
+            circle_fcfd46c57bf543218c96041bcb0afde5.bindTooltip(
+                `<div>
+                     
+            Glenn | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 4364925</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #47.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ade29c451811438ca51e5c2710792aa7 = L.circle(
+                [42.34128, -71.07607],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c3f64937a65940cea9ee4867e5afb896);
+        
+    
+        var popup_1c1b7573e0d34d7596bb2cccb499b484 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_9fec524876064a3f9bf89d400f352814 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDM2NDk4OSc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy80MzY0OTg5PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1c1b7573e0d34d7596bb2cccb499b484.setContent(i_frame_9fec524876064a3f9bf89d400f352814);
+        
+
+        circle_ade29c451811438ca51e5c2710792aa7.bindPopup(popup_1c1b7573e0d34d7596bb2cccb499b484)
+        ;
+
+        
+    
+    
+            circle_ade29c451811438ca51e5c2710792aa7.bindTooltip(
+                `<div>
+                     
+            Glenn | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 4364989</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #47.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fd009a60b0274f629aa64f59b94d092f = L.circle(
+                [42.34175, -71.07533000000002],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c3f64937a65940cea9ee4867e5afb896);
+        
+    
+        var popup_ef59a4c5a18740c8bf7e685e8a25c74b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a6545a36cd00431ca6589746beb1f815 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNjQyNjM2NCc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy82NDI2MzY0PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_ef59a4c5a18740c8bf7e685e8a25c74b.setContent(i_frame_a6545a36cd00431ca6589746beb1f815);
+        
+
+        circle_fd009a60b0274f629aa64f59b94d092f.bindPopup(popup_ef59a4c5a18740c8bf7e685e8a25c74b)
+        ;
+
+        
+    
+    
+            circle_fd009a60b0274f629aa64f59b94d092f.bindTooltip(
+                `<div>
+                     
+            Glenn | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 6426364</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #47.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cc00e6c8f0de497f84382e347a9bbcd6 = L.circle(
+                [42.34055, -71.07511],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c3f64937a65940cea9ee4867e5afb896);
+        
+    
+        var popup_3d113334a5bb4924b74d33160730d21e = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_557e4b76512e40d385189f300cf914e0 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNzU3NTA1Mic+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy83NTc1MDUyPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_3d113334a5bb4924b74d33160730d21e.setContent(i_frame_557e4b76512e40d385189f300cf914e0);
+        
+
+        circle_cc00e6c8f0de497f84382e347a9bbcd6.bindPopup(popup_3d113334a5bb4924b74d33160730d21e)
+        ;
+
+        
+    
+    
+            circle_cc00e6c8f0de497f84382e347a9bbcd6.bindTooltip(
+                `<div>
+                     
+            Glenn | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 7575052</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #47.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_e190f58e061f47d5852718622f160e4c = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_1bcf34d66b2d49c2a7bef7a1f267980d,
+                },
+            };
+            L.control.layers(
+                layer_control_e190f58e061f47d5852718622f160e4c.base_layers,
+                layer_control_e190f58e061f47d5852718622f160e4c.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_658c3f060e124544aef220a6fc305e5f);
+            feature_group_1bcf34d66b2d49c2a7bef7a1f267980d.remove();
+        
+</script>

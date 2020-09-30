@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9bb277da6fe9424a8f8ce4b8a4f667c7 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Eunice</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        6 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>6</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>35, Portsmouth Street, North Brighton, Allston</b>
+                    <span style='color:black'>(6 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 300 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_9bb277da6fe9424a8f8ce4b8a4f667c7" ></div>
+        
+</body>
+<script>    
+    
+            var map_9bb277da6fe9424a8f8ce4b8a4f667c7 = L.map(
+                "map_9bb277da6fe9424a8f8ce4b8a4f667c7",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a3ad27db628f4063b84c5b62f84e772e = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_9bb277da6fe9424a8f8ce4b8a4f667c7);
+        
+    
+            var feature_group_ea72b0e84e4740edb4b04d7e8d38a848 = L.featureGroup(
+                {}
+            ).addTo(map_9bb277da6fe9424a8f8ce4b8a4f667c7);
+        
+    
+            var circle_ba7895c4bc77456abba2150d57332f73 = L.circle(
+                [42.35966333333333, -71.14443833333333],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 98.7552, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ea72b0e84e4740edb4b04d7e8d38a848);
+        
+    
+            circle_ba7895c4bc77456abba2150d57332f73.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #54.1 | 6 listings | Eunice</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>35, Portsmouth Street, North Brighton, Allston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d369644829654ba38e0db1cf84b8b9e9 = L.circleMarker(
+                [42.35966333333333, -71.14443833333333],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_ea72b0e84e4740edb4b04d7e8d38a848);
+        
+    
+            circle_marker_d369644829654ba38e0db1cf84b8b9e9.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #54.1 | 6 listings | Eunice</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (6 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (6 listings)</li></ul>
+            <span style='color:#0D47A1;'>35, Portsmouth Street, North Brighton, Allston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_4f22bfb7051c45fc98636febd20ef586 = L.featureGroup(
+                {}
+            ).addTo(map_9bb277da6fe9424a8f8ce4b8a4f667c7);
+        
+    
+            var feature_group_73477cba77654287b90799c43dc41f73 = L.featureGroup(
+                {}
+            ).addTo(map_9bb277da6fe9424a8f8ce4b8a4f667c7);
+        
+    
+            var circle_2096b49f75424cecbeaef21ce179e928 = L.circle(
+                [42.35908, -71.14407],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73477cba77654287b90799c43dc41f73);
+        
+    
+        var popup_3ae5bbcffff34eb89583146af8410440 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_9db0b1da578948429dd7d20ef99f5415 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM0Nzg4NjgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM0Nzg4Njg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_3ae5bbcffff34eb89583146af8410440.setContent(i_frame_9db0b1da578948429dd7d20ef99f5415);
+        
+
+        circle_2096b49f75424cecbeaef21ce179e928.bindPopup(popup_3ae5bbcffff34eb89583146af8410440)
+        ;
+
+        
+    
+    
+            circle_2096b49f75424cecbeaef21ce179e928.bindTooltip(
+                `<div>
+                     
+            Eunice | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 13478868</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #54.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b0deeb68eaa449f58d985fd96278fbb9 = L.circle(
+                [42.35884, -71.14434],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73477cba77654287b90799c43dc41f73);
+        
+    
+        var popup_d5b95f3aa13342f68ae622afecb3abd3 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_e3db3a8f7824452eb0c9858ee8cc47a2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM1MTUxMTgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM1MTUxMTg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_d5b95f3aa13342f68ae622afecb3abd3.setContent(i_frame_e3db3a8f7824452eb0c9858ee8cc47a2);
+        
+
+        circle_b0deeb68eaa449f58d985fd96278fbb9.bindPopup(popup_d5b95f3aa13342f68ae622afecb3abd3)
+        ;
+
+        
+    
+    
+            circle_b0deeb68eaa449f58d985fd96278fbb9.bindTooltip(
+                `<div>
+                     
+            Eunice | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 13515118</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #54.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5786015ab00749e7a9b2c97edda6654a = L.circle(
+                [42.35891, -71.14401],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73477cba77654287b90799c43dc41f73);
+        
+    
+        var popup_670d72eb5b5e4211977c315ff83bda8d = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_3adb6d4da9924a76b6eed1868a8dfcd1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM2NTY5NjknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM2NTY5Njk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_670d72eb5b5e4211977c315ff83bda8d.setContent(i_frame_3adb6d4da9924a76b6eed1868a8dfcd1);
+        
+
+        circle_5786015ab00749e7a9b2c97edda6654a.bindPopup(popup_670d72eb5b5e4211977c315ff83bda8d)
+        ;
+
+        
+    
+    
+            circle_5786015ab00749e7a9b2c97edda6654a.bindTooltip(
+                `<div>
+                     
+            Eunice | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 13656969</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #54.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2a12bc0008174ec4a54ef64c5b4cc4d9 = L.circle(
+                [42.35972, -71.1455],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73477cba77654287b90799c43dc41f73);
+        
+    
+        var popup_bae7cb6ad3a847ce8d97481495d546f9 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_600bb34d2add465aaee81098d63aaa48 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM2ODQzMTknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM2ODQzMTk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_bae7cb6ad3a847ce8d97481495d546f9.setContent(i_frame_600bb34d2add465aaee81098d63aaa48);
+        
+
+        circle_2a12bc0008174ec4a54ef64c5b4cc4d9.bindPopup(popup_bae7cb6ad3a847ce8d97481495d546f9)
+        ;
+
+        
+    
+    
+            circle_2a12bc0008174ec4a54ef64c5b4cc4d9.bindTooltip(
+                `<div>
+                     
+            Eunice | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 13684319</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #54.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1c2db489604743a3a21984c29aca824a = L.circle(
+                [42.36051, -71.1449],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73477cba77654287b90799c43dc41f73);
+        
+    
+        var popup_23be190497824c4c97fd2794eac507c7 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d45774428c714876881f546840a67525 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM3MTkyMjcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTM3MTkyMjc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_23be190497824c4c97fd2794eac507c7.setContent(i_frame_d45774428c714876881f546840a67525);
+        
+
+        circle_1c2db489604743a3a21984c29aca824a.bindPopup(popup_23be190497824c4c97fd2794eac507c7)
+        ;
+
+        
+    
+    
+            circle_1c2db489604743a3a21984c29aca824a.bindTooltip(
+                `<div>
+                     
+            Eunice | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 13719227</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #54.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6b0f0a1ec83e4cd2b60128a132669d31 = L.circle(
+                [42.36092, -71.14381],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_73477cba77654287b90799c43dc41f73);
+        
+    
+        var popup_0a35f6db7b6b4e519141cc3f4f548134 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_4c055dd80fce499393ee5fa5394d1df9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjUwNzkyMTInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjUwNzkyMTI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0a35f6db7b6b4e519141cc3f4f548134.setContent(i_frame_4c055dd80fce499393ee5fa5394d1df9);
+        
+
+        circle_6b0f0a1ec83e4cd2b60128a132669d31.bindPopup(popup_0a35f6db7b6b4e519141cc3f4f548134)
+        ;
+
+        
+    
+    
+            circle_6b0f0a1ec83e4cd2b60128a132669d31.bindTooltip(
+                `<div>
+                     
+            Eunice | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 25079212</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #54.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_61328c378db7461888f4cd748cd38bb4 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_4f22bfb7051c45fc98636febd20ef586,
+                },
+            };
+            L.control.layers(
+                layer_control_61328c378db7461888f4cd748cd38bb4.base_layers,
+                layer_control_61328c378db7461888f4cd748cd38bb4.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_9bb277da6fe9424a8f8ce4b8a4f667c7);
+            feature_group_4f22bfb7051c45fc98636febd20ef586.remove();
+        
+</script>

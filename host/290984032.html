@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e856011660aa473382e588fe6a9be4d1 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Turana</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#E65100; margin-right:3px;"></i>
+                        9 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#E65100; margin-right:3px"></i>
+                Not verified - <b>9</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>10, Greylock Road, Allston</b>
+                    <span style='color:black'>(9 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 200 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>15 N Beacon St</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_e856011660aa473382e588fe6a9be4d1" ></div>
+        
+</body>
+<script>    
+    
+            var map_e856011660aa473382e588fe6a9be4d1 = L.map(
+                "map_e856011660aa473382e588fe6a9be4d1",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_9564dfb580f84368ba16f902d065f51a = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e856011660aa473382e588fe6a9be4d1);
+        
+    
+            var feature_group_3e3fb15247914025b8b8b7ab61c165db = L.featureGroup(
+                {}
+            ).addTo(map_e856011660aa473382e588fe6a9be4d1);
+        
+    
+            var circle_7d48962d61c04aefb081e35d1f2f90c2 = L.circle(
+                [42.35072333333333, -71.1352411111111],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 59.7408, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3e3fb15247914025b8b8b7ab61c165db);
+        
+    
+            circle_7d48962d61c04aefb081e35d1f2f90c2.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #26.1 | 9 listings | Turana</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: executive suite (9 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (9 listings)</li></ul>
+            <span style='color:#0D47A1;'>10, Greylock Road, Allston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4b2fe9cfb8954951a1b8f1d4e43c36a3 = L.circleMarker(
+                [42.35072333333333, -71.1352411111111],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_3e3fb15247914025b8b8b7ab61c165db);
+        
+    
+            circle_marker_4b2fe9cfb8954951a1b8f1d4e43c36a3.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #26.1 | 9 listings | Turana</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: executive suite (9 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (9 listings)</li></ul>
+            <span style='color:#0D47A1;'>10, Greylock Road, Allston</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_c16e7b2aba3049cbb9b70cdca98a9c02 = L.featureGroup(
+                {}
+            ).addTo(map_e856011660aa473382e588fe6a9be4d1);
+        
+    
+            var marker_e27e6076d545411f8c3d7fe55fa4d27d = L.marker(
+                [42.3541397, -71.1379353],
+                {"opacity": 0.7}
+            ).addTo(feature_group_c16e7b2aba3049cbb9b70cdca98a9c02);
+        
+    
+            var icon_e46d1d148f554459b6e7ac8a2b6500fd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_e27e6076d545411f8c3d7fe55fa4d27d.setIcon(icon_e46d1d148f554459b6e7ac8a2b6500fd);
+        
+    
+            marker_e27e6076d545411f8c3d7fe55fa4d27d.bindTooltip(
+                `<div>
+                     15 N Beacon St, Allston MA 02134</b><br>Units: nan | Floors: 11.0 | Source: AirBPDBjn<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_0f50142fc772457f8cddcefb9cbfba01 = L.featureGroup(
+                {}
+            ).addTo(map_e856011660aa473382e588fe6a9be4d1);
+        
+    
+            var circle_0183bd9cb9a44738afbe412dd51635c1 = L.circle(
+                [42.35093, -71.13467],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_a5a4b7a92a6c4f28b45333b8c560f5a3 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_3534e59a63c34dfd80ae721d8743acea = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgyNzkxMDMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgyNzkxMDM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_a5a4b7a92a6c4f28b45333b8c560f5a3.setContent(i_frame_3534e59a63c34dfd80ae721d8743acea);
+        
+
+        circle_0183bd9cb9a44738afbe412dd51635c1.bindPopup(popup_a5a4b7a92a6c4f28b45333b8c560f5a3)
+        ;
+
+        
+    
+    
+            circle_0183bd9cb9a44738afbe412dd51635c1.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38279103</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1c441d99cdee46178c63355e2417c18b = L.circle(
+                [42.3505, -71.13538],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_2088a2644549448b814c6edf97f3fb2f = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_5e09889717224243869a81f30b88c735 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzOTEzNjUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzOTEzNjU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_2088a2644549448b814c6edf97f3fb2f.setContent(i_frame_5e09889717224243869a81f30b88c735);
+        
+
+        circle_1c441d99cdee46178c63355e2417c18b.bindPopup(popup_2088a2644549448b814c6edf97f3fb2f)
+        ;
+
+        
+    
+    
+            circle_1c441d99cdee46178c63355e2417c18b.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38391365</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d7485248e66d426a9669fc1f1e250135 = L.circle(
+                [42.35133, -71.13465],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_891c57e487414261aff71b9c1fa81e2b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_9ae6edefd4964cb9a9dc1424434e4ffb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzOTE1MDcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgzOTE1MDc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_891c57e487414261aff71b9c1fa81e2b.setContent(i_frame_9ae6edefd4964cb9a9dc1424434e4ffb);
+        
+
+        circle_d7485248e66d426a9669fc1f1e250135.bindPopup(popup_891c57e487414261aff71b9c1fa81e2b)
+        ;
+
+        
+    
+    
+            circle_d7485248e66d426a9669fc1f1e250135.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38391507</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_50c972ac2e6e46e983aec2674058db37 = L.circle(
+                [42.35084000000001, -71.13629],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_9477469ce19c4313bbc9e73c07cca09c = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_67499a75d4ee4292a962a2843a13fab0 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg0MDEwNzAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg0MDEwNzA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_9477469ce19c4313bbc9e73c07cca09c.setContent(i_frame_67499a75d4ee4292a962a2843a13fab0);
+        
+
+        circle_50c972ac2e6e46e983aec2674058db37.bindPopup(popup_9477469ce19c4313bbc9e73c07cca09c)
+        ;
+
+        
+    
+    
+            circle_50c972ac2e6e46e983aec2674058db37.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38401070</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1e36fd32680743b28b00c121e56bdb7e = L.circle(
+                [42.3504, -71.13488000000002],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_3a82942db5a6428a91bb318ce84afe6f = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_3f4c8aaa002449979d54e532555d29a9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg0MDEzNzcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg0MDEzNzc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_3a82942db5a6428a91bb318ce84afe6f.setContent(i_frame_3f4c8aaa002449979d54e532555d29a9);
+        
+
+        circle_1e36fd32680743b28b00c121e56bdb7e.bindPopup(popup_3a82942db5a6428a91bb318ce84afe6f)
+        ;
+
+        
+    
+    
+            circle_1e36fd32680743b28b00c121e56bdb7e.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 38401377</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_45c3c672f0a34a9ea799b5149f0eb50b = L.circle(
+                [42.35134, -71.13511],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_09f6044452d64dc9beed8707765c1cde = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c63b33126826482c995bca0e673be412 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA0MjQwMjcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA0MjQwMjc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_09f6044452d64dc9beed8707765c1cde.setContent(i_frame_c63b33126826482c995bca0e673be412);
+        
+
+        circle_45c3c672f0a34a9ea799b5149f0eb50b.bindPopup(popup_09f6044452d64dc9beed8707765c1cde)
+        ;
+
+        
+    
+    
+            circle_45c3c672f0a34a9ea799b5149f0eb50b.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 40424027</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_df269bca382b4e40af35ba7110008945 = L.circle(
+                [42.3508, -71.13501],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_7bd49101bcd94ec6aefe3fdaf9ccbac7 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_34994a52d8b74a69bfb4e062818c8ea2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA0MjQ0MTcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA0MjQ0MTc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_7bd49101bcd94ec6aefe3fdaf9ccbac7.setContent(i_frame_34994a52d8b74a69bfb4e062818c8ea2);
+        
+
+        circle_df269bca382b4e40af35ba7110008945.bindPopup(popup_7bd49101bcd94ec6aefe3fdaf9ccbac7)
+        ;
+
+        
+    
+    
+            circle_df269bca382b4e40af35ba7110008945.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 40424417</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d487207dfb004ce4bc497028c6a1c68b = L.circle(
+                [42.3504, -71.13505],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_818318c68a3841c0a57fe1693b0e857d = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c133a38c7412451895036740c7ac1480 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA1NDAxMDknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA1NDAxMDk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_818318c68a3841c0a57fe1693b0e857d.setContent(i_frame_c133a38c7412451895036740c7ac1480);
+        
+
+        circle_d487207dfb004ce4bc497028c6a1c68b.bindPopup(popup_818318c68a3841c0a57fe1693b0e857d)
+        ;
+
+        
+    
+    
+            circle_d487207dfb004ce4bc497028c6a1c68b.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 40540109</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7ba2c84fb3d44b888fc82b15d42fba49 = L.circle(
+                [42.34997, -71.13613000000002],
+                {"bubblingMouseEvents": true, "color": "#E65100", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0f50142fc772457f8cddcefb9cbfba01);
+        
+    
+        var popup_9caa81e4ec8d49dfae272fda2a1f506e = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_c367470df0d34a41a9042f33ec688a22 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA1NDAyNjcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDA1NDAyNjc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_9caa81e4ec8d49dfae272fda2a1f506e.setContent(i_frame_c367470df0d34a41a9042f33ec688a22);
+        
+
+        circle_7ba2c84fb3d44b888fc82b15d42fba49.bindPopup(popup_9caa81e4ec8d49dfae272fda2a1f506e)
+        ;
+
+        
+    
+    
+            circle_7ba2c84fb3d44b888fc82b15d42fba49.bindTooltip(
+                `<div>
+                     
+            Turana | License: <span style="color:#E65100">Exemption claimed: executive suite</span> (Not verified)
+            <br> <i class="fa fa-dot-circle-o" style="color:#E65100; margin-right:3px;"></i>
+            <b>Listing 40540267</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #26.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_82a2e7ec381f4291ae1e6673af65d440 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_c16e7b2aba3049cbb9b70cdca98a9c02,
+                },
+            };
+            L.control.layers(
+                layer_control_82a2e7ec381f4291ae1e6673af65d440.base_layers,
+                layer_control_82a2e7ec381f4291ae1e6673af65d440.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_e856011660aa473382e588fe6a9be4d1);
+            feature_group_c16e7b2aba3049cbb9b70cdca98a9c02.remove();
+        
+</script>

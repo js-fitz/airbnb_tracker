@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_dfdbc30d4ca544eb95575fcc88f0cad1 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Anthony</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        2 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>2</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>450, Washington Street, Phillips Square, Downtown Crossing, Financial District</b>
+                    <span style='color:black'>(2 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>103 Arch Street</li><li style='margin:2px 0;'>55 Temple Place</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_dfdbc30d4ca544eb95575fcc88f0cad1" ></div>
+        
+</body>
+<script>    
+    
+            var map_dfdbc30d4ca544eb95575fcc88f0cad1 = L.map(
+                "map_dfdbc30d4ca544eb95575fcc88f0cad1",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e12714a7961f4a8d95b7fabc636ce246 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_dfdbc30d4ca544eb95575fcc88f0cad1);
+        
+    
+            var feature_group_139510c5f6804fc696fed80f90e630cc = L.featureGroup(
+                {}
+            ).addTo(map_dfdbc30d4ca544eb95575fcc88f0cad1);
+        
+    
+            var circle_5aef8ad1f43249a893ad6e9a119a8674 = L.circle(
+                [42.354470000000006, -71.06023499999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
+            ).addTo(feature_group_139510c5f6804fc696fed80f90e630cc);
+        
+    
+            circle_5aef8ad1f43249a893ad6e9a119a8674.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #280.1 | 2 listings | Anthony</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (2 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (2 listings)</li></ul>
+            <span style='color:#0D47A1;'>450, Washington Street, Phillips Square, Downtown Crossing, Financial District</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_070feaa0d0fa44fbb9f2cc643d8874fe = L.circleMarker(
+                [42.354470000000006, -71.06023499999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_139510c5f6804fc696fed80f90e630cc);
+        
+    
+            circle_marker_070feaa0d0fa44fbb9f2cc643d8874fe.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #280.1 | 2 listings | Anthony</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (2 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (2 listings)</li></ul>
+            <span style='color:#0D47A1;'>450, Washington Street, Phillips Square, Downtown Crossing, Financial District</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_3cb9ed1be52e4ba497d230b0056d4060 = L.featureGroup(
+                {}
+            ).addTo(map_dfdbc30d4ca544eb95575fcc88f0cad1);
+        
+    
+            var marker_c163ddb83bc4412f80b140a4715865aa = L.marker(
+                [42.354857, -71.0588721],
+                {"opacity": 0.7}
+            ).addTo(feature_group_3cb9ed1be52e4ba497d230b0056d4060);
+        
+    
+            var icon_eac8ed70f79e4e5ea99a8c6fa46aa5bc = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_c163ddb83bc4412f80b140a4715865aa.setIcon(icon_eac8ed70f79e4e5ea99a8c6fa46aa5bc);
+        
+    
+            marker_c163ddb83bc4412f80b140a4715865aa.bindTooltip(
+                `<div>
+                     103 Arch Street, Boston MA 02110</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Sonder 
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_faeb0ca39b354b3eb71f89f97c51e473 = L.marker(
+                [42.3548464, -71.0618248],
+                {"opacity": 0.7}
+            ).addTo(feature_group_3cb9ed1be52e4ba497d230b0056d4060);
+        
+    
+            var icon_3e37c7b57d2c4c31ad2d29bd0a5bc508 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_faeb0ca39b354b3eb71f89f97c51e473.setIcon(icon_3e37c7b57d2c4c31ad2d29bd0a5bc508);
+        
+    
+            marker_faeb0ca39b354b3eb71f89f97c51e473.bindTooltip(
+                `<div>
+                     55 Temple Place, Boston MA 02111</b><br>Units: nan | Floors: 6.0 | Source: AirBPDBjn<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_28ab8654b9f64456a26459a0c8c5a8da = L.featureGroup(
+                {}
+            ).addTo(map_dfdbc30d4ca544eb95575fcc88f0cad1);
+        
+    
+            var circle_82f12fb21120487681182ae47edeec57 = L.circle(
+                [42.35452, -71.05989],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_28ab8654b9f64456a26459a0c8c5a8da);
+        
+    
+        var popup_a87d6f7531134528ab0c432e4c0c0e98 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_2ff48b8a328e4218ba57b8cf1fb5abd3 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA1ODg3ODUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA1ODg3ODU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_a87d6f7531134528ab0c432e4c0c0e98.setContent(i_frame_2ff48b8a328e4218ba57b8cf1fb5abd3);
+        
+
+        circle_82f12fb21120487681182ae47edeec57.bindPopup(popup_a87d6f7531134528ab0c432e4c0c0e98)
+        ;
+
+        
+    
+    
+            circle_82f12fb21120487681182ae47edeec57.bindTooltip(
+                `<div>
+                     
+            Anthony | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 20588785</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #280.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_20926ab536ee4736862060ab18435bd3 = L.circle(
+                [42.35442000000001, -71.06058],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_28ab8654b9f64456a26459a0c8c5a8da);
+        
+    
+        var popup_7874a933f54e4ec6b9b3251c3be6a122 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d91cae6ef6a644fda227739fcd0b1c56 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjk0ODkzNDYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjk0ODkzNDY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_7874a933f54e4ec6b9b3251c3be6a122.setContent(i_frame_d91cae6ef6a644fda227739fcd0b1c56);
+        
+
+        circle_20926ab536ee4736862060ab18435bd3.bindPopup(popup_7874a933f54e4ec6b9b3251c3be6a122)
+        ;
+
+        
+    
+    
+            circle_20926ab536ee4736862060ab18435bd3.bindTooltip(
+                `<div>
+                     
+            Anthony | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 29489346</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #280.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_49fab553731b46eba315ea6026142ef7 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_3cb9ed1be52e4ba497d230b0056d4060,
+                },
+            };
+            L.control.layers(
+                layer_control_49fab553731b46eba315ea6026142ef7.base_layers,
+                layer_control_49fab553731b46eba315ea6026142ef7.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_dfdbc30d4ca544eb95575fcc88f0cad1);
+            feature_group_3cb9ed1be52e4ba497d230b0056d4060.remove();
+        
+</script>

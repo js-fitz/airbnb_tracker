@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e94f2d31a5a840da964f36111a18a30c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Suzanne</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        4 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>4</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>Back Street, Audubon Square, Back Bay</b>
+                    <span style='color:black'>(4 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 350 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>25 Bay State Road</li><li style='margin:2px 0;'>4 Charlesgate East </li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_e94f2d31a5a840da964f36111a18a30c" ></div>
+        
+</body>
+<script>    
+    
+            var map_e94f2d31a5a840da964f36111a18a30c = L.map(
+                "map_e94f2d31a5a840da964f36111a18a30c",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_eec7468330de442e96976ad15014e320 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e94f2d31a5a840da964f36111a18a30c);
+        
+    
+            var feature_group_2ed422e89674455895c12ba0576dd2d0 = L.featureGroup(
+                {}
+            ).addTo(map_e94f2d31a5a840da964f36111a18a30c);
+        
+    
+            var circle_b47930ef971e4121ace5d7f34b4f4105 = L.circle(
+                [42.3503775, -71.094275],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 100.2792, "stroke": true, "weight": 3}
+            ).addTo(feature_group_2ed422e89674455895c12ba0576dd2d0);
+        
+    
+            circle_b47930ef971e4121ace5d7f34b4f4105.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #110.1 | 4 listings | Suzanne</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>Back Street, Audubon Square, Back Bay</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_834d3b4c19f4456ebc904210aad40edf = L.circleMarker(
+                [42.3503775, -71.094275],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_2ed422e89674455895c12ba0576dd2d0);
+        
+    
+            circle_marker_834d3b4c19f4456ebc904210aad40edf.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #110.1 | 4 listings | Suzanne</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>Back Street, Audubon Square, Back Bay</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_7c373157e6b4450c8727a68618b0033e = L.featureGroup(
+                {}
+            ).addTo(map_e94f2d31a5a840da964f36111a18a30c);
+        
+    
+            var marker_b0e5d7e910f747f18a593cea3488f84a = L.marker(
+                [42.3501285, -71.0939977],
+                {"opacity": 0.7}
+            ).addTo(feature_group_7c373157e6b4450c8727a68618b0033e);
+        
+    
+            var icon_7028c9857c674d638132dda9bd738fe9 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_b0e5d7e910f747f18a593cea3488f84a.setIcon(icon_7028c9857c674d638132dda9bd738fe9);
+        
+    
+            marker_b0e5d7e910f747f18a593cea3488f84a.bindTooltip(
+                `<div>
+                     25 Bay State Road, Boston MA 02115</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Seamless Transitions
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f1d1bd40481648caa0554216b0c24659 = L.marker(
+                [42.3500788, -71.0915041],
+                {"opacity": 0.7}
+            ).addTo(feature_group_7c373157e6b4450c8727a68618b0033e);
+        
+    
+            var icon_7e6d889fb4974b6b82339f2f04cbaa58 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_f1d1bd40481648caa0554216b0c24659.setIcon(icon_7e6d889fb4974b6b82339f2f04cbaa58);
+        
+    
+            marker_f1d1bd40481648caa0554216b0c24659.bindTooltip(
+                `<div>
+                     4 Charlesgate East , Boston MA 02115</b><br>Units: nan | Floors: 8.0 | Source: AirBPDBjn<br><b>Hosts: </b>unknown
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_522f6d68877543a787170d2fe7503d26 = L.featureGroup(
+                {}
+            ).addTo(map_e94f2d31a5a840da964f36111a18a30c);
+        
+    
+            var circle_6b0c280de7594897b85fc38850a53e1f = L.circle(
+                [42.34947, -71.09265],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_522f6d68877543a787170d2fe7503d26);
+        
+    
+        var popup_cea07593fd1149bca659f3da099716e8 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_6dcee379f3804daa84134df2aa7b3b86 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTgxOTk5NCc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy8xODE5OTk0PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_cea07593fd1149bca659f3da099716e8.setContent(i_frame_6dcee379f3804daa84134df2aa7b3b86);
+        
+
+        circle_6b0c280de7594897b85fc38850a53e1f.bindPopup(popup_cea07593fd1149bca659f3da099716e8)
+        ;
+
+        
+    
+    
+            circle_6b0c280de7594897b85fc38850a53e1f.bindTooltip(
+                `<div>
+                     
+            Suzanne | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 1819994</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #110.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f60203a25d8745fa816e86a23feac057 = L.circle(
+                [42.35062, -71.09486],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_522f6d68877543a787170d2fe7503d26);
+        
+    
+        var popup_9a8a77a17abd48df8e489abaab372d36 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_459ec6a47c304f48815ad56922557fa4 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNzQ5OTk2MCc+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy83NDk5OTYwPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_9a8a77a17abd48df8e489abaab372d36.setContent(i_frame_459ec6a47c304f48815ad56922557fa4);
+        
+
+        circle_f60203a25d8745fa816e86a23feac057.bindPopup(popup_9a8a77a17abd48df8e489abaab372d36)
+        ;
+
+        
+    
+    
+            circle_f60203a25d8745fa816e86a23feac057.bindTooltip(
+                `<div>
+                     
+            Suzanne | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 7499960</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #110.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_afdde641b6724738bf8196b1f93c813a = L.circle(
+                [42.35063, -71.09571],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_522f6d68877543a787170d2fe7503d26);
+        
+    
+        var popup_ad7650b7c7814ed5ad040d71260bf310 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_459d395a4a694176b73c25313e90d7e2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjU0NzY0NjYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjU0NzY0NjY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_ad7650b7c7814ed5ad040d71260bf310.setContent(i_frame_459d395a4a694176b73c25313e90d7e2);
+        
+
+        circle_afdde641b6724738bf8196b1f93c813a.bindPopup(popup_ad7650b7c7814ed5ad040d71260bf310)
+        ;
+
+        
+    
+    
+            circle_afdde641b6724738bf8196b1f93c813a.bindTooltip(
+                `<div>
+                     
+            Suzanne | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 25476466</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #110.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8963aad2f55043cea7ecbe56974e1191 = L.circle(
+                [42.35079, -71.09388],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_522f6d68877543a787170d2fe7503d26);
+        
+    
+        var popup_72345c60bcb042b4beabbfdeb86152bd = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_af73eb6f992744ad8f786696f8ac988c = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjYxMjczMTgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjYxMjczMTg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_72345c60bcb042b4beabbfdeb86152bd.setContent(i_frame_af73eb6f992744ad8f786696f8ac988c);
+        
+
+        circle_8963aad2f55043cea7ecbe56974e1191.bindPopup(popup_72345c60bcb042b4beabbfdeb86152bd)
+        ;
+
+        
+    
+    
+            circle_8963aad2f55043cea7ecbe56974e1191.bindTooltip(
+                `<div>
+                     
+            Suzanne | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 26127318</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #110.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_10d7544c9d3449ff83597933ba8d3d33 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_7c373157e6b4450c8727a68618b0033e,
+                },
+            };
+            L.control.layers(
+                layer_control_10d7544c9d3449ff83597933ba8d3d33.base_layers,
+                layer_control_10d7544c9d3449ff83597933ba8d3d33.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_e94f2d31a5a840da964f36111a18a30c);
+            feature_group_7c373157e6b4450c8727a68618b0033e.remove();
+        
+</script>

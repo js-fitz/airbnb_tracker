@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_0ca25f97270645bea6ec55a67e6c85d4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Flores</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        4 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+                Active - <b>4</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>31, Walden Street, Roxbury</b>
+                    <span style='color:black'>(4 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>unknown</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul style='margin:0'><li style='margin:2px 0;'>40 Fisher Ave</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_0ca25f97270645bea6ec55a67e6c85d4" ></div>
+        
+</body>
+<script>    
+    
+            var map_0ca25f97270645bea6ec55a67e6c85d4 = L.map(
+                "map_0ca25f97270645bea6ec55a67e6c85d4",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d4edac30a0ba41759dda8dd1160fe748 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_0ca25f97270645bea6ec55a67e6c85d4);
+        
+    
+            var feature_group_ecf6448d39634250a08f4462ad423564 = L.featureGroup(
+                {}
+            ).addTo(map_0ca25f97270645bea6ec55a67e6c85d4);
+        
+    
+            var circle_ba2143819d3c4d7abdbcc712c749f832 = L.circle(
+                [42.32487598436227, -71.10430261838843],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 45.72, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ecf6448d39634250a08f4462ad423564);
+        
+    
+            circle_ba2143819d3c4d7abdbcc712c749f832.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #112.1 | 4 listings | Flores</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>415697 (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>31, Walden Street, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_74b07945457542888481b4bcd198f896 = L.circleMarker(
+                [42.32487598436227, -71.10430261838843],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_ecf6448d39634250a08f4462ad423564);
+        
+    
+            circle_marker_74b07945457542888481b4bcd198f896.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #112.1 | 4 listings | Flores</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>415697 (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>31, Walden Street, Roxbury</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_0952dc7c3422467b93018450d0f642bb = L.featureGroup(
+                {}
+            ).addTo(map_0ca25f97270645bea6ec55a67e6c85d4);
+        
+    
+            var marker_872935f338fb469abb50a9de34435365 = L.marker(
+                [42.32738519999999, -71.1016343],
+                {"opacity": 0.7}
+            ).addTo(feature_group_0952dc7c3422467b93018450d0f642bb);
+        
+    
+            var icon_0739a41699604d448594f6657ca3862c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_872935f338fb469abb50a9de34435365.setIcon(icon_0739a41699604d448594f6657ca3862c);
+        
+    
+            marker_872935f338fb469abb50a9de34435365.bindTooltip(
+                `<div>
+                     <b>Cliff apts, aka Longwood terrace<br>40 Fisher Ave, Boston MA 02120</b><br>Units: 15.0 | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Northeast Suites
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_49901f4ea4ff40ca91c689f6f9023a4f = L.featureGroup(
+                {}
+            ).addTo(map_0ca25f97270645bea6ec55a67e6c85d4);
+        
+    
+            var circle_c16084d5d5ea47d58ab04093d3b1a29b = L.circle(
+                [42.3251, -71.10410999999998],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_49901f4ea4ff40ca91c689f6f9023a4f);
+        
+    
+        var popup_e83391fa297c4b2f937840d01ed7f2b6 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_70d693bd44254c049eb8dffbd7ca4db8 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDM1MDg5MTAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDM1MDg5MTA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_e83391fa297c4b2f937840d01ed7f2b6.setContent(i_frame_70d693bd44254c049eb8dffbd7ca4db8);
+        
+
+        circle_c16084d5d5ea47d58ab04093d3b1a29b.bindPopup(popup_e83391fa297c4b2f937840d01ed7f2b6)
+        ;
+
+        
+    
+    
+            circle_c16084d5d5ea47d58ab04093d3b1a29b.bindTooltip(
+                `<div>
+                     
+            Flores | License: <span style="color:#2E7D32">415697</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 43508910</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #112.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_26e22d84dfa54d2792c10cb7a752c3b5 = L.circle(
+                [42.32480131248303, -71.10436682451791],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_49901f4ea4ff40ca91c689f6f9023a4f);
+        
+    
+        var popup_8da9af6e23bc433785aba7a38adbddd4 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a593db0a469d463fa4587fb37634468c = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDUyMDgyNTMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDUyMDgyNTM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_8da9af6e23bc433785aba7a38adbddd4.setContent(i_frame_a593db0a469d463fa4587fb37634468c);
+        
+
+        circle_26e22d84dfa54d2792c10cb7a752c3b5.bindPopup(popup_8da9af6e23bc433785aba7a38adbddd4)
+        ;
+
+        
+    
+    
+            circle_26e22d84dfa54d2792c10cb7a752c3b5.bindTooltip(
+                `<div>
+                     
+            Flores | License: <span style="color:#2E7D32">415697</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 45208253</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #112.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2beeaf6596fd4625bf55b36262d737f9 = L.circle(
+                [42.32480131248303, -71.10436682451791],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_49901f4ea4ff40ca91c689f6f9023a4f);
+        
+    
+        var popup_86c63b6851f847a485eac5e7d61c199f = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_91094c0296544c0eab89f3d885fed0df = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDUyMDg1MDcnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDUyMDg1MDc8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_86c63b6851f847a485eac5e7d61c199f.setContent(i_frame_91094c0296544c0eab89f3d885fed0df);
+        
+
+        circle_2beeaf6596fd4625bf55b36262d737f9.bindPopup(popup_86c63b6851f847a485eac5e7d61c199f)
+        ;
+
+        
+    
+    
+            circle_2beeaf6596fd4625bf55b36262d737f9.bindTooltip(
+                `<div>
+                     
+            Flores | License: <span style="color:#2E7D32">415697</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 45208507</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #112.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e3dba2249ab94364ab94c97ae27a6233 = L.circle(
+                [42.32480131248303, -71.10436682451791],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_49901f4ea4ff40ca91c689f6f9023a4f);
+        
+    
+        var popup_b9de64d312eb4be79253498f7ea8da57 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0c99ff5d6a844e2f953a4297f55750e0 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDUyMDg3MDEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDUyMDg3MDE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_b9de64d312eb4be79253498f7ea8da57.setContent(i_frame_0c99ff5d6a844e2f953a4297f55750e0);
+        
+
+        circle_e3dba2249ab94364ab94c97ae27a6233.bindPopup(popup_b9de64d312eb4be79253498f7ea8da57)
+        ;
+
+        
+    
+    
+            circle_e3dba2249ab94364ab94c97ae27a6233.bindTooltip(
+                `<div>
+                     
+            Flores | License: <span style="color:#2E7D32">415697</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 45208701</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #112.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_b6e734425c854cc88cdfc1e26fda4e83 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_0952dc7c3422467b93018450d0f642bb,
+                },
+            };
+            L.control.layers(
+                layer_control_b6e734425c854cc88cdfc1e26fda4e83.base_layers,
+                layer_control_b6e734425c854cc88cdfc1e26fda4e83.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_0ca25f97270645bea6ec55a67e6c85d4);
+            feature_group_0952dc7c3422467b93018450d0f642bb.remove();
+        
+</script>

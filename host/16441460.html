@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_54f6892b16b74d90b271ba88d5618984 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Charles</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        5 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+                Active - <b>5</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>55, Perthshire Road, Faneuil, Brighton</b>
+                    <span style='color:black'>(5 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>unknown</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_54f6892b16b74d90b271ba88d5618984" ></div>
+        
+</body>
+<script>    
+    
+            var map_54f6892b16b74d90b271ba88d5618984 = L.map(
+                "map_54f6892b16b74d90b271ba88d5618984",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_de0cadbf309f48dc9f497904ca6e03fa = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_54f6892b16b74d90b271ba88d5618984);
+        
+    
+            var feature_group_ef1272d9d735409597f4b1c7ae2e3c3c = L.featureGroup(
+                {}
+            ).addTo(map_54f6892b16b74d90b271ba88d5618984);
+        
+    
+            var circle_7889c21a9c6c4362804c69141a94a619 = L.circle(
+                [42.354024, -71.16775799999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 45.72, "stroke": true, "weight": 3}
+            ).addTo(feature_group_ef1272d9d735409597f4b1c7ae2e3c3c);
+        
+    
+            circle_7889c21a9c6c4362804c69141a94a619.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #75.1 | 5 listings | Charles</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>387480 (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>55, Perthshire Road, Faneuil, Brighton</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_03465cd740754368bac59536b7db8cc3 = L.circleMarker(
+                [42.354024, -71.16775799999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_ef1272d9d735409597f4b1c7ae2e3c3c);
+        
+    
+            circle_marker_03465cd740754368bac59536b7db8cc3.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #75.1 | 5 listings | Charles</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>387480 (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>55, Perthshire Road, Faneuil, Brighton</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_792ae995940f41119132e601bf211ef1 = L.featureGroup(
+                {}
+            ).addTo(map_54f6892b16b74d90b271ba88d5618984);
+        
+    
+            var feature_group_4b040cf815394449ac378758789c676a = L.featureGroup(
+                {}
+            ).addTo(map_54f6892b16b74d90b271ba88d5618984);
+        
+    
+            var circle_34cced946d474937bdaf55b51dc5f322 = L.circle(
+                [42.35395, -71.16776],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4b040cf815394449ac378758789c676a);
+        
+    
+        var popup_d7a7e70123cf43ba8cceaf9b3a273ded = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_0b1d9a58020541ffaca08265387a989d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTgxOTk5NjMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTgxOTk5NjM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_d7a7e70123cf43ba8cceaf9b3a273ded.setContent(i_frame_0b1d9a58020541ffaca08265387a989d);
+        
+
+        circle_34cced946d474937bdaf55b51dc5f322.bindPopup(popup_d7a7e70123cf43ba8cceaf9b3a273ded)
+        ;
+
+        
+    
+    
+            circle_34cced946d474937bdaf55b51dc5f322.bindTooltip(
+                `<div>
+                     
+            Charles | License: <span style="color:#2E7D32">387480</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 18199963</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #75.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_01675e48bf7949f2819f35a2f9e6ad7f = L.circle(
+                [42.35418, -71.16776],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4b040cf815394449ac378758789c676a);
+        
+    
+        var popup_461a31064936453da6cdd6795851e3e8 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_671fa1aeb5ee492c81087315399fb494 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg4NzU0NTEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg4NzU0NTE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_461a31064936453da6cdd6795851e3e8.setContent(i_frame_671fa1aeb5ee492c81087315399fb494);
+        
+
+        circle_01675e48bf7949f2819f35a2f9e6ad7f.bindPopup(popup_461a31064936453da6cdd6795851e3e8)
+        ;
+
+        
+    
+    
+            circle_01675e48bf7949f2819f35a2f9e6ad7f.bindTooltip(
+                `<div>
+                     
+            Charles | License: <span style="color:#2E7D32">387480</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 18875451</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #75.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_31fe3ab921e64a32a6f5b1fcae145f26 = L.circle(
+                [42.35401, -71.16776],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4b040cf815394449ac378758789c676a);
+        
+    
+        var popup_1c3e6732c3dd4ce89716f101953fe1da = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_f4850ec4e0ad42c287bdd8c90f731f45 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg4NzU1NTMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg4NzU1NTM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1c3e6732c3dd4ce89716f101953fe1da.setContent(i_frame_f4850ec4e0ad42c287bdd8c90f731f45);
+        
+
+        circle_31fe3ab921e64a32a6f5b1fcae145f26.bindPopup(popup_1c3e6732c3dd4ce89716f101953fe1da)
+        ;
+
+        
+    
+    
+            circle_31fe3ab921e64a32a6f5b1fcae145f26.bindTooltip(
+                `<div>
+                     
+            Charles | License: <span style="color:#2E7D32">387480</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 18875553</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #75.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_996c363c354c4e09b8e9592b31467844 = L.circle(
+                [42.35401, -71.16776],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4b040cf815394449ac378758789c676a);
+        
+    
+        var popup_72b0fdbd775e45e791f86937592a7714 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_4142382efe934b4784f8282e56dc6e76 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg4NzU1OTknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg4NzU1OTk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_72b0fdbd775e45e791f86937592a7714.setContent(i_frame_4142382efe934b4784f8282e56dc6e76);
+        
+
+        circle_996c363c354c4e09b8e9592b31467844.bindPopup(popup_72b0fdbd775e45e791f86937592a7714)
+        ;
+
+        
+    
+    
+            circle_996c363c354c4e09b8e9592b31467844.bindTooltip(
+                `<div>
+                     
+            Charles | License: <span style="color:#2E7D32">387480</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 18875599</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #75.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e9a42a1b0eca49e2acc37c7f4660f52a = L.circle(
+                [42.35397, -71.16775],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4b040cf815394449ac378758789c676a);
+        
+    
+        var popup_843e18f1ec724e74b215b9155f52838b = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_997ff81228ad4b98b82c8d2c84f837fd = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTk0NzMwNjAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTk0NzMwNjA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_843e18f1ec724e74b215b9155f52838b.setContent(i_frame_997ff81228ad4b98b82c8d2c84f837fd);
+        
+
+        circle_e9a42a1b0eca49e2acc37c7f4660f52a.bindPopup(popup_843e18f1ec724e74b215b9155f52838b)
+        ;
+
+        
+    
+    
+            circle_e9a42a1b0eca49e2acc37c7f4660f52a.bindTooltip(
+                `<div>
+                     
+            Charles | License: <span style="color:#2E7D32">387480</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 19473060</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #75.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_3d54c8a92b8d44e3bd6110a40f867c21 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_792ae995940f41119132e601bf211ef1,
+                },
+            };
+            L.control.layers(
+                layer_control_3d54c8a92b8d44e3bd6110a40f867c21.base_layers,
+                layer_control_3d54c8a92b8d44e3bd6110a40f867c21.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_54f6892b16b74d90b271ba88d5618984);
+            feature_group_792ae995940f41119132e601bf211ef1.remove();
+        
+</script>

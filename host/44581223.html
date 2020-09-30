@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e27978ff3ad44c5e8fe96122e961a8e2 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Andre</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+                        4 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#2E7D32; margin-right:3px"></i>
+                Active - <b>4</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>8, Franklin Terrace, Fairmount, Hyde Park</b>
+                    <span style='color:black'>(4 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 200 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_e27978ff3ad44c5e8fe96122e961a8e2" ></div>
+        
+</body>
+<script>    
+    
+            var map_e27978ff3ad44c5e8fe96122e961a8e2 = L.map(
+                "map_e27978ff3ad44c5e8fe96122e961a8e2",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_01952c83dd76480c959c51ebc87cddf0 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e27978ff3ad44c5e8fe96122e961a8e2);
+        
+    
+            var feature_group_e61675fecb824df18d9fa8c532f86fbe = L.featureGroup(
+                {}
+            ).addTo(map_e27978ff3ad44c5e8fe96122e961a8e2);
+        
+    
+            var circle_a75467ad175649e1bb7aeb57518578ea = L.circle(
+                [42.25228, -71.11515250000001],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 60.6552, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e61675fecb824df18d9fa8c532f86fbe);
+        
+    
+            circle_a75467ad175649e1bb7aeb57518578ea.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #94.1 | 4 listings | Andre</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>416718 (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>8, Franklin Terrace, Fairmount, Hyde Park</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b994d1608f3d465bbccca9f09ec4c695 = L.circleMarker(
+                [42.25228, -71.11515250000001],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_e61675fecb824df18d9fa8c532f86fbe);
+        
+    
+            circle_marker_b994d1608f3d465bbccca9f09ec4c695.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #94.1 | 4 listings | Andre</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>416718 (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Active - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>8, Franklin Terrace, Fairmount, Hyde Park</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_251abdd89c1f432a91513a303d96a51d = L.featureGroup(
+                {}
+            ).addTo(map_e27978ff3ad44c5e8fe96122e961a8e2);
+        
+    
+            var feature_group_5822793e791e493b9e359cc4768104d2 = L.featureGroup(
+                {}
+            ).addTo(map_e27978ff3ad44c5e8fe96122e961a8e2);
+        
+    
+            var circle_bfc3c2bf6d7844e6bc7e7aea182e1bc8 = L.circle(
+                [42.25162, -71.11465],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5822793e791e493b9e359cc4768104d2);
+        
+    
+        var popup_c3e7566584e2480eb848637333da1885 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_663f352e5b5b4cdc89745a9887b277e6 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvODQ5MDM1Nic+aHR0cHM6Ly93d3cuYWlyYm5iLmNvbS9yb29tcy84NDkwMzU2PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_c3e7566584e2480eb848637333da1885.setContent(i_frame_663f352e5b5b4cdc89745a9887b277e6);
+        
+
+        circle_bfc3c2bf6d7844e6bc7e7aea182e1bc8.bindPopup(popup_c3e7566584e2480eb848637333da1885)
+        ;
+
+        
+    
+    
+            circle_bfc3c2bf6d7844e6bc7e7aea182e1bc8.bindTooltip(
+                `<div>
+                     
+            Andre | License: <span style="color:#2E7D32">416718</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 8490356</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #94.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fbbec548f6b544c4ba0bf174466b1a40 = L.circle(
+                [42.25261, -71.11616],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5822793e791e493b9e359cc4768104d2);
+        
+    
+        var popup_34f31e5022be4e248215fcc63d39308d = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_29155faf1c4b453494a096dbb32d0e1a = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ3Nzg1NjEnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ3Nzg1NjE8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_34f31e5022be4e248215fcc63d39308d.setContent(i_frame_29155faf1c4b453494a096dbb32d0e1a);
+        
+
+        circle_fbbec548f6b544c4ba0bf174466b1a40.bindPopup(popup_34f31e5022be4e248215fcc63d39308d)
+        ;
+
+        
+    
+    
+            circle_fbbec548f6b544c4ba0bf174466b1a40.bindTooltip(
+                `<div>
+                     
+            Andre | License: <span style="color:#2E7D32">416718</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 14778561</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #94.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e5c1b892ef434d50aaf305c976e6839e = L.circle(
+                [42.25223, -71.11493],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5822793e791e493b9e359cc4768104d2);
+        
+    
+        var popup_eef49bb2fda74d6290e07b96ef43973e = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_48ab5b284481402eb708859b94934e05 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjg1Nzg2NTUnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjg1Nzg2NTU8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_eef49bb2fda74d6290e07b96ef43973e.setContent(i_frame_48ab5b284481402eb708859b94934e05);
+        
+
+        circle_e5c1b892ef434d50aaf305c976e6839e.bindPopup(popup_eef49bb2fda74d6290e07b96ef43973e)
+        ;
+
+        
+    
+    
+            circle_e5c1b892ef434d50aaf305c976e6839e.bindTooltip(
+                `<div>
+                     
+            Andre | License: <span style="color:#2E7D32">416718</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 28578655</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #94.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_30bab1ff606942a3a55a89100298fecd = L.circle(
+                [42.25266, -71.11487],
+                {"bubblingMouseEvents": true, "color": "#2E7D32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_5822793e791e493b9e359cc4768104d2);
+        
+    
+        var popup_1fe1dc86d03c47988fd4aadba5ec8469 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_325b7687043e483fb466736002b73843 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIyMzkyOTgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDIyMzkyOTg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1fe1dc86d03c47988fd4aadba5ec8469.setContent(i_frame_325b7687043e483fb466736002b73843);
+        
+
+        circle_30bab1ff606942a3a55a89100298fecd.bindPopup(popup_1fe1dc86d03c47988fd4aadba5ec8469)
+        ;
+
+        
+    
+    
+            circle_30bab1ff606942a3a55a89100298fecd.bindTooltip(
+                `<div>
+                     
+            Andre | License: <span style="color:#2E7D32">416718</span> (Active)
+            <br> <i class="fa fa-dot-circle-o" style="color:#2E7D32; margin-right:3px;"></i>
+            <b>Listing 42239298</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #94.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_febd163d42054758a1e6cabec5ea6361 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_251abdd89c1f432a91513a303d96a51d,
+                },
+            };
+            L.control.layers(
+                layer_control_febd163d42054758a1e6cabec5ea6361.base_layers,
+                layer_control_febd163d42054758a1e6cabec5ea6361.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_e27978ff3ad44c5e8fe96122e961a8e2);
+            feature_group_251abdd89c1f432a91513a303d96a51d.remove();
+        
+</script>

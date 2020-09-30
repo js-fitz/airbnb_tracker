@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_bbd64da5f51c4957a1e41d97f25e24bf {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Maria</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
+                        5 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#B71C1C; margin-right:3px"></i>
+                Expired/Void/Revoked - <b>5</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>32;34, Codman Hill Avenue, Ashmont, Dorchester</b>
+                    <span style='color:black'>(5 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 350 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_bbd64da5f51c4957a1e41d97f25e24bf" ></div>
+        
+</body>
+<script>    
+    
+            var map_bbd64da5f51c4957a1e41d97f25e24bf = L.map(
+                "map_bbd64da5f51c4957a1e41d97f25e24bf",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_5eadf34f81964edf8a92860791110c66 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_bbd64da5f51c4957a1e41d97f25e24bf);
+        
+    
+            var feature_group_0acbd82846314ea5a9efa0b3df9f52dc = L.featureGroup(
+                {}
+            ).addTo(map_bbd64da5f51c4957a1e41d97f25e24bf);
+        
+    
+            var circle_303c899e6bf54dabb11b9602aa0bd30e = L.circle(
+                [42.279614, -71.07186800000002],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 100.584, "stroke": true, "weight": 3}
+            ).addTo(feature_group_0acbd82846314ea5a9efa0b3df9f52dc);
+        
+    
+            circle_303c899e6bf54dabb11b9602aa0bd30e.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #81.1 | 5 listings | Maria</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>415193 (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Expired/Void/Revoked - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>32;34, Codman Hill Avenue, Ashmont, Dorchester</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_986f7624141c439bae73f7338af627da = L.circleMarker(
+                [42.279614, -71.07186800000002],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_0acbd82846314ea5a9efa0b3df9f52dc);
+        
+    
+            circle_marker_986f7624141c439bae73f7338af627da.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #81.1 | 5 listings | Maria</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>415193 (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Expired/Void/Revoked - (5 listings)</li></ul>
+            <span style='color:#0D47A1;'>32;34, Codman Hill Avenue, Ashmont, Dorchester</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_e964cef4711643a9a8be8ba87744ca23 = L.featureGroup(
+                {}
+            ).addTo(map_bbd64da5f51c4957a1e41d97f25e24bf);
+        
+    
+            var feature_group_87f2d78cdb664d1280eec786893e1a2f = L.featureGroup(
+                {}
+            ).addTo(map_bbd64da5f51c4957a1e41d97f25e24bf);
+        
+    
+            var circle_12c4bb2c0a344129a1363a9201819ed4 = L.circle(
+                [42.28016, -71.07325],
+                {"bubblingMouseEvents": true, "color": "#B71C1C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_87f2d78cdb664d1280eec786893e1a2f);
+        
+    
+        var popup_0ce9c9c3c4ed461da6ec062398caf403 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_14aa5e68875c4c689ae0b82115c0ffec = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0MjY5MTYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0MjY5MTY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0ce9c9c3c4ed461da6ec062398caf403.setContent(i_frame_14aa5e68875c4c689ae0b82115c0ffec);
+        
+
+        circle_12c4bb2c0a344129a1363a9201819ed4.bindPopup(popup_0ce9c9c3c4ed461da6ec062398caf403)
+        ;
+
+        
+    
+    
+            circle_12c4bb2c0a344129a1363a9201819ed4.bindTooltip(
+                `<div>
+                     
+            Maria | License: <span style="color:#B71C1C">415193</span> (Expired/Void/Revoked)
+            <br> <i class="fa fa-dot-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
+            <b>Listing 32426916</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #81.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a9b370c87f744a38ae09d994bbdf4e7b = L.circle(
+                [42.27891, -71.07236],
+                {"bubblingMouseEvents": true, "color": "#B71C1C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_87f2d78cdb664d1280eec786893e1a2f);
+        
+    
+        var popup_866e6644cf77425297702089557d87c0 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_e96083085efd4293862ad71bf9604afb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0MjcyMzgnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0MjcyMzg8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_866e6644cf77425297702089557d87c0.setContent(i_frame_e96083085efd4293862ad71bf9604afb);
+        
+
+        circle_a9b370c87f744a38ae09d994bbdf4e7b.bindPopup(popup_866e6644cf77425297702089557d87c0)
+        ;
+
+        
+    
+    
+            circle_a9b370c87f744a38ae09d994bbdf4e7b.bindTooltip(
+                `<div>
+                     
+            Maria | License: <span style="color:#B71C1C">415193</span> (Expired/Void/Revoked)
+            <br> <i class="fa fa-dot-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
+            <b>Listing 32427238</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #81.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2d8fc630278042f8b9ebe021e14d4b32 = L.circle(
+                [42.27899, -71.07093],
+                {"bubblingMouseEvents": true, "color": "#B71C1C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_87f2d78cdb664d1280eec786893e1a2f);
+        
+    
+        var popup_b09d8349283d41efa6ed30c86f2cdcb3 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a52928b15b8848f8be6b84df1c8b10f3 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0MjczODMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0MjczODM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_b09d8349283d41efa6ed30c86f2cdcb3.setContent(i_frame_a52928b15b8848f8be6b84df1c8b10f3);
+        
+
+        circle_2d8fc630278042f8b9ebe021e14d4b32.bindPopup(popup_b09d8349283d41efa6ed30c86f2cdcb3)
+        ;
+
+        
+    
+    
+            circle_2d8fc630278042f8b9ebe021e14d4b32.bindTooltip(
+                `<div>
+                     
+            Maria | License: <span style="color:#B71C1C">415193</span> (Expired/Void/Revoked)
+            <br> <i class="fa fa-dot-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
+            <b>Listing 32427383</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #81.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8edbbfae372a4367859fc5aeb0e77e02 = L.circle(
+                [42.28057, -71.07181],
+                {"bubblingMouseEvents": true, "color": "#B71C1C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_87f2d78cdb664d1280eec786893e1a2f);
+        
+    
+        var popup_0499ebb889084835aa46a3f8148ef44a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_d1bfd99916094b1da66f73f8d2ac9444 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0Mjc0NzknPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0Mjc0Nzk8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_0499ebb889084835aa46a3f8148ef44a.setContent(i_frame_d1bfd99916094b1da66f73f8d2ac9444);
+        
+
+        circle_8edbbfae372a4367859fc5aeb0e77e02.bindPopup(popup_0499ebb889084835aa46a3f8148ef44a)
+        ;
+
+        
+    
+    
+            circle_8edbbfae372a4367859fc5aeb0e77e02.bindTooltip(
+                `<div>
+                     
+            Maria | License: <span style="color:#B71C1C">415193</span> (Expired/Void/Revoked)
+            <br> <i class="fa fa-dot-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
+            <b>Listing 32427479</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #81.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f4f77760847a4f37b083e5aecbf43e80 = L.circle(
+                [42.27944, -71.07099000000002],
+                {"bubblingMouseEvents": true, "color": "#B71C1C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_87f2d78cdb664d1280eec786893e1a2f);
+        
+    
+        var popup_9ac330487e474dcf84739f24135e3255 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_a73ff674d2bf4ebd806d5400a53514b2 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0Mjc1OTMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzI0Mjc1OTM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_9ac330487e474dcf84739f24135e3255.setContent(i_frame_a73ff674d2bf4ebd806d5400a53514b2);
+        
+
+        circle_f4f77760847a4f37b083e5aecbf43e80.bindPopup(popup_9ac330487e474dcf84739f24135e3255)
+        ;
+
+        
+    
+    
+            circle_f4f77760847a4f37b083e5aecbf43e80.bindTooltip(
+                `<div>
+                     
+            Maria | License: <span style="color:#B71C1C">415193</span> (Expired/Void/Revoked)
+            <br> <i class="fa fa-dot-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
+            <b>Listing 32427593</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #81.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_107f445ef94b427b8519f2cd9f55907d = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_e964cef4711643a9a8be8ba87744ca23,
+                },
+            };
+            L.control.layers(
+                layer_control_107f445ef94b427b8519f2cd9f55907d.base_layers,
+                layer_control_107f445ef94b427b8519f2cd9f55907d.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_bbd64da5f51c4957a1e41d97f25e24bf);
+            feature_group_e964cef4711643a9a8be8ba87744ca23.remove();
+        
+</script>

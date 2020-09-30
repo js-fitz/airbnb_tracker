@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e5c37f3f07664aaaaa3897dfe365770b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="position: fixed; z-index:699; 
+         top: 10px; right: 10px; max-width: 300px; height:100%;
+         display:block;">
+
+            <div style='width:auto; display:inline-block; overflow:auto;
+                        max-height:calc(100% - 60px);
+                        padding: 10px 10px; font-size:14px; 
+                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
+                        border-radius:5px;
+                        background-color:rgba(255, 255, 255, .8);'>
+                        
+                <div><a style='font-size:14px;color:#636363;'
+                href='https://air-monitor.onrender.com/home.html#hosts'>
+                    <b>&#8592; All hosts</b></a> </div>   
+                
+                <hr style='margin:10px 40px 0 0;'>
+                
+            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
+                        
+                <div style='margin:0; text-align:center'>
+                    <div style='font-size:22px;'>
+                        <b>Jay</div>
+                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
+                        1 Cluster
+                        &nbsp;|&nbsp;
+                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
+                        4 Listings
+                    </b>
+                </div>
+                <hr style='margin:8px 0 0;'>
+                <div style='margin:10px 0 5px; font-size:14px'>
+                           Host listings by <b>registration status</b>:</div>
+                       
+                <i class="fa fa-circle"
+                style="font-size:14px; color:#455A64; margin-right:3px"></i>
+                None claimed - <b>4</b> listings
+                <br>
+                <hr style='margin:8px 0 0;'>
+               
+    <div style='margin:10px 0 3px; font-size:14px'>
+        <b>Listing clusters</b></div>
+    <div style='margin:0 0 8px; font-size:12px'>
+        Addresses inferred from cluster centers.
+        Nearby STR buildings sourced from ADCO research.
+    </div> 
+    
+        <div class='row-container' style='display:block;
+                    margin:10px 0; background-color:#F0F0F0;
+                    padding:8px;border-radius:5px'>
+            <div style='display:inline-block; width:15px;  vertical-align:top'>
+                <i class="fa fa-bullseye" style="color:#448AFF;
+                          font-size: 14px; margin: 0 5px 0 0;"></i>
+            </div>
+            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
+                  <div>
+                    <b>69, Gladstone Street, Orient Heights</b>
+                    <span style='color:black'>(4 listings)</span>
+                  </div>
+                  <div style='color:#458AFF'>
+                     Location accuracy: <b style='color:#474747'>within 350 ft.</b>
+                  </div>
+            </div> 
+            <hr style='border-color: #9C9C9C; margin:6px 0'>
+            <div style='font-size:12px'>
+                Possible matches in STR building database:
+            </div>
+        <ul><li>No known STR buildings nearby</li></ul></div>
+            </div>
+          </div> 
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 12px; right: 0px; width: 355px; height: 24px; 
+         background-color:rgba(255, 255, 255, .8);
+         padding: 2px 6px;
+         font-size:12px">
+            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+          </div> 
+    
+            <div class="folium-map" id="map_e5c37f3f07664aaaaa3897dfe365770b" ></div>
+        
+</body>
+<script>    
+    
+            var map_e5c37f3f07664aaaaa3897dfe365770b = L.map(
+                "map_e5c37f3f07664aaaaa3897dfe365770b",
+                {
+                    center: [42.34554, -71.052],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_58032fa98ec74025af26a9a95db23d83 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e5c37f3f07664aaaaa3897dfe365770b);
+        
+    
+            var feature_group_61dc1f2924a143c19b086a1be004ab25 = L.featureGroup(
+                {}
+            ).addTo(map_e5c37f3f07664aaaaa3897dfe365770b);
+        
+    
+            var circle_6d336b80e1f5436392d25e176c48a0fd = L.circle(
+                [42.38965, -71.00263249999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 104.2416, "stroke": true, "weight": 3}
+            ).addTo(feature_group_61dc1f2924a143c19b086a1be004ab25);
+        
+    
+            circle_6d336b80e1f5436392d25e176c48a0fd.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #93.1 | 4 listings | Jay</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>69, Gladstone Street, Orient Heights</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d4fba8076a2346e8a0c49d53d0a99c96 = L.circleMarker(
+                [42.38965, -71.00263249999999],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
+            ).addTo(feature_group_61dc1f2924a143c19b086a1be004ab25);
+        
+    
+            circle_marker_d4fba8076a2346e8a0c49d53d0a99c96.bindTooltip(
+                `<div>
+                     
+            <span stle='font-size:13px'>
+                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #93.1 | 4 listings | Jay</b> 
+            </span>
+            <br><b>License:</b><ul style='margin:0'><li>? (4 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (4 listings)</li></ul>
+            <span style='color:#0D47A1;'>69, Gladstone Street, Orient Heights</span><br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_ce6da73ae403427782289f098203b0fb = L.featureGroup(
+                {}
+            ).addTo(map_e5c37f3f07664aaaaa3897dfe365770b);
+        
+    
+            var feature_group_c0eaacd3d75948f395e732e915c64e94 = L.featureGroup(
+                {}
+            ).addTo(map_e5c37f3f07664aaaaa3897dfe365770b);
+        
+    
+            var circle_1bbc50d6f2af4908ac7c535538805a28 = L.circle(
+                [42.39051, -71.00331],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c0eaacd3d75948f395e732e915c64e94);
+        
+    
+        var popup_3bd140a7b62c4fd68d7bf7e0eea27f6a = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_15966043622c40dbbf6e318d265ee619 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg2MTIzMTInPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg2MTIzMTI8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_3bd140a7b62c4fd68d7bf7e0eea27f6a.setContent(i_frame_15966043622c40dbbf6e318d265ee619);
+        
+
+        circle_1bbc50d6f2af4908ac7c535538805a28.bindPopup(popup_3bd140a7b62c4fd68d7bf7e0eea27f6a)
+        ;
+
+        
+    
+    
+            circle_1bbc50d6f2af4908ac7c535538805a28.bindTooltip(
+                `<div>
+                     
+            Jay | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 18612312</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #93.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6d5676fc737c40fe988527bb4103e713 = L.circle(
+                [42.38848, -71.00211999999998],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c0eaacd3d75948f395e732e915c64e94);
+        
+    
+        var popup_a22a8d60dfec45a889a9b36d7ff52867 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_66c2fa52d8ff4ae6a5b83718ba6c6a0a = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg2MTM2MzMnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTg2MTM2MzM8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_a22a8d60dfec45a889a9b36d7ff52867.setContent(i_frame_66c2fa52d8ff4ae6a5b83718ba6c6a0a);
+        
+
+        circle_6d5676fc737c40fe988527bb4103e713.bindPopup(popup_a22a8d60dfec45a889a9b36d7ff52867)
+        ;
+
+        
+    
+    
+            circle_6d5676fc737c40fe988527bb4103e713.bindTooltip(
+                `<div>
+                     
+            Jay | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 18613633</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #93.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cd7453a69bf147ffba94d7c49b4f0207 = L.circle(
+                [42.38991, -71.00155],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c0eaacd3d75948f395e732e915c64e94);
+        
+    
+        var popup_1b9403b053634ec1bfe0bbe508487a28 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_dc6e22354976489381cb0ee1780f89be = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTkyMDkwNjYnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTkyMDkwNjY8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_1b9403b053634ec1bfe0bbe508487a28.setContent(i_frame_dc6e22354976489381cb0ee1780f89be);
+        
+
+        circle_cd7453a69bf147ffba94d7c49b4f0207.bindPopup(popup_1b9403b053634ec1bfe0bbe508487a28)
+        ;
+
+        
+    
+    
+            circle_cd7453a69bf147ffba94d7c49b4f0207.bindTooltip(
+                `<div>
+                     
+            Jay | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 19209066</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #93.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d278e1ffaa3141cdaa5cbb8aa6632b5a = L.circle(
+                [42.3897, -71.00355],
+                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c0eaacd3d75948f395e732e915c64e94);
+        
+    
+        var popup_8b4eac2023b14d2bb9194bab81d7c5b3 = L.popup({"maxWidth": "100%"});
+
+        
+            var i_frame_236c6583843b4a13bef97c3c50262a02 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjMyNTg0MDAnPmh0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjMyNTg0MDA8L2E+CiAgICA8L2Rpdj4KICAgIA==" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
+            popup_8b4eac2023b14d2bb9194bab81d7c5b3.setContent(i_frame_236c6583843b4a13bef97c3c50262a02);
+        
+
+        circle_d278e1ffaa3141cdaa5cbb8aa6632b5a.bindPopup(popup_8b4eac2023b14d2bb9194bab81d7c5b3)
+        ;
+
+        
+    
+    
+            circle_d278e1ffaa3141cdaa5cbb8aa6632b5a.bindTooltip(
+                `<div>
+                     
+            Jay | License: <span style="color:#455A64">Missing</span> (None claimed)
+            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
+            <b>Listing 23258400</b> &nbsp;|&nbsp;
+            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #93.1<br>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_f99e4cdc06404d95b5102ce5a0c480bb = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_ce6da73ae403427782289f098203b0fb,
+                },
+            };
+            L.control.layers(
+                layer_control_f99e4cdc06404d95b5102ce5a0c480bb.base_layers,
+                layer_control_f99e4cdc06404d95b5102ce5a0c480bb.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_e5c37f3f07664aaaaa3897dfe365770b);
+            feature_group_ce6da73ae403427782289f098203b0fb.remove();
+        
+</script>
