@@ -1,0 +1,3417 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Maverick Empire</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Maverick Empire </h2>
+        <h3>
+            <b>55 listings</b> | 
+            4 clusters
+        </h3> 
+
+        <p> <b>Note:</b> This host represents a corporation using the following 
+             alias accounts</p>
+             
+             <ul style='margin:0; font-size:15px; color: white; padding-left:15px;margin-left:10px' >
+        <li>
+            <a target='_blank' href='https://www.airbnb.com/users/show/22348222'>
+                "Maverick"</a> - 55 listings</li></ul>
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    40 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#2E7D32">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Active
+                                </p></td>
+                                
+                            </tr>
+                        
+                                                   
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    9 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#D32F2F">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Not found (fabricated)
+                                </p></td>
+                                
+                            </tr>
+                        
+                                                   
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    5 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#B71C1C">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Expired/Void/Revoked
+                                </p></td>
+                                
+                            </tr>
+                        
+                                                   
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    1 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/190-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>190-1</b> (14 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 40, Temple Street, Downtown Crossing, West End </p>
+            <a href='/centroid/190-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/190-2.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>190-2</b> (27 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 402, Columbus Avenue, South End </p>
+            <a href='/centroid/190-2.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/190-3.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>190-3</b> (13 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 245, Newbury Street, Block F, Back Bay </p>
+            <a href='/centroid/190-3.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/190-4.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>190-4</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 235, West Canton Street, South End </p>
+            <a href='/centroid/190-4.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fe2214f7e3a544a1a0fcee3454b99198 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
+         font-size:12px">
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
+          </div> 
+    
+            <div class="folium-map" id="map_fe2214f7e3a544a1a0fcee3454b99198" ></div>
+        
+</body>
+<script>    
+    
+            var map_fe2214f7e3a544a1a0fcee3454b99198 = L.map(
+                "map_fe2214f7e3a544a1a0fcee3454b99198",
+                {
+                    center: [42.3523038888889, -71.07304923076921],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 14,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_324469861fce41f79e1a5ba09e947a71 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+            var circle_dece23974e3d4fbfb453bf0e20b60621 = L.circle(
+                [42.344437777777785, -71.07636592592596],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.5536356146101762, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8536356146101762, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_2fdea11f5abd45a1baf3384096ffa047 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4d37d7c9cbb74f33ae7c2c1be0083fad = $(`<div id="html_4d37d7c9cbb74f33ae7c2c1be0083fad" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_2fdea11f5abd45a1baf3384096ffa047.setContent(html_4d37d7c9cbb74f33ae7c2c1be0083fad);
+        
+
+        circle_dece23974e3d4fbfb453bf0e20b60621.bindPopup(popup_2fdea11f5abd45a1baf3384096ffa047)
+        ;
+
+        
+    
+    
+            circle_dece23974e3d4fbfb453bf0e20b60621.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-2</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>27</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1bc0d4b66957478cb4211f09c8d15688 = L.circle(
+                [42.360170000000004, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.5230198008308818, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8230198008308818, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_7bee3da13ef84f989293cb992bc0e3ad = L.popup({"maxWidth": "100%"});
+
+        
+            var html_569d6ba62de24d2a89602ed629c508c1 = $(`<div id="html_569d6ba62de24d2a89602ed629c508c1" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_7bee3da13ef84f989293cb992bc0e3ad.setContent(html_569d6ba62de24d2a89602ed629c508c1);
+        
+
+        circle_1bc0d4b66957478cb4211f09c8d15688.bindPopup(popup_7bee3da13ef84f989293cb992bc0e3ad)
+        ;
+
+        
+    
+    
+            circle_1bc0d4b66957478cb4211f09c8d15688.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-1</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>14</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_aeb9d0cc78e542b281c4243a021bef42 = L.circle(
+                [42.34981846153847, -71.08263846153844],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.5195652536817829, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8195652536817828, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_53e935e7e5944642a15e40903055d1e6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fad8a94892c74789bf8176a08423a82e = $(`<div id="html_fad8a94892c74789bf8176a08423a82e" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_53e935e7e5944642a15e40903055d1e6.setContent(html_fad8a94892c74789bf8176a08423a82e);
+        
+
+        circle_aeb9d0cc78e542b281c4243a021bef42.bindPopup(popup_53e935e7e5944642a15e40903055d1e6)
+        ;
+
+        
+    
+    
+            circle_aeb9d0cc78e542b281c4243a021bef42.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-3</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>13</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e60f27abffb742f5b9e71d23a84b6905 = L.circle(
+                [42.34557, -71.07736],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_d02a090e23a54e8191b8b20698b06ab2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_00cfa81949d643529c14bc86bb1ea1b6 = $(`<div id="html_00cfa81949d643529c14bc86bb1ea1b6" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-4.html'>                                 <b>Cluster 190-4</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d02a090e23a54e8191b8b20698b06ab2.setContent(html_00cfa81949d643529c14bc86bb1ea1b6);
+        
+
+        circle_e60f27abffb742f5b9e71d23a84b6905.bindPopup(popup_d02a090e23a54e8191b8b20698b06ab2)
+        ;
+
+        
+    
+    
+            circle_e60f27abffb742f5b9e71d23a84b6905.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-4</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_addd5895697e4e7499090a6c8a3eaf61 = L.circle(
+                [42.344437777777785, -71.07636592592596],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_d1f459081c9f4788ac012bbbc8e34505 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_502a84fad97346bab36e9912aa01f3e5 = $(`<div id="html_502a84fad97346bab36e9912aa01f3e5" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d1f459081c9f4788ac012bbbc8e34505.setContent(html_502a84fad97346bab36e9912aa01f3e5);
+        
+
+        circle_addd5895697e4e7499090a6c8a3eaf61.bindPopup(popup_d1f459081c9f4788ac012bbbc8e34505)
+        ;
+
+        
+    
+    
+            circle_addd5895697e4e7499090a6c8a3eaf61.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-2</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>27</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_dc38f6aebf8240f6b3f558d610e2e804 = L.circle(
+                [42.360170000000004, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_ef6a3f1068fb411ca50b993298d19bc4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_92f5e016d4c940af9f7e99f2ea192fd4 = $(`<div id="html_92f5e016d4c940af9f7e99f2ea192fd4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ef6a3f1068fb411ca50b993298d19bc4.setContent(html_92f5e016d4c940af9f7e99f2ea192fd4);
+        
+
+        circle_dc38f6aebf8240f6b3f558d610e2e804.bindPopup(popup_ef6a3f1068fb411ca50b993298d19bc4)
+        ;
+
+        
+    
+    
+            circle_dc38f6aebf8240f6b3f558d610e2e804.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-1</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>14</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_693cb60351394434ba556dfcad4f53c3 = L.circle(
+                [42.34981846153847, -71.08263846153844],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_50d8c575bba8484ba7979411834f923e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_924866b5ba684110be2f4414c83f73a8 = $(`<div id="html_924866b5ba684110be2f4414c83f73a8" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_50d8c575bba8484ba7979411834f923e.setContent(html_924866b5ba684110be2f4414c83f73a8);
+        
+
+        circle_693cb60351394434ba556dfcad4f53c3.bindPopup(popup_50d8c575bba8484ba7979411834f923e)
+        ;
+
+        
+    
+    
+            circle_693cb60351394434ba556dfcad4f53c3.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-3</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>13</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e628d5817a9f4786bb63f00aabef381b = L.circle(
+                [42.34557, -71.07736],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+        var popup_0b5b786659f7444d96b06de9464f096a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e741ed51ab3b42a5894122841a5196e8 = $(`<div id="html_e741ed51ab3b42a5894122841a5196e8" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-4.html'>                                 <b>Cluster 190-4</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_0b5b786659f7444d96b06de9464f096a.setContent(html_e741ed51ab3b42a5894122841a5196e8);
+        
+
+        circle_e628d5817a9f4786bb63f00aabef381b.bindPopup(popup_0b5b786659f7444d96b06de9464f096a)
+        ;
+
+        
+    
+    
+            circle_e628d5817a9f4786bb63f00aabef381b.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>190-4</b></p>
+                        Host: <b>Maverick Empire </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_79284f11553d43749c670a340a5859e1 = L.featureGroup(
+                {}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+    
+            var circle_2e1050aac62844dca0ffeaa33a7313c2 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_2ea87f0c3ba24342bb5f6d2a0017ab39 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8f253085eb2c4b7daeaddd73fc468b62 = $(`<div id="html_8f253085eb2c4b7daeaddd73fc468b62" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_2ea87f0c3ba24342bb5f6d2a0017ab39.setContent(html_8f253085eb2c4b7daeaddd73fc468b62);
+        
+
+        circle_2e1050aac62844dca0ffeaa33a7313c2.bindPopup(popup_2ea87f0c3ba24342bb5f6d2a0017ab39)
+        ;
+
+        
+    
+    
+            circle_2e1050aac62844dca0ffeaa33a7313c2.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>4461613</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415630</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_98246ac919cd4de79f800a18fd42b388 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_3512edc846444b95905eaf12daf789e2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_08660d8299d145a68c1a4953c9a276c4 = $(`<div id="html_08660d8299d145a68c1a4953c9a276c4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_3512edc846444b95905eaf12daf789e2.setContent(html_08660d8299d145a68c1a4953c9a276c4);
+        
+
+        circle_98246ac919cd4de79f800a18fd42b388.bindPopup(popup_3512edc846444b95905eaf12daf789e2)
+        ;
+
+        
+    
+    
+            circle_98246ac919cd4de79f800a18fd42b388.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>4461846</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414102</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_71031a6c37644cd8a7bec49957ffc2a4 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_f529cb46fc0e46c58625c19800817e8f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9f4dbdbaff104d0b806a4b050fec6f21 = $(`<div id="html_9f4dbdbaff104d0b806a4b050fec6f21" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f529cb46fc0e46c58625c19800817e8f.setContent(html_9f4dbdbaff104d0b806a4b050fec6f21);
+        
+
+        circle_71031a6c37644cd8a7bec49957ffc2a4.bindPopup(popup_f529cb46fc0e46c58625c19800817e8f)
+        ;
+
+        
+    
+    
+            circle_71031a6c37644cd8a7bec49957ffc2a4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>4461901</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415612</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c36159b456504f179adc7c9df0a03624 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_33f09616e33843d28265f9e5867963c9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c6c2c774cf274f2ba7a3572e1862086f = $(`<div id="html_c6c2c774cf274f2ba7a3572e1862086f" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_33f09616e33843d28265f9e5867963c9.setContent(html_c6c2c774cf274f2ba7a3572e1862086f);
+        
+
+        circle_c36159b456504f179adc7c9df0a03624.bindPopup(popup_33f09616e33843d28265f9e5867963c9)
+        ;
+
+        
+    
+    
+            circle_c36159b456504f179adc7c9df0a03624.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>4500409</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#B71C1C';
+                       class='fa fa-file-text'></i>
+                <b> 415635</b>
+        <br>License status: <span style='color:#B71C1C'> <b>Expired/Void/Revoked</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ba7912aa721d428b9a1d0ba549924bcb = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_e468cb41207348a1b8c46bab979ae422 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c282f41ec0c74cfcbde72d4ed639ad22 = $(`<div id="html_c282f41ec0c74cfcbde72d4ed639ad22" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e468cb41207348a1b8c46bab979ae422.setContent(html_c282f41ec0c74cfcbde72d4ed639ad22);
+        
+
+        circle_ba7912aa721d428b9a1d0ba549924bcb.bindPopup(popup_e468cb41207348a1b8c46bab979ae422)
+        ;
+
+        
+    
+    
+            circle_ba7912aa721d428b9a1d0ba549924bcb.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>4623114</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414120</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6260686241c44b56a5bae6c5c7dab145 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_eeb93924f17b459090155ca9c5362c8a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_46c6d51fd29f490082056d8cb876a303 = $(`<div id="html_46c6d51fd29f490082056d8cb876a303" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_eeb93924f17b459090155ca9c5362c8a.setContent(html_46c6d51fd29f490082056d8cb876a303);
+        
+
+        circle_6260686241c44b56a5bae6c5c7dab145.bindPopup(popup_eeb93924f17b459090155ca9c5362c8a)
+        ;
+
+        
+    
+    
+            circle_6260686241c44b56a5bae6c5c7dab145.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>5718801</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414105</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f332cd99e4254fcd96d955893d46f33d = L.circle(
+                [42.34455, -71.07628000000003],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_d80ae2137a3846098df628afc23b6286 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f6d31b817ebd4808a3098d15636be12d = $(`<div id="html_f6d31b817ebd4808a3098d15636be12d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d80ae2137a3846098df628afc23b6286.setContent(html_f6d31b817ebd4808a3098d15636be12d);
+        
+
+        circle_f332cd99e4254fcd96d955893d46f33d.bindPopup(popup_d80ae2137a3846098df628afc23b6286)
+        ;
+
+        
+    
+    
+            circle_f332cd99e4254fcd96d955893d46f33d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>5718921</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415648</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4465d26924104a0c9c865444caad4440 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_9d8942a99522400f9fba4fa80020411f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_df974b4737a14a30b9f75896845cfb97 = $(`<div id="html_df974b4737a14a30b9f75896845cfb97" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9d8942a99522400f9fba4fa80020411f.setContent(html_df974b4737a14a30b9f75896845cfb97);
+        
+
+        circle_4465d26924104a0c9c865444caad4440.bindPopup(popup_9d8942a99522400f9fba4fa80020411f)
+        ;
+
+        
+    
+    
+            circle_4465d26924104a0c9c865444caad4440.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>5768819</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415605</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d65f850bd6f845bbbe4b03b0a0e52a2a = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_d41a7a8fdfe048ddb145fb09eaad922b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5d27b77d532947f18226c5a30667b22d = $(`<div id="html_5d27b77d532947f18226c5a30667b22d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d41a7a8fdfe048ddb145fb09eaad922b.setContent(html_5d27b77d532947f18226c5a30667b22d);
+        
+
+        circle_d65f850bd6f845bbbe4b03b0a0e52a2a.bindPopup(popup_d41a7a8fdfe048ddb145fb09eaad922b)
+        ;
+
+        
+    
+    
+            circle_d65f850bd6f845bbbe4b03b0a0e52a2a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>5769127</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415604</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a8ec120502cd41db95f820b5df65af90 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_84e41a2843ae4f1a9831a2e76dff7ed9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_dcd6abdde1c0440aab3b23a9c546691d = $(`<div id="html_dcd6abdde1c0440aab3b23a9c546691d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_84e41a2843ae4f1a9831a2e76dff7ed9.setContent(html_dcd6abdde1c0440aab3b23a9c546691d);
+        
+
+        circle_a8ec120502cd41db95f820b5df65af90.bindPopup(popup_84e41a2843ae4f1a9831a2e76dff7ed9)
+        ;
+
+        
+    
+    
+            circle_a8ec120502cd41db95f820b5df65af90.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6758443</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414119</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_16160e072cd44b0dad12864d10b941b4 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_76a12534c7924f81ac2075539708f8e6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d9e134f4704d4da7adc57add78942aa7 = $(`<div id="html_d9e134f4704d4da7adc57add78942aa7" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_76a12534c7924f81ac2075539708f8e6.setContent(html_d9e134f4704d4da7adc57add78942aa7);
+        
+
+        circle_16160e072cd44b0dad12864d10b941b4.bindPopup(popup_76a12534c7924f81ac2075539708f8e6)
+        ;
+
+        
+    
+    
+            circle_16160e072cd44b0dad12864d10b941b4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6758462</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414116</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_11dbc84b40ed4adaa302fdc9f471f91d = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_ce01fbe2d68444e0bc0188d100d2448c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c099112d50eb4fc3b856436fd5797e37 = $(`<div id="html_c099112d50eb4fc3b856436fd5797e37" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ce01fbe2d68444e0bc0188d100d2448c.setContent(html_c099112d50eb4fc3b856436fd5797e37);
+        
+
+        circle_11dbc84b40ed4adaa302fdc9f471f91d.bindPopup(popup_ce01fbe2d68444e0bc0188d100d2448c)
+        ;
+
+        
+    
+    
+            circle_11dbc84b40ed4adaa302fdc9f471f91d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6758482</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415602</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e36f4de8eae841358d0e6f3039bd7444 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_29444df0122d4ec69a6a83fe27c8a751 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eeb60bcf8b9e4aa8acb3f2d0b92ffc5b = $(`<div id="html_eeb60bcf8b9e4aa8acb3f2d0b92ffc5b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_29444df0122d4ec69a6a83fe27c8a751.setContent(html_eeb60bcf8b9e4aa8acb3f2d0b92ffc5b);
+        
+
+        circle_e36f4de8eae841358d0e6f3039bd7444.bindPopup(popup_29444df0122d4ec69a6a83fe27c8a751)
+        ;
+
+        
+    
+    
+            circle_e36f4de8eae841358d0e6f3039bd7444.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6759004</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415644</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_684c7cf99d55463fb9a96ccc7cd4a0f2 = L.circle(
+                [42.34557, -71.07736],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_5b5bc8ae59d6487183f0d4e53100b4c1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2c14b668c67a4af5ab55699e61212faa = $(`<div id="html_2c14b668c67a4af5ab55699e61212faa" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-4.html'>                                 <b>Cluster 190-4</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_5b5bc8ae59d6487183f0d4e53100b4c1.setContent(html_2c14b668c67a4af5ab55699e61212faa);
+        
+
+        circle_684c7cf99d55463fb9a96ccc7cd4a0f2.bindPopup(popup_5b5bc8ae59d6487183f0d4e53100b4c1)
+        ;
+
+        
+    
+    
+            circle_684c7cf99d55463fb9a96ccc7cd4a0f2.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6759439</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-4</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414095</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8304389e1ba3491f873b8d2d0272bf4c = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_b1af23f746f943cd8b682e957cf0a3af = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1e2d6b6b67784dfd9c32d3eecc4a1d50 = $(`<div id="html_1e2d6b6b67784dfd9c32d3eecc4a1d50" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b1af23f746f943cd8b682e957cf0a3af.setContent(html_1e2d6b6b67784dfd9c32d3eecc4a1d50);
+        
+
+        circle_8304389e1ba3491f873b8d2d0272bf4c.bindPopup(popup_b1af23f746f943cd8b682e957cf0a3af)
+        ;
+
+        
+    
+    
+            circle_8304389e1ba3491f873b8d2d0272bf4c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6762011</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414091</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d5e47779c0b842d4a8f43a3d142d4989 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_58fdda25f3634871930d5bbec1b96df0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ce6a673f71264c1385692a3ae0e481dd = $(`<div id="html_ce6a673f71264c1385692a3ae0e481dd" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_58fdda25f3634871930d5bbec1b96df0.setContent(html_ce6a673f71264c1385692a3ae0e481dd);
+        
+
+        circle_d5e47779c0b842d4a8f43a3d142d4989.bindPopup(popup_58fdda25f3634871930d5bbec1b96df0)
+        ;
+
+        
+    
+    
+            circle_d5e47779c0b842d4a8f43a3d142d4989.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6763409</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415606</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_61c400583bb5496d9612e8d3da492fd0 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_a0d37be0395548a5aebd63b4edcd3363 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_95e2783d80734b79bccef60fc10fdc54 = $(`<div id="html_95e2783d80734b79bccef60fc10fdc54" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a0d37be0395548a5aebd63b4edcd3363.setContent(html_95e2783d80734b79bccef60fc10fdc54);
+        
+
+        circle_61c400583bb5496d9612e8d3da492fd0.bindPopup(popup_a0d37be0395548a5aebd63b4edcd3363)
+        ;
+
+        
+    
+    
+            circle_61c400583bb5496d9612e8d3da492fd0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6810723</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414092</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_27460af329a84f9980ebb9569313a64b = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_378fb53838004533930cd7806fa9ae19 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4982254b6ee34b419db6f191e866046b = $(`<div id="html_4982254b6ee34b419db6f191e866046b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_378fb53838004533930cd7806fa9ae19.setContent(html_4982254b6ee34b419db6f191e866046b);
+        
+
+        circle_27460af329a84f9980ebb9569313a64b.bindPopup(popup_378fb53838004533930cd7806fa9ae19)
+        ;
+
+        
+    
+    
+            circle_27460af329a84f9980ebb9569313a64b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6851459</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414096</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b186d05808ee42ca870f04e16ed2f30f = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_e19361b9ff224818aa5db12691c58cd1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_46844e79be684da8b92737f905c5f96e = $(`<div id="html_46844e79be684da8b92737f905c5f96e" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e19361b9ff224818aa5db12691c58cd1.setContent(html_46844e79be684da8b92737f905c5f96e);
+        
+
+        circle_b186d05808ee42ca870f04e16ed2f30f.bindPopup(popup_e19361b9ff224818aa5db12691c58cd1)
+        ;
+
+        
+    
+    
+            circle_b186d05808ee42ca870f04e16ed2f30f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6851460</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414090</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f3c86d20ec4e446b8ae4b8d7914a8ab8 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_1c6f9087cf9649088fbccf115a1085e5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_340a3d9ab77349d6bae1aab88e63a1f7 = $(`<div id="html_340a3d9ab77349d6bae1aab88e63a1f7" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_1c6f9087cf9649088fbccf115a1085e5.setContent(html_340a3d9ab77349d6bae1aab88e63a1f7);
+        
+
+        circle_f3c86d20ec4e446b8ae4b8d7914a8ab8.bindPopup(popup_1c6f9087cf9649088fbccf115a1085e5)
+        ;
+
+        
+    
+    
+            circle_f3c86d20ec4e446b8ae4b8d7914a8ab8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6879036</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#B71C1C';
+                       class='fa fa-file-text'></i>
+                <b> 415637</b>
+        <br>License status: <span style='color:#B71C1C'> <b>Expired/Void/Revoked</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_bf7e959f2856419b9c933036591208e8 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_74fb52ef8ac44423bc2746e67d90ce08 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4b9c7b8637374df793966e73c9eb3c78 = $(`<div id="html_4b9c7b8637374df793966e73c9eb3c78" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_74fb52ef8ac44423bc2746e67d90ce08.setContent(html_4b9c7b8637374df793966e73c9eb3c78);
+        
+
+        circle_bf7e959f2856419b9c933036591208e8.bindPopup(popup_74fb52ef8ac44423bc2746e67d90ce08)
+        ;
+
+        
+    
+    
+            circle_bf7e959f2856419b9c933036591208e8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6882615</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415638</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_33401e15e796414b91c36a92abfe9ddb = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_1d03e27710de4aadbb16c9fa73aa1006 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d1354999fe5d436291c5568c29963652 = $(`<div id="html_d1354999fe5d436291c5568c29963652" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_1d03e27710de4aadbb16c9fa73aa1006.setContent(html_d1354999fe5d436291c5568c29963652);
+        
+
+        circle_33401e15e796414b91c36a92abfe9ddb.bindPopup(popup_1d03e27710de4aadbb16c9fa73aa1006)
+        ;
+
+        
+    
+    
+            circle_33401e15e796414b91c36a92abfe9ddb.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6908525</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415646</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_837e759d0a80434eaf135f5563d41442 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_e83548a1a5e84f72a437778d5618f4ac = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ccfcf4900fa5442388060ebe536c8650 = $(`<div id="html_ccfcf4900fa5442388060ebe536c8650" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e83548a1a5e84f72a437778d5618f4ac.setContent(html_ccfcf4900fa5442388060ebe536c8650);
+        
+
+        circle_837e759d0a80434eaf135f5563d41442.bindPopup(popup_e83548a1a5e84f72a437778d5618f4ac)
+        ;
+
+        
+    
+    
+            circle_837e759d0a80434eaf135f5563d41442.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7342489</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415649</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f39ed1861fa64805b521e85f282cb679 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_ad4aec5f67a0448bb601292a02350784 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_16692ccac5e94a588baaf0c021b75d8c = $(`<div id="html_16692ccac5e94a588baaf0c021b75d8c" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ad4aec5f67a0448bb601292a02350784.setContent(html_16692ccac5e94a588baaf0c021b75d8c);
+        
+
+        circle_f39ed1861fa64805b521e85f282cb679.bindPopup(popup_ad4aec5f67a0448bb601292a02350784)
+        ;
+
+        
+    
+    
+            circle_f39ed1861fa64805b521e85f282cb679.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7474044</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415639</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_63d0838d9b12451e9e62b45423cfd40b = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_7de222f9747a4b44b9a1241c1033d7c3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_79a38b7c62264b4cb4cad9452b6c8814 = $(`<div id="html_79a38b7c62264b4cb4cad9452b6c8814" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_7de222f9747a4b44b9a1241c1033d7c3.setContent(html_79a38b7c62264b4cb4cad9452b6c8814);
+        
+
+        circle_63d0838d9b12451e9e62b45423cfd40b.bindPopup(popup_7de222f9747a4b44b9a1241c1033d7c3)
+        ;
+
+        
+    
+    
+            circle_63d0838d9b12451e9e62b45423cfd40b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7474855</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#B71C1C';
+                       class='fa fa-file-text'></i>
+                <b> 415645</b>
+        <br>License status: <span style='color:#B71C1C'> <b>Expired/Void/Revoked</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_bb7cc3e0c1d746bbb1c9218a3acc1d01 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_1adef77d13d543e9a779515ce7877735 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9d06bbcf833a4b45934116e8a402fe37 = $(`<div id="html_9d06bbcf833a4b45934116e8a402fe37" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_1adef77d13d543e9a779515ce7877735.setContent(html_9d06bbcf833a4b45934116e8a402fe37);
+        
+
+        circle_bb7cc3e0c1d746bbb1c9218a3acc1d01.bindPopup(popup_1adef77d13d543e9a779515ce7877735)
+        ;
+
+        
+    
+    
+            circle_bb7cc3e0c1d746bbb1c9218a3acc1d01.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7475052</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415641</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9bec7b9f32b74178863cc23fe55243c7 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_0442055617de4abcb181b6abdeb6009d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_76e5cb29e3ed42e1aebfabfe36f2d777 = $(`<div id="html_76e5cb29e3ed42e1aebfabfe36f2d777" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_0442055617de4abcb181b6abdeb6009d.setContent(html_76e5cb29e3ed42e1aebfabfe36f2d777);
+        
+
+        circle_9bec7b9f32b74178863cc23fe55243c7.bindPopup(popup_0442055617de4abcb181b6abdeb6009d)
+        ;
+
+        
+    
+    
+            circle_9bec7b9f32b74178863cc23fe55243c7.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7475215</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415636</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9c3e43ca34b042488bd7381444824d9f = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_f30cc05ac01145afa42cf5e8251d1ebd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8e16c3ad68634806beedd989610e85c6 = $(`<div id="html_8e16c3ad68634806beedd989610e85c6" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f30cc05ac01145afa42cf5e8251d1ebd.setContent(html_8e16c3ad68634806beedd989610e85c6);
+        
+
+        circle_9c3e43ca34b042488bd7381444824d9f.bindPopup(popup_f30cc05ac01145afa42cf5e8251d1ebd)
+        ;
+
+        
+    
+    
+            circle_9c3e43ca34b042488bd7381444824d9f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7475379</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415640</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_aa38a7b16cbd4441b80627c7362a50f0 = L.circle(
+                [42.34982, -71.08264],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_26ea6bc124e74b5fa20a8c73b2ac48c2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b2f85499a07940ceaaf1f1214314d54d = $(`<div id="html_b2f85499a07940ceaaf1f1214314d54d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_26ea6bc124e74b5fa20a8c73b2ac48c2.setContent(html_b2f85499a07940ceaaf1f1214314d54d);
+        
+
+        circle_aa38a7b16cbd4441b80627c7362a50f0.bindPopup(popup_26ea6bc124e74b5fa20a8c73b2ac48c2)
+        ;
+
+        
+    
+    
+            circle_aa38a7b16cbd4441b80627c7362a50f0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7475573</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 415642</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9dca9b94988e4d0d980d0bfb981f2dee = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_8a5b475c00794620867adbbe22c7d197 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3977204b561d48ca95ebcf6a096c8e73 = $(`<div id="html_3977204b561d48ca95ebcf6a096c8e73" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_8a5b475c00794620867adbbe22c7d197.setContent(html_3977204b561d48ca95ebcf6a096c8e73);
+        
+
+        circle_9dca9b94988e4d0d980d0bfb981f2dee.bindPopup(popup_8a5b475c00794620867adbbe22c7d197)
+        ;
+
+        
+    
+    
+            circle_9dca9b94988e4d0d980d0bfb981f2dee.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7476340</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414118</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6ab47cf931a54ccba2d4f191675c25c3 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_7c28490794b944ab9f69d94032889bf5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_248e8900b75d4bef9467a2bcaf2e0351 = $(`<div id="html_248e8900b75d4bef9467a2bcaf2e0351" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_7c28490794b944ab9f69d94032889bf5.setContent(html_248e8900b75d4bef9467a2bcaf2e0351);
+        
+
+        circle_6ab47cf931a54ccba2d4f191675c25c3.bindPopup(popup_7c28490794b944ab9f69d94032889bf5)
+        ;
+
+        
+    
+    
+            circle_6ab47cf931a54ccba2d4f191675c25c3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7511737</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415608</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_39dd5a8ea383435cb6f31416c84660e6 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_ee63a1fdbf9b498aaffb9a572c5be065 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_12f31dd0437d4a84bef2179b0274f920 = $(`<div id="html_12f31dd0437d4a84bef2179b0274f920" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ee63a1fdbf9b498aaffb9a572c5be065.setContent(html_12f31dd0437d4a84bef2179b0274f920);
+        
+
+        circle_39dd5a8ea383435cb6f31416c84660e6.bindPopup(popup_ee63a1fdbf9b498aaffb9a572c5be065)
+        ;
+
+        
+    
+    
+            circle_39dd5a8ea383435cb6f31416c84660e6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7513605</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415603</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_caa4db2762ca4e60a21385e2a144eed8 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_eaad9ce85ef44ec8a316a5ccf679b228 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c0401ba1aa1547cbaaa7acd0b0e8a60b = $(`<div id="html_c0401ba1aa1547cbaaa7acd0b0e8a60b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_eaad9ce85ef44ec8a316a5ccf679b228.setContent(html_c0401ba1aa1547cbaaa7acd0b0e8a60b);
+        
+
+        circle_caa4db2762ca4e60a21385e2a144eed8.bindPopup(popup_eaad9ce85ef44ec8a316a5ccf679b228)
+        ;
+
+        
+    
+    
+            circle_caa4db2762ca4e60a21385e2a144eed8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7513906</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415621</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5f5d52250ce8449ca2bca7e14d2973f3 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_9ee2c3a0c090431aba293239643dadbb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_76e28d2e88fd46b095b5a3d15bfc44b7 = $(`<div id="html_76e28d2e88fd46b095b5a3d15bfc44b7" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9ee2c3a0c090431aba293239643dadbb.setContent(html_76e28d2e88fd46b095b5a3d15bfc44b7);
+        
+
+        circle_5f5d52250ce8449ca2bca7e14d2973f3.bindPopup(popup_9ee2c3a0c090431aba293239643dadbb)
+        ;
+
+        
+    
+    
+            circle_5f5d52250ce8449ca2bca7e14d2973f3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7514024</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415632</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e174d66178274e949d99736508563624 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_243b1d7ab2934d73ab95e7cad3bd3feb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a06156b1cb7b4f72a6fb1e776bc316dc = $(`<div id="html_a06156b1cb7b4f72a6fb1e776bc316dc" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_243b1d7ab2934d73ab95e7cad3bd3feb.setContent(html_a06156b1cb7b4f72a6fb1e776bc316dc);
+        
+
+        circle_e174d66178274e949d99736508563624.bindPopup(popup_243b1d7ab2934d73ab95e7cad3bd3feb)
+        ;
+
+        
+    
+    
+            circle_e174d66178274e949d99736508563624.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7514336</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415624</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_aa1db1f35b1941c582e8afa467fa86b4 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_2bfc18ba574b429bb65be880561201a1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_622591b513d84e559292a9067c5d7834 = $(`<div id="html_622591b513d84e559292a9067c5d7834" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_2bfc18ba574b429bb65be880561201a1.setContent(html_622591b513d84e559292a9067c5d7834);
+        
+
+        circle_aa1db1f35b1941c582e8afa467fa86b4.bindPopup(popup_2bfc18ba574b429bb65be880561201a1)
+        ;
+
+        
+    
+    
+            circle_aa1db1f35b1941c582e8afa467fa86b4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7531700</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415618</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_215087feecb1411abda50e70a06798d7 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_df12e2b0d626414e8a6469efd5bc871a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e800e06423f847369f9c67cd5643f542 = $(`<div id="html_e800e06423f847369f9c67cd5643f542" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_df12e2b0d626414e8a6469efd5bc871a.setContent(html_e800e06423f847369f9c67cd5643f542);
+        
+
+        circle_215087feecb1411abda50e70a06798d7.bindPopup(popup_df12e2b0d626414e8a6469efd5bc871a)
+        ;
+
+        
+    
+    
+            circle_215087feecb1411abda50e70a06798d7.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7635616</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415626</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_477987aac480491584f6ea55c94326ce = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_c07248948e0e42bb8bd08d921fb57353 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_225bcb86125c47069bbf41d63440ed64 = $(`<div id="html_225bcb86125c47069bbf41d63440ed64" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_c07248948e0e42bb8bd08d921fb57353.setContent(html_225bcb86125c47069bbf41d63440ed64);
+        
+
+        circle_477987aac480491584f6ea55c94326ce.bindPopup(popup_c07248948e0e42bb8bd08d921fb57353)
+        ;
+
+        
+    
+    
+            circle_477987aac480491584f6ea55c94326ce.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7694365</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414103</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fcf8c26da9dc42018c8c8ff53f05b867 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_d219f2b1030e426e840408fdbb497294 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a033e8a3389b4b5380a639e569da8d22 = $(`<div id="html_a033e8a3389b4b5380a639e569da8d22" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d219f2b1030e426e840408fdbb497294.setContent(html_a033e8a3389b4b5380a639e569da8d22);
+        
+
+        circle_fcf8c26da9dc42018c8c8ff53f05b867.bindPopup(popup_d219f2b1030e426e840408fdbb497294)
+        ;
+
+        
+    
+    
+            circle_fcf8c26da9dc42018c8c8ff53f05b867.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7694559</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414097</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_429e822c4e394660981af5a4bf9f7ce4 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_7f30b7fde8734c81b05a4ecd1e47b9bf = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9c7b3a896c50446ea702f7eb871ac289 = $(`<div id="html_9c7b3a896c50446ea702f7eb871ac289" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_7f30b7fde8734c81b05a4ecd1e47b9bf.setContent(html_9c7b3a896c50446ea702f7eb871ac289);
+        
+
+        circle_429e822c4e394660981af5a4bf9f7ce4.bindPopup(popup_7f30b7fde8734c81b05a4ecd1e47b9bf)
+        ;
+
+        
+    
+    
+            circle_429e822c4e394660981af5a4bf9f7ce4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7713815</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415616</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_53b03763dd8f4cf7984637cf3d648ff6 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_3afc1a7d5b2d422e9fc70d3e615ede57 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9cf4767594fc4945bbef7fc2c9d62b14 = $(`<div id="html_9cf4767594fc4945bbef7fc2c9d62b14" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_3afc1a7d5b2d422e9fc70d3e615ede57.setContent(html_9cf4767594fc4945bbef7fc2c9d62b14);
+        
+
+        circle_53b03763dd8f4cf7984637cf3d648ff6.bindPopup(popup_3afc1a7d5b2d422e9fc70d3e615ede57)
+        ;
+
+        
+    
+    
+            circle_53b03763dd8f4cf7984637cf3d648ff6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7728499</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415619</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9773accc535746b2afa4d95644a7d2a1 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_8666ed38e9db4dd9910d985958fdb583 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c39e2bd5cfda4075ba012920c56ebd42 = $(`<div id="html_c39e2bd5cfda4075ba012920c56ebd42" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_8666ed38e9db4dd9910d985958fdb583.setContent(html_c39e2bd5cfda4075ba012920c56ebd42);
+        
+
+        circle_9773accc535746b2afa4d95644a7d2a1.bindPopup(popup_8666ed38e9db4dd9910d985958fdb583)
+        ;
+
+        
+    
+    
+            circle_9773accc535746b2afa4d95644a7d2a1.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7832890</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415623</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_993f6d803fa741d7a90742713cc764fc = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_6d9dc4c1af8d4183b72b03865a39a4e2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_be0c381c8f654dafb181c137523cc8f7 = $(`<div id="html_be0c381c8f654dafb181c137523cc8f7" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_6d9dc4c1af8d4183b72b03865a39a4e2.setContent(html_be0c381c8f654dafb181c137523cc8f7);
+        
+
+        circle_993f6d803fa741d7a90742713cc764fc.bindPopup(popup_6d9dc4c1af8d4183b72b03865a39a4e2)
+        ;
+
+        
+    
+    
+            circle_993f6d803fa741d7a90742713cc764fc.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7837202</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E65100';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: executive suite</b>
+        <br>License status: <span style='color:#E65100'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f38f4e89a2164cddbf4254d55c8fc766 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_4ddcde54a68d4e1f9b4fb069661041ae = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3215b040dd0e45bba5689c604549ec20 = $(`<div id="html_3215b040dd0e45bba5689c604549ec20" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_4ddcde54a68d4e1f9b4fb069661041ae.setContent(html_3215b040dd0e45bba5689c604549ec20);
+        
+
+        circle_f38f4e89a2164cddbf4254d55c8fc766.bindPopup(popup_4ddcde54a68d4e1f9b4fb069661041ae)
+        ;
+
+        
+    
+    
+            circle_f38f4e89a2164cddbf4254d55c8fc766.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7854872</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415628</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5e18023ce1e54d27a61b8be06bc28f74 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_b21f0d9799794b26b41a972070739460 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b0deca8969bf4dbf9a295a0856eb931f = $(`<div id="html_b0deca8969bf4dbf9a295a0856eb931f" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b21f0d9799794b26b41a972070739460.setContent(html_b0deca8969bf4dbf9a295a0856eb931f);
+        
+
+        circle_5e18023ce1e54d27a61b8be06bc28f74.bindPopup(popup_b21f0d9799794b26b41a972070739460)
+        ;
+
+        
+    
+    
+            circle_5e18023ce1e54d27a61b8be06bc28f74.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7911936</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415615</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_67010a9270f64f7c827f4c59c5ecb7b4 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_d9766f1edbf7492ca96e005d33122e51 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ea6ebdb4e0064a7e90f50d88fe5158a0 = $(`<div id="html_ea6ebdb4e0064a7e90f50d88fe5158a0" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d9766f1edbf7492ca96e005d33122e51.setContent(html_ea6ebdb4e0064a7e90f50d88fe5158a0);
+        
+
+        circle_67010a9270f64f7c827f4c59c5ecb7b4.bindPopup(popup_d9766f1edbf7492ca96e005d33122e51)
+        ;
+
+        
+    
+    
+            circle_67010a9270f64f7c827f4c59c5ecb7b4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>7916575</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414101</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2f5b73a7ea6244fa9c1c984c3e18ace3 = L.circle(
+                [42.34447, -71.07644],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_9c50c48c0717411482337aabc0719abe = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1db459328a954a73aa039ff28a3a1e7b = $(`<div id="html_1db459328a954a73aa039ff28a3a1e7b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9c50c48c0717411482337aabc0719abe.setContent(html_1db459328a954a73aa039ff28a3a1e7b);
+        
+
+        circle_2f5b73a7ea6244fa9c1c984c3e18ace3.bindPopup(popup_9c50c48c0717411482337aabc0719abe)
+        ;
+
+        
+    
+    
+            circle_2f5b73a7ea6244fa9c1c984c3e18ace3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8025718</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415607</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_de7aff1f199d44c59aac55ae94868f4e = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_ad23ddcafd2a4b5ca0c803de5b2409ac = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0e095158d89343f4b903abf69f9e4e77 = $(`<div id="html_0e095158d89343f4b903abf69f9e4e77" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ad23ddcafd2a4b5ca0c803de5b2409ac.setContent(html_0e095158d89343f4b903abf69f9e4e77);
+        
+
+        circle_de7aff1f199d44c59aac55ae94868f4e.bindPopup(popup_ad23ddcafd2a4b5ca0c803de5b2409ac)
+        ;
+
+        
+    
+    
+            circle_de7aff1f199d44c59aac55ae94868f4e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8082512</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414100</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c83c12f0a9664985af50f1ab06d10ed6 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_acc2be8292fe40f080c347a2e61ccc14 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0d180a6e753546cb9e6f08812ef093d2 = $(`<div id="html_0d180a6e753546cb9e6f08812ef093d2" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_acc2be8292fe40f080c347a2e61ccc14.setContent(html_0d180a6e753546cb9e6f08812ef093d2);
+        
+
+        circle_c83c12f0a9664985af50f1ab06d10ed6.bindPopup(popup_acc2be8292fe40f080c347a2e61ccc14)
+        ;
+
+        
+    
+    
+            circle_c83c12f0a9664985af50f1ab06d10ed6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8206536</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414094</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_63086e8ea5d44a00b14b97a1088cd1f6 = L.circle(
+                [42.34441, -71.07633],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_172afd3340bb40cea0ecff62d057b23a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9296f3016186451dab3f807d79cf9c95 = $(`<div id="html_9296f3016186451dab3f807d79cf9c95" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_172afd3340bb40cea0ecff62d057b23a.setContent(html_9296f3016186451dab3f807d79cf9c95);
+        
+
+        circle_63086e8ea5d44a00b14b97a1088cd1f6.bindPopup(popup_172afd3340bb40cea0ecff62d057b23a)
+        ;
+
+        
+    
+    
+            circle_63086e8ea5d44a00b14b97a1088cd1f6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8403945</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414098</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_13652f59d2574771966b84bcb4646148 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_c734ef87671e492088412977faf7325c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_47712a887ad4482da3587e177c304071 = $(`<div id="html_47712a887ad4482da3587e177c304071" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_c734ef87671e492088412977faf7325c.setContent(html_47712a887ad4482da3587e177c304071);
+        
+
+        circle_13652f59d2574771966b84bcb4646148.bindPopup(popup_c734ef87671e492088412977faf7325c)
+        ;
+
+        
+    
+    
+            circle_13652f59d2574771966b84bcb4646148.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8732121</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415627</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e82377b77c00460c9fc325c18f32b6c6 = L.circle(
+                [42.36017, -71.06345999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_a328c69c1f8149158d8a0a11dea056ec = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4d869501f0b341ffa47b67b26acd5dfa = $(`<div id="html_4d869501f0b341ffa47b67b26acd5dfa" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-1.html'>                                 <b>Cluster 190-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a328c69c1f8149158d8a0a11dea056ec.setContent(html_4d869501f0b341ffa47b67b26acd5dfa);
+        
+
+        circle_e82377b77c00460c9fc325c18f32b6c6.bindPopup(popup_a328c69c1f8149158d8a0a11dea056ec)
+        ;
+
+        
+    
+    
+            circle_e82377b77c00460c9fc325c18f32b6c6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>9133627</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 415613</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9d09879466cb44e28b5dfdbaca3f53f8 = L.circle(
+                [42.34981, -71.08263000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_c926d7c14c7a4e4498ae3e03fdde54c0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_54bd3f6b8905490a9f7f6012518e07af = $(`<div id="html_54bd3f6b8905490a9f7f6012518e07af" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_c926d7c14c7a4e4498ae3e03fdde54c0.setContent(html_54bd3f6b8905490a9f7f6012518e07af);
+        
+
+        circle_9d09879466cb44e28b5dfdbaca3f53f8.bindPopup(popup_c926d7c14c7a4e4498ae3e03fdde54c0)
+        ;
+
+        
+    
+    
+            circle_9d09879466cb44e28b5dfdbaca3f53f8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>18070939</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#B71C1C';
+                       class='fa fa-file-text'></i>
+                <b> 415647</b>
+        <br>License status: <span style='color:#B71C1C'> <b>Expired/Void/Revoked</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_dfa9867febbb421e933edb488c208f0d = L.circle(
+                [42.34981, -71.08263000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_9b02a019566f4e678fa7f2ecdfd2d4a5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_807da05a351c47438ca4a06e43f938a7 = $(`<div id="html_807da05a351c47438ca4a06e43f938a7" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-3.html'>                                 <b>Cluster 190-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9b02a019566f4e678fa7f2ecdfd2d4a5.setContent(html_807da05a351c47438ca4a06e43f938a7);
+        
+
+        circle_dfa9867febbb421e933edb488c208f0d.bindPopup(popup_9b02a019566f4e678fa7f2ecdfd2d4a5)
+        ;
+
+        
+    
+    
+            circle_dfa9867febbb421e933edb488c208f0d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>21486679</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#B71C1C';
+                       class='fa fa-file-text'></i>
+                <b> 415643</b>
+        <br>License status: <span style='color:#B71C1C'> <b>Expired/Void/Revoked</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_86d961220a864489826e3dc9919ddc8a = L.circle(
+                [42.34448, -71.07636],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_79284f11553d43749c670a340a5859e1);
+        
+    
+        var popup_b59638b230cb4b27a5567c5827603939 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_59331bfbdd8840928c9949879edc7885 = $(`<div id="html_59331bfbdd8840928c9949879edc7885" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/190-2.html'>                                 <b>Cluster 190-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b59638b230cb4b27a5567c5827603939.setContent(html_59331bfbdd8840928c9949879edc7885);
+        
+
+        circle_86d961220a864489826e3dc9919ddc8a.bindPopup(popup_b59638b230cb4b27a5567c5827603939)
+        ;
+
+        
+    
+    
+            circle_86d961220a864489826e3dc9919ddc8a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>24749244</b></p>
+        Cluster: <span style='color:#448AFF'><b>190-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Maverick Empire </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Maverick Empire </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#2E7D32';
+                       class='fa fa-file-text'></i>
+                <b> 414093</b>
+        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_37b3b88f14b44e93912b4c6b7c36a34d = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_79284f11553d43749c670a340a5859e1,
+                },
+            };
+            L.control.layers(
+                layer_control_37b3b88f14b44e93912b4c6b7c36a34d.base_layers,
+                layer_control_37b3b88f14b44e93912b4c6b7c36a34d.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_fe2214f7e3a544a1a0fcee3454b99198);
+        
+</script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

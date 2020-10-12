@@ -1,4 +1,487 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Murat</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Murat </h2>
+        <h3>
+            <b>6 listings</b> | 
+            3 clusters
+        </h3> 
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    5 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#455A64">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    None claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                                                   
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    1 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#B71C1C">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Expired/Void/Revoked
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/75-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>75-1</b> (4 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 57, Gerrish Street, Faneuil, Brighton </p>
+            <a href='/centroid/75-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/75-2.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>75-2</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 153, Bigelow Street, Faneuil, Brighton </p>
+            <a href='/centroid/75-2.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/75-3.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>75-3</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Massachusetts Turnpike, Newton, Suffolk County, Massachusetts, 02135-3202, United States of America </p>
+            <a href='/centroid/75-3.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
 <head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
@@ -23,7 +506,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_d8c49a6a1aea439294c62d1029593cbf {
+                #map_088f9d3eaffa4c28a980dfaaaa7c62e6 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,113 +518,31 @@
 </head>
 <body>    
     
-         <div style="position: fixed; z-index:699; 
-         top: 10px; right: 10px; max-width: 300px; height:100%;
-         display:block;">
-
-            <div style='width:auto; display:inline-block; overflow:auto;
-                        max-height:calc(100% - 60px);
-                        padding: 10px 10px; font-size:14px; 
-                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
-                        border-radius:5px;
-                        background-color:rgba(255, 255, 255, .8);'>
-                        
-                <div><a style='font-size:14px;color:#636363;'
-                href='https://air-monitor.onrender.com/home.html#hosts'>
-                    <b>&#8592; All hosts</b></a> </div>   
-                
-                <hr style='margin:10px 40px 0 0;'>
-                
-            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
-                        
-                <div style='margin:0; text-align:center'>
-                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
-                        2 Clusters
-                        &nbsp;|&nbsp;
-                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
-                        6 Listings
-                    </b>
-                </div>
-                <hr style='margin:8px 0 0;'>
-                <div style='margin:10px 0 5px; font-size:14px'>
-                           Host listings by <b>registration status</b>:</div>
-                       
-                <i class="fa fa-circle"
-                style="font-size:14px; color:#B71C1C; margin-right:3px"></i>
-                Expired/Void/Revoked - <b>1</b> listing
-                <br>
-                <i class="fa fa-circle"
-                style="font-size:14px; color:#455A64; margin-right:3px"></i>
-                None claimed - <b>5</b> listings
-                <br>
-                <hr style='margin:8px 0 0;'>
-               
-    <div style='margin:10px 0 3px; font-size:14px'>
-        <b>Listing clusters</b></div>
-    <div style='margin:0 0 8px; font-size:12px'>
-        Addresses inferred from cluster centers.
-        Nearby STR buildings sourced from ADCO research.
-    </div> 
-    
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>57, Gerrish Street, Faneuil, Brighton</b>
-                    <span style='color:black'>(5 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>within 250 ft.</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <ul style='margin:0'><li>No known STR buildings nearby</li></ul></div>
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>Massachusetts Turnpike, Newton, Suffolk County, Massachusetts, 02135-3202, United States of America</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <ul style='margin:0'><li>No known STR buildings nearby</li></ul></div>
-            </div>
-          </div> 
-    
          <div style="
          position: fixed; z-index:699; 
-         bottom: 12px; right: 0px; width: 355px; height: 24px; 
-         background-color:rgba(255, 255, 255, .8);
-         padding: 2px 6px;
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
          font-size:12px">
-            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
           </div> 
     
-            <div class="folium-map" id="map_d8c49a6a1aea439294c62d1029593cbf" ></div>
+            <div class="folium-map" id="map_088f9d3eaffa4c28a980dfaaaa7c62e6" ></div>
         
 </body>
 <script>    
     
-            var map_d8c49a6a1aea439294c62d1029593cbf = L.map(
-                "map_d8c49a6a1aea439294c62d1029593cbf",
+            var map_088f9d3eaffa4c28a980dfaaaa7c62e6 = L.map(
+                "map_088f9d3eaffa4c28a980dfaaaa7c62e6",
                 {
-                    center: [42.34554, -71.052],
+                    center: [42.356445, -71.16462],
                     crs: L.CRS.EPSG3857,
-                    zoom: 13,
+                    zoom: 15,
                     zoomControl: true,
                     preferCanvas: false,
                 }
@@ -151,311 +552,624 @@
 
         
     
-            var tile_layer_090fee31c0f94b61a0d9b5aa759a83cc = L.tileLayer(
+            var tile_layer_7724ff0b1fa04641ae06e34e11f44319 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_d8c49a6a1aea439294c62d1029593cbf);
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
         
     
-            var feature_group_22d4dd43a66244f08abedb17f6170f67 = L.featureGroup(
-                {}
-            ).addTo(map_d8c49a6a1aea439294c62d1029593cbf);
+            var circle_ae058ec2d97a478f93400b2e253044d3 = L.circle(
+                [42.356770000000004, -71.1646825],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.4646221869771986, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7646221869771985, "radius": 70.88611680000001, "stroke": true, "weight": 2}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
         
     
-            var circle_3220e9f996e54b43b029591145d09fe8 = L.circle(
-                [42.356548, -71.164884],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 74.0664, "stroke": true, "weight": 3}
-            ).addTo(feature_group_22d4dd43a66244f08abedb17f6170f67);
-        
-    
-            circle_3220e9f996e54b43b029591145d09fe8.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #85.1 | 5 listings | Murat</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>? (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (5 listings)</li></ul>
-            <span style='color:#0D47A1;'>57, Gerrish Street, Faneuil, Brighton</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_b500d820801746409d98bb690098e612 = L.circle(
-                [42.35723, -71.16355],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_22d4dd43a66244f08abedb17f6170f67);
-        
-    
-            circle_b500d820801746409d98bb690098e612.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #85.2 | 1 listings | Murat</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>418683 (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Expired/Void/Revoked - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>Massachusetts Turnpike, Newton, Suffolk County, Massachusetts, 02135-3202, United States of America</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_7510a46fa3c54a59abe699199c09e171 = L.circleMarker(
-                [42.356548, -71.164884],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_22d4dd43a66244f08abedb17f6170f67);
-        
-    
-            circle_marker_7510a46fa3c54a59abe699199c09e171.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #85.1 | 5 listings | Murat</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>? (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (5 listings)</li></ul>
-            <span style='color:#0D47A1;'>57, Gerrish Street, Faneuil, Brighton</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_de76f529efaa47ec8d8d06a722eed7e8 = L.circleMarker(
-                [42.35723, -71.16355],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_22d4dd43a66244f08abedb17f6170f67);
-        
-    
-            circle_marker_de76f529efaa47ec8d8d06a722eed7e8.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #85.2 | 1 listings | Murat</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>418683 (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Expired/Void/Revoked - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>Massachusetts Turnpike, Newton, Suffolk County, Massachusetts, 02135-3202, United States of America</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var feature_group_a4a589bfbe434c158c43211533ec1d13 = L.featureGroup(
-                {}
-            ).addTo(map_d8c49a6a1aea439294c62d1029593cbf);
-        
-    
-            var feature_group_be4bfeb937a641aeaaeb660a15f376dc = L.featureGroup(
-                {}
-            ).addTo(map_d8c49a6a1aea439294c62d1029593cbf);
-        
-    
-            var circle_c37dcc49dfa64d51a88c7d7fc5445f8f = L.circle(
-                [42.35729, -71.16521],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_be4bfeb937a641aeaaeb660a15f376dc);
-        
-    
-        var popup_09af4e195ee14480abff58e022c5a71c = L.popup({"maxWidth": "100%"});
+        var popup_2a127b3eb4534116b43e865f52460ef4 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_b039bcf498d841e39c2d9fe19bae635f = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjkwMzAyNjEnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzI5MDMwMjYxPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_09af4e195ee14480abff58e022c5a71c.setContent(i_frame_b039bcf498d841e39c2d9fe19bae635f);
+            var html_a93b62076eeb4a40ab447259b843123e = $(`<div id="html_a93b62076eeb4a40ab447259b843123e" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-1.html'>                                 <b>Cluster 75-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_2a127b3eb4534116b43e865f52460ef4.setContent(html_a93b62076eeb4a40ab447259b843123e);
         
 
-        circle_c37dcc49dfa64d51a88c7d7fc5445f8f.bindPopup(popup_09af4e195ee14480abff58e022c5a71c)
+        circle_ae058ec2d97a478f93400b2e253044d3.bindPopup(popup_2a127b3eb4534116b43e865f52460ef4)
         ;
 
         
     
     
-            circle_c37dcc49dfa64d51a88c7d7fc5445f8f.bindTooltip(
+            circle_ae058ec2d97a478f93400b2e253044d3.bindTooltip(
                 `<div>
                      
-            Murat | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 29030261</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #85.1<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>75-1</b></p>
+                        Host: <b>Murat </b> | Listings: <b>4</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_e96766c9acb74b85bca9dc1034f8f3d2 = L.circle(
+            var circle_0d43fd9d46b64076be43372c6f9681ac = L.circle(
                 [42.35566, -71.16569],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_be4bfeb937a641aeaaeb660a15f376dc);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
         
     
-        var popup_f0bf410eaed74d63a4380c57212b89cf = L.popup({"maxWidth": "100%"});
+        var popup_fe6a9aa21aa84309aa8032fe3dcf8886 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_a41f01872ca749fc9e00f3bb5cc4558c = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzQ3NzEwMDEnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM0NzcxMDAxPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_f0bf410eaed74d63a4380c57212b89cf.setContent(i_frame_a41f01872ca749fc9e00f3bb5cc4558c);
+            var html_af288a44a4e64fb78365a9e4e4c9beae = $(`<div id="html_af288a44a4e64fb78365a9e4e4c9beae" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-2.html'>                                 <b>Cluster 75-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_fe6a9aa21aa84309aa8032fe3dcf8886.setContent(html_af288a44a4e64fb78365a9e4e4c9beae);
         
 
-        circle_e96766c9acb74b85bca9dc1034f8f3d2.bindPopup(popup_f0bf410eaed74d63a4380c57212b89cf)
+        circle_0d43fd9d46b64076be43372c6f9681ac.bindPopup(popup_fe6a9aa21aa84309aa8032fe3dcf8886)
         ;
 
         
     
     
-            circle_e96766c9acb74b85bca9dc1034f8f3d2.bindTooltip(
+            circle_0d43fd9d46b64076be43372c6f9681ac.bindTooltip(
                 `<div>
                      
-            Murat | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 34771001</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #85.1<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>75-2</b></p>
+                        Host: <b>Murat </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_db8c2afee33e46799df1f39ca1800b2e = L.circle(
-                [42.35646, -71.16429000000002],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_be4bfeb937a641aeaaeb660a15f376dc);
-        
-    
-        var popup_77f71aba86c94cc890fa376bda86dfae = L.popup({"maxWidth": "100%"});
-
-        
-            var i_frame_090bbb6eeeb549258868a074dbdf9321 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzc4NDA4NDInIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM3ODQwODQyPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_77f71aba86c94cc890fa376bda86dfae.setContent(i_frame_090bbb6eeeb549258868a074dbdf9321);
-        
-
-        circle_db8c2afee33e46799df1f39ca1800b2e.bindPopup(popup_77f71aba86c94cc890fa376bda86dfae)
-        ;
-
-        
-    
-    
-            circle_db8c2afee33e46799df1f39ca1800b2e.bindTooltip(
-                `<div>
-                     
-            Murat | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 37840842</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #85.1<br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_a9b8ab5b36ed4aabbdac3d9e6b3fe883 = L.circle(
-                [42.35706, -71.16493],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_be4bfeb937a641aeaaeb660a15f376dc);
-        
-    
-        var popup_54825f5bbc9b4b3aa05c654b27f6c2b9 = L.popup({"maxWidth": "100%"});
-
-        
-            var i_frame_a129c6ae7d4f402886f6b19ec174e3a5 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzc4NDA5NzEnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM3ODQwOTcxPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_54825f5bbc9b4b3aa05c654b27f6c2b9.setContent(i_frame_a129c6ae7d4f402886f6b19ec174e3a5);
-        
-
-        circle_a9b8ab5b36ed4aabbdac3d9e6b3fe883.bindPopup(popup_54825f5bbc9b4b3aa05c654b27f6c2b9)
-        ;
-
-        
-    
-    
-            circle_a9b8ab5b36ed4aabbdac3d9e6b3fe883.bindTooltip(
-                `<div>
-                     
-            Murat | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 37840971</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #85.1<br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_3d552f96704349daacde082889a6d8af = L.circle(
-                [42.35627, -71.1643],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_be4bfeb937a641aeaaeb660a15f376dc);
-        
-    
-        var popup_dbbbd6761eac44bfb80f4d6795623f3a = L.popup({"maxWidth": "100%"});
-
-        
-            var i_frame_8a38cd264ee6477ca9191e5919b73c11 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzgxMjcwOTUnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM4MTI3MDk1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_dbbbd6761eac44bfb80f4d6795623f3a.setContent(i_frame_8a38cd264ee6477ca9191e5919b73c11);
-        
-
-        circle_3d552f96704349daacde082889a6d8af.bindPopup(popup_dbbbd6761eac44bfb80f4d6795623f3a)
-        ;
-
-        
-    
-    
-            circle_3d552f96704349daacde082889a6d8af.bindTooltip(
-                `<div>
-                     
-            Murat | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 38127095</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #85.1<br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_ee332110a3c3409a9c7302f8727990f1 = L.circle(
+            var circle_014143bfeb0e4cb2ad1387412a022899 = L.circle(
                 [42.35723, -71.16355],
-                {"bubblingMouseEvents": true, "color": "#B71C1C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_be4bfeb937a641aeaaeb660a15f376dc);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
         
     
-        var popup_914fb06eb2bb43e19c56b5ca004f933c = L.popup({"maxWidth": "100%"});
+        var popup_bb41654057b3443b977bbf6e0650d85a = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_7f5981ff962a425994ac3413ff18f551 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjkwMjk5NDInIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzI5MDI5OTQyPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_914fb06eb2bb43e19c56b5ca004f933c.setContent(i_frame_7f5981ff962a425994ac3413ff18f551);
+            var html_54550a0a0cdc4fd2bb45688294833d0d = $(`<div id="html_54550a0a0cdc4fd2bb45688294833d0d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-3.html'>                                 <b>Cluster 75-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_bb41654057b3443b977bbf6e0650d85a.setContent(html_54550a0a0cdc4fd2bb45688294833d0d);
         
 
-        circle_ee332110a3c3409a9c7302f8727990f1.bindPopup(popup_914fb06eb2bb43e19c56b5ca004f933c)
+        circle_014143bfeb0e4cb2ad1387412a022899.bindPopup(popup_bb41654057b3443b977bbf6e0650d85a)
         ;
 
         
     
     
-            circle_ee332110a3c3409a9c7302f8727990f1.bindTooltip(
+            circle_014143bfeb0e4cb2ad1387412a022899.bindTooltip(
                 `<div>
                      
-            Murat | License: <span style="color:#B71C1C">418683</span> (Expired/Void/Revoked)
-            <br> <i class="fa fa-dot-circle-o" style="color:#B71C1C; margin-right:3px;"></i>
-            <b>Listing 29029942</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #85.2<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>75-3</b></p>
+                        Host: <b>Murat </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var layer_control_f9aee4e459db434e86aa9323fca45ef0 = {
+            var circle_bfc4d7656d8342efa9aa845ea30c764f = L.circle(
+                [42.356770000000004, -71.1646825],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
+        
+    
+        var popup_c2932f047ff8450691a2e71853c6c1cb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f1fef8dd6ac043f7a717b28997052d98 = $(`<div id="html_f1fef8dd6ac043f7a717b28997052d98" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-1.html'>                                 <b>Cluster 75-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_c2932f047ff8450691a2e71853c6c1cb.setContent(html_f1fef8dd6ac043f7a717b28997052d98);
+        
+
+        circle_bfc4d7656d8342efa9aa845ea30c764f.bindPopup(popup_c2932f047ff8450691a2e71853c6c1cb)
+        ;
+
+        
+    
+    
+            circle_bfc4d7656d8342efa9aa845ea30c764f.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>75-1</b></p>
+                        Host: <b>Murat </b> | Listings: <b>4</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7693955cf16645f287ebbda55416582b = L.circle(
+                [42.35566, -71.16569],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
+        
+    
+        var popup_22d7632d0e594de8be647f5df8e88ab0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ad3ade55798243c2abc2fc95e4eeb46d = $(`<div id="html_ad3ade55798243c2abc2fc95e4eeb46d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-2.html'>                                 <b>Cluster 75-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_22d7632d0e594de8be647f5df8e88ab0.setContent(html_ad3ade55798243c2abc2fc95e4eeb46d);
+        
+
+        circle_7693955cf16645f287ebbda55416582b.bindPopup(popup_22d7632d0e594de8be647f5df8e88ab0)
+        ;
+
+        
+    
+    
+            circle_7693955cf16645f287ebbda55416582b.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>75-2</b></p>
+                        Host: <b>Murat </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c42124467c5c422c8d5339c5a5600aff = L.circle(
+                [42.35723, -71.16355],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
+        
+    
+        var popup_214a15123403462ab820be341b6ad935 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e22f54fa0b284e05adbe4dc72b95ffc5 = $(`<div id="html_e22f54fa0b284e05adbe4dc72b95ffc5" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-3.html'>                                 <b>Cluster 75-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_214a15123403462ab820be341b6ad935.setContent(html_e22f54fa0b284e05adbe4dc72b95ffc5);
+        
+
+        circle_c42124467c5c422c8d5339c5a5600aff.bindPopup(popup_214a15123403462ab820be341b6ad935)
+        ;
+
+        
+    
+    
+            circle_c42124467c5c422c8d5339c5a5600aff.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>75-3</b></p>
+                        Host: <b>Murat </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_64077c5a5af04dba9ee1cdf2e81b786e = L.featureGroup(
+                {}
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
+        
+    
+            var circle_afaa06de0c9a40afba9f252777831725 = L.circle(
+                [42.35723, -71.16355],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_64077c5a5af04dba9ee1cdf2e81b786e);
+        
+    
+        var popup_fb5a12fda6e64025b3ee17d0821eb63c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f00c96cf8c8f4a99995fce505e378b64 = $(`<div id="html_f00c96cf8c8f4a99995fce505e378b64" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-3.html'>                                 <b>Cluster 75-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_fb5a12fda6e64025b3ee17d0821eb63c.setContent(html_f00c96cf8c8f4a99995fce505e378b64);
+        
+
+        circle_afaa06de0c9a40afba9f252777831725.bindPopup(popup_fb5a12fda6e64025b3ee17d0821eb63c)
+        ;
+
+        
+    
+    
+            circle_afaa06de0c9a40afba9f252777831725.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>29029942</b></p>
+        Cluster: <span style='color:#448AFF'><b>75-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Murat </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#B71C1C';
+                       class='fa fa-file-text'></i>
+                <b> 418683</b>
+        <br>License status: <span style='color:#B71C1C'> <b>Expired/Void/Revoked</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ff39b27fb453426f9c666df9709bd52b = L.circle(
+                [42.35729, -71.16521],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_64077c5a5af04dba9ee1cdf2e81b786e);
+        
+    
+        var popup_ea2dd64824764d50a9ede6eabcc57059 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8752cab8ab374367a209fa28748284c9 = $(`<div id="html_8752cab8ab374367a209fa28748284c9" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-1.html'>                                 <b>Cluster 75-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ea2dd64824764d50a9ede6eabcc57059.setContent(html_8752cab8ab374367a209fa28748284c9);
+        
+
+        circle_ff39b27fb453426f9c666df9709bd52b.bindPopup(popup_ea2dd64824764d50a9ede6eabcc57059)
+        ;
+
+        
+    
+    
+            circle_ff39b27fb453426f9c666df9709bd52b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>29030261</b></p>
+        Cluster: <span style='color:#448AFF'><b>75-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Murat </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fb3b7b4c6d6b44d5a1522e4e9fc3c87a = L.circle(
+                [42.35566, -71.16569],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_64077c5a5af04dba9ee1cdf2e81b786e);
+        
+    
+        var popup_26516cd4530947ea91811d39502dcc73 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_82d2ad23a66548a9a166d34c0531ea39 = $(`<div id="html_82d2ad23a66548a9a166d34c0531ea39" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-2.html'>                                 <b>Cluster 75-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_26516cd4530947ea91811d39502dcc73.setContent(html_82d2ad23a66548a9a166d34c0531ea39);
+        
+
+        circle_fb3b7b4c6d6b44d5a1522e4e9fc3c87a.bindPopup(popup_26516cd4530947ea91811d39502dcc73)
+        ;
+
+        
+    
+    
+            circle_fb3b7b4c6d6b44d5a1522e4e9fc3c87a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>34771001</b></p>
+        Cluster: <span style='color:#448AFF'><b>75-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Murat </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a5c45a40dd27433fb6fc00c56fa18d85 = L.circle(
+                [42.35646, -71.16429000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_64077c5a5af04dba9ee1cdf2e81b786e);
+        
+    
+        var popup_fe898be4cbf04b0b896d028181ff7151 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_63ae19cdb22b40d1950e55c51d50d9d2 = $(`<div id="html_63ae19cdb22b40d1950e55c51d50d9d2" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-1.html'>                                 <b>Cluster 75-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_fe898be4cbf04b0b896d028181ff7151.setContent(html_63ae19cdb22b40d1950e55c51d50d9d2);
+        
+
+        circle_a5c45a40dd27433fb6fc00c56fa18d85.bindPopup(popup_fe898be4cbf04b0b896d028181ff7151)
+        ;
+
+        
+    
+    
+            circle_a5c45a40dd27433fb6fc00c56fa18d85.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37840842</b></p>
+        Cluster: <span style='color:#448AFF'><b>75-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Murat </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2b51e09b962e49e09badfc721dcd2d5f = L.circle(
+                [42.35706, -71.16493],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_64077c5a5af04dba9ee1cdf2e81b786e);
+        
+    
+        var popup_efa1c62216284ff6a90fc80fae9648be = L.popup({"maxWidth": "100%"});
+
+        
+            var html_63a7787417b0483db95b5d84596af291 = $(`<div id="html_63a7787417b0483db95b5d84596af291" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-1.html'>                                 <b>Cluster 75-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_efa1c62216284ff6a90fc80fae9648be.setContent(html_63a7787417b0483db95b5d84596af291);
+        
+
+        circle_2b51e09b962e49e09badfc721dcd2d5f.bindPopup(popup_efa1c62216284ff6a90fc80fae9648be)
+        ;
+
+        
+    
+    
+            circle_2b51e09b962e49e09badfc721dcd2d5f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37840971</b></p>
+        Cluster: <span style='color:#448AFF'><b>75-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Murat </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_74e1038549ab4500a882ebae1f3987ec = L.circle(
+                [42.35627, -71.1643],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_64077c5a5af04dba9ee1cdf2e81b786e);
+        
+    
+        var popup_1a37d4d50cb14a40bfc6a2a645e505ef = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5cdbb12952fc4e329a32bf63308c5244 = $(`<div id="html_5cdbb12952fc4e329a32bf63308c5244" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/75-1.html'>                                 <b>Cluster 75-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_1a37d4d50cb14a40bfc6a2a645e505ef.setContent(html_5cdbb12952fc4e329a32bf63308c5244);
+        
+
+        circle_74e1038549ab4500a882ebae1f3987ec.bindPopup(popup_1a37d4d50cb14a40bfc6a2a645e505ef)
+        ;
+
+        
+    
+    
+            circle_74e1038549ab4500a882ebae1f3987ec.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38127095</b></p>
+        Cluster: <span style='color:#448AFF'><b>75-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Murat </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_f2e8d3d6403e48718e938f39402588a7 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_a4a589bfbe434c158c43211533ec1d13,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_64077c5a5af04dba9ee1cdf2e81b786e,
                 },
             };
             L.control.layers(
-                layer_control_f9aee4e459db434e86aa9323fca45ef0.base_layers,
-                layer_control_f9aee4e459db434e86aa9323fca45ef0.overlays,
+                layer_control_f2e8d3d6403e48718e938f39402588a7.base_layers,
+                layer_control_f2e8d3d6403e48718e938f39402588a7.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_d8c49a6a1aea439294c62d1029593cbf);
-            feature_group_a4a589bfbe434c158c43211533ec1d13.remove();
+            ).addTo(map_088f9d3eaffa4c28a980dfaaaa7c62e6);
         
 </script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

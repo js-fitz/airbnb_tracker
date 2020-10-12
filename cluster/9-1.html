@@ -1,0 +1,3160 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            <a href='/clusters.html'>Clusters</a> &#62;
+                            <span style='color:#448AFF'>9-1</span>
+                            <a href='/host/Bay Village.html' style='color:#9C9C9C'>(Bay Village)</a>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+        <h2 style='font-size:2.2em; margin:0 0 10px'> Cluster 9-1 </h2>
+
+        <h3 style='margin-bottom:5px'>
+            <b>53 listings</b> |
+            2 accounts</b> 
+        </h3> 
+        
+        <p class='text-lite'>
+            <b>92<b/> total accommodations
+        </p> 
+        
+        <h3 style='font-size: 1.6em; margin:15px 0 5px'>
+        Host: <a href='/host/CorpGroup6.html' class='host-info-link'> Bay Village</a> </h3>
+        
+        
+        
+        
+        
+        <p class='text-lite'> This host represents a corporation using multiple alias accounts at this location</p>
+             <ul style='margin:0; line-height:22px; font-size:16px; color: white; padding-left:15px;margin-left:10px' >
+        <li>
+            "<a target='_blank' href='https://www.airbnb.com/users/show/244600805'>
+                Bay Village</a>" (22 listings)</li><li>
+            "<a target='_blank' href='https://www.airbnb.com/users/show/285344759'>
+                Bv</a>" (31 listings)</li></ul>
+        <hr class='hr-lite'>
+
+        <h3>License Status Summary</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    45 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#D32F2F">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Not found (fabricated)
+                                </p></td>
+                                
+                            </tr>
+                        
+                                                   
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    8 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Listings</h3>
+        
+        
+        <a href='https://www.airbnb.com/rooms/32570056' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32570056</b></p>
+                <p style='font-size:1.1em'>Studio That Is Safe/Clean Ready 4 You! 143-22</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32570056'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32570057' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32570057</b></p>
+                <p style='font-size:1.1em'>Studio That Is Safe/Clean Ready 4 You! 143-12</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32570057'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32570059' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32570059</b></p>
+                <p style='font-size:1.1em'>Modern Efficiency Studio Awaits Your Stay! 1-1</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32570059'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32570062' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32570062</b></p>
+                <p style='font-size:1.1em'>Clean/Safe Efficient Studio Awaits!  143-41</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32570062'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32687520' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32687520</b></p>
+                <p style='font-size:1.1em'>Modern Single Studio at the Heart of Boston! 1-21</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32687520'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32831946' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32831946</b></p>
+                <p style='font-size:1.1em'>Welcoming Private Studio for One!  5-44</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32831946'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32861018' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32861018</b></p>
+                <p style='font-size:1.1em'>Location A++, Sleeps 3 1-31</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32861018'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32861021' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32861021</b></p>
+                <p style='font-size:1.1em'>Prices/Location CANNOT Be Beat! 5-B1</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32861021'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32861080' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32861080</b></p>
+                <p style='font-size:1.1em'>Private Studio in Boston's Bay Village! 5-22</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32861080'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32861086' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32861086</b></p>
+                <p style='font-size:1.1em'>Modern Single Studio at the Heart of Boston! 1-24</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32861086'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32861088' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32861088</b></p>
+                <p style='font-size:1.1em'>Location A++, Sleeps 3 143-23</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hotel/motel</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/32861088'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/34149470' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>34149470</b></p>
+                <p style='font-size:1.1em'>Safe/Clean Studio With Flexible Cancellations! 3-31</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/34149470'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/34149473' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>34149473</b></p>
+                <p style='font-size:1.1em'>Welcoming Private Studio for One!  5-3</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/34149473'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/34149872' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>34149872</b></p>
+                <p style='font-size:1.1em'>Stylish Private Studio in Boston! 3-33</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/34149872'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36036045' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36036045</b></p>
+                <p style='font-size:1.1em'>Modern Efficiency Studio Awaits Your Stay! 1-2</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36036045'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36036766' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36036766</b></p>
+                <p style='font-size:1.1em'>Clean/Safe Efficient Studio Awaits! 143-44</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101773</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36036766'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36036969' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36036969</b></p>
+                <p style='font-size:1.1em'>Safe/Clean Studio With Flexible Cancellations! 3-41</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36036969'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36037367' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36037367</b></p>
+                <p style='font-size:1.1em'>Clean, Safe, & Ready For You! 143-43</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101773</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36037367'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36037475' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36037475</b></p>
+                <p style='font-size:1.1em'>Great Value For Your Boston Stay, Sleeps 3! 3-32</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36037475'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36037605' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36037605</b></p>
+                <p style='font-size:1.1em'>Studio That Is Safe/Clean Ready 4 You!  143-13</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101773</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36037605'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/36037756' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>36037756</b></p>
+                <p style='font-size:1.1em'>Clean/Safe Efficient Studio Awaits!  143-11</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101773</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/36037756'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/37744884' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>37744884</b></p>
+                <p style='font-size:1.1em'>Safe/Clean Studio With Flexible Cancellations! 3-21</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/37744884'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/37853806' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>37853806</b></p>
+                <p style='font-size:1.1em'>Welcoming Private Studio for One! 5-31</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/37853806'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/37889446' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>37889446</b></p>
+                <p style='font-size:1.1em'>Private Studio in Boston's Bay Village!! 5-33</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/37889446'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/38422629' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>38422629</b></p>
+                <p style='font-size:1.1em'>Stylish Private Studio in Boston! 3-22</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/38422629'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/38432874' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>38432874</b></p>
+                <p style='font-size:1.1em'>Hip and Chic Studio Awaits Your Stay! 1-32</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/38432874'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/38433315' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>38433315</b></p>
+                <p style='font-size:1.1em'>Modern Efficiency Studio Awaits Your Stay! 1-22</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/38433315'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/38798321' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>38798321</b></p>
+                <p style='font-size:1.1em'>Prices/Location CANNOT Be Beat! 3-B2</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/38798321'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39004265' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39004265</b></p>
+                <p style='font-size:1.1em'>Modern Efficiency Studio Awaits Your Stay! 1-23</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/39004265'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39004794' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39004794</b></p>
+                <p style='font-size:1.1em'>Hip and Chic Studio Awaits Your Stay! 1-42</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/39004794'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39242821' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39242821</b></p>
+                <p style='font-size:1.1em'>Safe/Clean Studio With Flexible Cancellations! 3-42</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>372821</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/39242821'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39298735' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39298735</b></p>
+                <p style='font-size:1.1em'>Location A++, Sleeps 3 1-41</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/39298735'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39621523' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39621523</b></p>
+                <p style='font-size:1.1em'>Prices/Location CANNOT Be Beat! 1-B1</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/39621523'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39971003' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39971003</b></p>
+                <p style='font-size:1.1em'>Clean, Safe, & Ready For You! 143-42</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/39971003'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40011705' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40011705</b></p>
+                <p style='font-size:1.1em'>Double Occupancy Room in Boston!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bay Village</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40011705'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40012018' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40012018</b></p>
+                <p style='font-size:1.1em'>Double Occupancy Room in Boston!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40012018'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40035442' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40035442</b></p>
+                <p style='font-size:1.1em'>Spring/Summer Discounts, Book Now! 5-32</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40035442'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40115277' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40115277</b></p>
+                <p style='font-size:1.1em'>Welcoming Private Studio for One! 5-21</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40115277'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40117655' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40117655</b></p>
+                <p style='font-size:1.1em'>Welcoming Private Studio for One!  5-24</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40117655'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40117803' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40117803</b></p>
+                <p style='font-size:1.1em'>Private Studio in Boston's Bay Village! 5-23</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40117803'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40159488' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40159488</b></p>
+                <p style='font-size:1.1em'>Private Studio in Boston's Bay Village! 5-1</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40159488'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40512451' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40512451</b></p>
+                <p style='font-size:1.1em'>Clean, Safe, & Ready For You! 143-33</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40512451'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40801809' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40801809</b></p>
+                <p style='font-size:1.1em'>Safe/Clean Studio With Flexible Cancellations! 3-44</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40801809'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40801949' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40801949</b></p>
+                <p style='font-size:1.1em'>Safe/Clean Studio With Flexible Cancellations! 3-24</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40801949'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40802120' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40802120</b></p>
+                <p style='font-size:1.1em'>Prices/Location CANNOT Be Beat! 3-B1</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101772</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40802120'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40842632' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40842632</b></p>
+                <p style='font-size:1.1em'>Clean/Safe Efficient Studio Awaits! 143-31</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40842632'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40843926' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40843926</b></p>
+                <p style='font-size:1.1em'>Studio in Boston with Flexible Cancellations! 3-1</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40843926'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40844698' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40844698</b></p>
+                <p style='font-size:1.1em'>Studio in Boston with Flexible Cancellations! 3-23</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40844698'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40845057' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40845057</b></p>
+                <p style='font-size:1.1em'>Spring/Summer Discounts, Book Now! 5-42</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40845057'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40882667' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40882667</b></p>
+                <p style='font-size:1.1em'>Spring/Summer Discounts, Book Now! 5-43</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40882667'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40883920' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40883920</b></p>
+                <p style='font-size:1.1em'>Prices/Location CANNOT Be Beat! 5-B2</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>101723</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/40883920'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/42981986' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>42981986</b></p>
+                <p style='font-size:1.1em'>Welcoming Private Studio for One!  5-41</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>2</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>011724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/42981986'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/43664536' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>43664536</b></p>
+                <p style='font-size:1.1em'>Comfortable Studio in Boston's Bay Village! 5-22</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Bv</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>45</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>011724</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/43664536'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5e0f2589db6145199856d63cec0d5b30 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
+         font-size:12px">
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
+          </div> 
+    
+            <div class="folium-map" id="map_5e0f2589db6145199856d63cec0d5b30" ></div>
+        
+</body>
+<script>    
+    
+            var map_5e0f2589db6145199856d63cec0d5b30 = L.map(
+                "map_5e0f2589db6145199856d63cec0d5b30",
+                {
+                    center: [42.3490583018868, -71.0697633962264],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 17,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_cae06c7b101e4a7ab488dd6d3d1b7636 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_5e0f2589db6145199856d63cec0d5b30);
+        
+    
+            var circle_6688ecb5326a4f65816aa6336ade8af2 = L.circle(
+                [42.3490583018868, -71.0697633962264],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.5850753733026516, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8850753733026515, "radius": 101.92475424000003, "stroke": true, "weight": 2}
+            ).addTo(map_5e0f2589db6145199856d63cec0d5b30);
+        
+    
+            circle_6688ecb5326a4f65816aa6336ade8af2.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>9-1</b></p>
+        Host: <b>Bay Village </b> | Listings: <b>53</b>
+        <br><span style='text-align:center; color:#448AFF'>
+        </span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_57517ceaa3004f06a6d9c9e53648d8b3 = L.circle(
+                [42.3490583018868, -71.0697633962264],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_5e0f2589db6145199856d63cec0d5b30);
+        
+    
+            circle_57517ceaa3004f06a6d9c9e53648d8b3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>9-1</b></p>
+        Host: <b>Bay Village </b> | Listings: <b>53</b>
+        <br><span style='text-align:center; color:#448AFF'>
+        </span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_49d14b696bd440bd875fac38a9f425bf = L.featureGroup(
+                {}
+            ).addTo(map_5e0f2589db6145199856d63cec0d5b30);
+        
+    
+            var circle_71963ca8aa1a42c88f0622c3109af33f = L.circle(
+                [42.34901, -71.06891],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_71963ca8aa1a42c88f0622c3109af33f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32570056</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8135f26894b147e982da368a9d990359 = L.circle(
+                [42.34831, -71.06876],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_8135f26894b147e982da368a9d990359.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32570057</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e6c9441418ad4264890ddfb00cea7a0b = L.circle(
+                [42.34894, -71.07004],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_e6c9441418ad4264890ddfb00cea7a0b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32570059</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0d8f0e326105485da106b2cc1e6d995a = L.circle(
+                [42.34913, -71.06899],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_0d8f0e326105485da106b2cc1e6d995a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32570062</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_465c9d4504ba4d5fb4c3aadb53cf65cf = L.circle(
+                [42.3493, -71.06918],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_465c9d4504ba4d5fb4c3aadb53cf65cf.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32687520</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a43f2a9aeca145e4b4ef4051d476d173 = L.circle(
+                [42.34892, -71.07036],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_a43f2a9aeca145e4b4ef4051d476d173.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32831946</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d7ccbf47a7e14cb8bd8c27245fc2864b = L.circle(
+                [42.34906, -71.0691],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_d7ccbf47a7e14cb8bd8c27245fc2864b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32861018</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4bec3b6a38a64803b5b2d3c1a26a0435 = L.circle(
+                [42.34873, -71.07066999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_4bec3b6a38a64803b5b2d3c1a26a0435.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32861021</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_84507c65dde246d08109b5f08e2f7d8c = L.circle(
+                [42.34943, -71.07047],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_84507c65dde246d08109b5f08e2f7d8c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32861080</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9806645b4bf5426ca6516a71927dac70 = L.circle(
+                [42.34948, -71.06858000000003],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_9806645b4bf5426ca6516a71927dac70.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32861086</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7cdc0351ddc14a4fba70322e854e43e9 = L.circle(
+                [42.34899, -71.07026],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_7cdc0351ddc14a4fba70322e854e43e9.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32861088</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4d832d1b43cc4bd8a2159b70d1bac034 = L.circle(
+                [42.34906, -71.07042],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_4d832d1b43cc4bd8a2159b70d1bac034.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>34149470</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ee0a4c2129a64f9681d7cc565a1dcdfb = L.circle(
+                [42.34872, -71.07085],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_ee0a4c2129a64f9681d7cc565a1dcdfb.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>34149473</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_108e202c8b294d398b131e95277e01f6 = L.circle(
+                [42.34877, -71.07016999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_108e202c8b294d398b131e95277e01f6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>34149872</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_58beda3404584178b02d919f34c1391c = L.circle(
+                [42.34929, -71.07058],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_58beda3404584178b02d919f34c1391c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36036045</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2815f309b5104f0abacc84ac03ce9e6e = L.circle(
+                [42.34907000000001, -71.06924000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_2815f309b5104f0abacc84ac03ce9e6e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36036766</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101773</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a9e9fc5a328c40c7b106088dfe6605ad = L.circle(
+                [42.34898, -71.07078],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_a9e9fc5a328c40c7b106088dfe6605ad.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36036969</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7c5a628a94be44de98320aadcf7639e8 = L.circle(
+                [42.34917, -71.06868],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_7c5a628a94be44de98320aadcf7639e8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36037367</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101773</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_57eac9508fe84d5ab041e9aa788ce4b8 = L.circle(
+                [42.34909, -71.06923],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_57eac9508fe84d5ab041e9aa788ce4b8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36037475</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8f5adad42ae04bbe974ff0635e92ba2f = L.circle(
+                [42.34938, -71.06916],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_8f5adad42ae04bbe974ff0635e92ba2f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36037605</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101773</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5bf63bf5983443d28c50647f035f630d = L.circle(
+                [42.34858, -71.07045],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_5bf63bf5983443d28c50647f035f630d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>36037756</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101773</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_1aa3f37253d147229a83acb5715aff7b = L.circle(
+                [42.34868, -71.07092],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_1aa3f37253d147229a83acb5715aff7b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37744884</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e21c485f2a8a43acaf6eaeced72b9af3 = L.circle(
+                [42.34947, -71.07054000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_e21c485f2a8a43acaf6eaeced72b9af3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37853806</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f2f58035084945b79f1a730cba4bb180 = L.circle(
+                [42.34903, -71.07032],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_f2f58035084945b79f1a730cba4bb180.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37889446</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4a2f5c19ecbd4b0695fc2a36432a70bd = L.circle(
+                [42.34912, -71.07185],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_4a2f5c19ecbd4b0695fc2a36432a70bd.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38422629</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a9610e5fbb4b4b5bb004990f54c2f3a5 = L.circle(
+                [42.34944, -71.07095],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_a9610e5fbb4b4b5bb004990f54c2f3a5.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38432874</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a892153f38f0479babfc700578d7adcf = L.circle(
+                [42.3494, -71.06868],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_a892153f38f0479babfc700578d7adcf.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38433315</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5d515107c5e849baa82c7cf91299c587 = L.circle(
+                [42.34806, -71.06868],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_5d515107c5e849baa82c7cf91299c587.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38798321</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_69d9ac62a2644f7b8b8f22a96702439c = L.circle(
+                [42.34896, -71.07079],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_69d9ac62a2644f7b8b8f22a96702439c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39004265</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fea6536ad0a1401b8528b67a5db31c38 = L.circle(
+                [42.34894, -71.06864],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_fea6536ad0a1401b8528b67a5db31c38.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39004794</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7a2eddf03e4048428ea9ba1867de2e3b = L.circle(
+                [42.34914000000001, -71.06954],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_7a2eddf03e4048428ea9ba1867de2e3b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39242821</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 372821</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5ebda3c82d4e41aaae11899253861eff = L.circle(
+                [42.34908, -71.06860999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_5ebda3c82d4e41aaae11899253861eff.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39298735</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ce945247019b4f0a90dfad4176df8888 = L.circle(
+                [42.34921, -71.06949],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_ce945247019b4f0a90dfad4176df8888.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39621523</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0d7cb2f24f5e476b9e4128a4c7cd961d = L.circle(
+                [42.34954000000001, -71.07032],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_0d7cb2f24f5e476b9e4128a4c7cd961d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39971003</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9d8b6c0988c24dc9b599635b3c1419d6 = L.circle(
+                [42.34946, -71.06915],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_9d8b6c0988c24dc9b599635b3c1419d6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40011705</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_14e6fa7c034c44888b8bd5cc3778e241 = L.circle(
+                [42.34925, -71.06885],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_14e6fa7c034c44888b8bd5cc3778e241.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40012018</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_96152f6508a24122854ed94135b862eb = L.circle(
+                [42.34945, -71.07014000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_96152f6508a24122854ed94135b862eb.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40035442</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a9a1d420c1004f4eb2538d45f22bc1e3 = L.circle(
+                [42.34905, -71.06966],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_a9a1d420c1004f4eb2538d45f22bc1e3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40115277</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2369319c27294e8e8e0f3ca5d4e2aad9 = L.circle(
+                [42.34876, -71.06928],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_2369319c27294e8e8e0f3ca5d4e2aad9.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40117655</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ecab82193709491396c5951ad5ad89ec = L.circle(
+                [42.34915, -71.06989],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_ecab82193709491396c5951ad5ad89ec.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40117803</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_69d5deceaa744931adb4208375e20cb9 = L.circle(
+                [42.3491, -71.06954],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_69d5deceaa744931adb4208375e20cb9.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40159488</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d25e439af578428a92c59ba1e239dd6b = L.circle(
+                [42.349, -71.07054000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_d25e439af578428a92c59ba1e239dd6b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40512451</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2b2d81aae6ad4b8b853eb0683e92a5d4 = L.circle(
+                [42.34916, -71.06875],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_2b2d81aae6ad4b8b853eb0683e92a5d4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40801809</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_09ee106b4c10472185de5f285066c030 = L.circle(
+                [42.34947, -71.07077],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_09ee106b4c10472185de5f285066c030.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40801949</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3d8957a7de884564b0e0ac334055d46f = L.circle(
+                [42.34864, -71.06877],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_3d8957a7de884564b0e0ac334055d46f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40802120</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101772</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_03c6453d6703444e8fbd4b095aca0090 = L.circle(
+                [42.3489, -71.06992],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_03c6453d6703444e8fbd4b095aca0090.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40842632</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_54f91657020e4475995d274afcca7475 = L.circle(
+                [42.34935, -71.06952],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_54f91657020e4475995d274afcca7475.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40843926</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_99281ddc9d0f4674af4cade100b68e77 = L.circle(
+                [42.3488, -71.06925],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_99281ddc9d0f4674af4cade100b68e77.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40844698</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_88f4af3f2c14439a8fd0ead6aab7406e = L.circle(
+                [42.3482, -71.06928],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_88f4af3f2c14439a8fd0ead6aab7406e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40845057</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8fe281a2eba146bfaf13e59ff3030224 = L.circle(
+                [42.34904, -71.07066999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_8fe281a2eba146bfaf13e59ff3030224.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40882667</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0857e13ab16f410798894f7140993941 = L.circle(
+                [42.34961, -71.07085],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_0857e13ab16f410798894f7140993941.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40883920</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 101723</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_63712e52f59e451680b8275a8907bbad = L.circle(
+                [42.34902, -71.06924000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_63712e52f59e451680b8275a8907bbad.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42981986</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 011724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ef0e897e669e455b9e6394a3ad12a024 = L.circle(
+                [42.3492, -71.06918],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_49d14b696bd440bd875fac38a9f425bf);
+        
+    
+            circle_ef0e897e669e455b9e6394a3ad12a024.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>43664536</b></p>
+        Cluster: <span style='color:#448AFF'><b>9-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Bay Village </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Bay Village </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 011724</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_47db7d2cb5704373abe9a7da16fd540c = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_49d14b696bd440bd875fac38a9f425bf,
+                },
+            };
+            L.control.layers(
+                layer_control_47db7d2cb5704373abe9a7da16fd540c.base_layers,
+                layer_control_47db7d2cb5704373abe9a7da16fd540c.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_5e0f2589db6145199856d63cec0d5b30);
+        
+</script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

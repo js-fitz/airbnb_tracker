@@ -1,4 +1,466 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Jeffery</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Jeffery </h2>
+        <h3>
+            <b>3 listings</b> | 
+            3 clusters
+        </h3> 
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    3 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#455A64">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    None claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/204-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>204-1</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 7, Wainwright Street, Dorchester Center, Dorchester </p>
+            <a href='/centroid/204-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/204-2.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>204-2</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 21, Argyle Street, Ashmont, Dorchester </p>
+            <a href='/centroid/204-2.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/204-3.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>204-3</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 18, Melbourne Street, Dorchester Center, Dorchester </p>
+            <a href='/centroid/204-3.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
 <head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
@@ -23,7 +485,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_61ad9d48a9fc46afb5d329456115c4e8 {
+                #map_e0e841e30b214f08aaa874731e9156e5 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,109 +497,31 @@
 </head>
 <body>    
     
-         <div style="position: fixed; z-index:699; 
-         top: 10px; right: 10px; max-width: 300px; height:100%;
-         display:block;">
-
-            <div style='width:auto; display:inline-block; overflow:auto;
-                        max-height:calc(100% - 60px);
-                        padding: 10px 10px; font-size:14px; 
-                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
-                        border-radius:5px;
-                        background-color:rgba(255, 255, 255, .8);'>
-                        
-                <div><a style='font-size:14px;color:#636363;'
-                href='https://air-monitor.onrender.com/home.html#hosts'>
-                    <b>&#8592; All hosts</b></a> </div>   
-                
-                <hr style='margin:10px 40px 0 0;'>
-                
-            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
-                        
-                <div style='margin:0; text-align:center'>
-                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
-                        2 Clusters
-                        &nbsp;|&nbsp;
-                    <i class="fa fa-circle-o" style="color:#455A64; margin-right:3px;"></i>
-                        3 Listings
-                    </b>
-                </div>
-                <hr style='margin:8px 0 0;'>
-                <div style='margin:10px 0 5px; font-size:14px'>
-                           Host listings by <b>registration status</b>:</div>
-                       
-                <i class="fa fa-circle"
-                style="font-size:14px; color:#455A64; margin-right:3px"></i>
-                None claimed - <b>3</b> listings
-                <br>
-                <hr style='margin:8px 0 0;'>
-               
-    <div style='margin:10px 0 3px; font-size:14px'>
-        <b>Listing clusters</b></div>
-    <div style='margin:0 0 8px; font-size:12px'>
-        Addresses inferred from cluster centers.
-        Nearby STR buildings sourced from ADCO research.
-    </div> 
-    
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>35, Melbourne Street, Dorchester Center, Dorchester</b>
-                    <span style='color:black'>(2 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <ul style='margin:0'><li>No known STR buildings nearby</li></ul></div>
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>7, Wainwright Street, Dorchester Center, Dorchester</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <ul style='margin:0'><li>No known STR buildings nearby</li></ul></div>
-            </div>
-          </div> 
-    
          <div style="
          position: fixed; z-index:699; 
-         bottom: 12px; right: 0px; width: 355px; height: 24px; 
-         background-color:rgba(255, 255, 255, .8);
-         padding: 2px 6px;
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
          font-size:12px">
-            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
           </div> 
     
-            <div class="folium-map" id="map_61ad9d48a9fc46afb5d329456115c4e8" ></div>
+            <div class="folium-map" id="map_e0e841e30b214f08aaa874731e9156e5" ></div>
         
 </body>
 <script>    
     
-            var map_61ad9d48a9fc46afb5d329456115c4e8 = L.map(
-                "map_61ad9d48a9fc46afb5d329456115c4e8",
+            var map_e0e841e30b214f08aaa874731e9156e5 = L.map(
+                "map_e0e841e30b214f08aaa874731e9156e5",
                 {
-                    center: [42.34554, -71.052],
+                    center: [42.289925, -71.066555],
                     crs: L.CRS.EPSG3857,
-                    zoom: 13,
+                    zoom: 15,
                     zoomControl: true,
                     preferCanvas: false,
                 }
@@ -147,215 +531,501 @@
 
         
     
-            var tile_layer_41621057c077445a88a44ea811d56efe = L.tileLayer(
+            var tile_layer_3adbb3a8bd0b4dbcaa510b61479676b8 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_61ad9d48a9fc46afb5d329456115c4e8);
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
         
     
-            var feature_group_bd9233083b924951b340673db5b6d2ea = L.featureGroup(
-                {}
-            ).addTo(map_61ad9d48a9fc46afb5d329456115c4e8);
-        
-    
-            var circle_b93baf4260b74f69997c6e51ff3b6328 = L.circle(
-                [42.289835, -71.0656],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_bd9233083b924951b340673db5b6d2ea);
-        
-    
-            circle_b93baf4260b74f69997c6e51ff3b6328.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #265.1 | 2 listings | Jeffery</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>? (2 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (2 listings)</li></ul>
-            <span style='color:#0D47A1;'>35, Melbourne Street, Dorchester Center, Dorchester</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_8821fbe905a8487a8d7217befc5cba2c = L.circle(
+            var circle_de3d56d85ffc49a193bb5ef0b5babeff = L.circle(
                 [42.29096, -71.0676],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_bd9233083b924951b340673db5b6d2ea);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
         
     
-            circle_8821fbe905a8487a8d7217befc5cba2c.bindTooltip(
+        var popup_b1db481efbf24c70867b80806b64ba83 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d85943b0825c4a50af2171cb83b67137 = $(`<div id="html_d85943b0825c4a50af2171cb83b67137" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-1.html'>                                 <b>Cluster 204-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b1db481efbf24c70867b80806b64ba83.setContent(html_d85943b0825c4a50af2171cb83b67137);
+        
+
+        circle_de3d56d85ffc49a193bb5ef0b5babeff.bindPopup(popup_b1db481efbf24c70867b80806b64ba83)
+        ;
+
+        
+    
+    
+            circle_de3d56d85ffc49a193bb5ef0b5babeff.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #265.2 | 1 listings | Jeffery</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>? (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>7, Wainwright Street, Dorchester Center, Dorchester</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>204-1</b></p>
+                        Host: <b>Jeffery </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_marker_837aa96b49dd4139aa9f2b9e15b24d65 = L.circleMarker(
-                [42.289835, -71.0656],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_bd9233083b924951b340673db5b6d2ea);
-        
-    
-            circle_marker_837aa96b49dd4139aa9f2b9e15b24d65.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #265.1 | 2 listings | Jeffery</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>? (2 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (2 listings)</li></ul>
-            <span style='color:#0D47A1;'>35, Melbourne Street, Dorchester Center, Dorchester</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_203c1d3c73d045a3a0261724b0c780e0 = L.circleMarker(
-                [42.29096, -71.0676],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_bd9233083b924951b340673db5b6d2ea);
-        
-    
-            circle_marker_203c1d3c73d045a3a0261724b0c780e0.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #265.2 | 1 listings | Jeffery</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>? (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>None claimed - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>7, Wainwright Street, Dorchester Center, Dorchester</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var feature_group_dde2217bb21a4962a5b8f8c162a5b1fb = L.featureGroup(
-                {}
-            ).addTo(map_61ad9d48a9fc46afb5d329456115c4e8);
-        
-    
-            var feature_group_a5f7aee579184251816eef250f35ba3f = L.featureGroup(
-                {}
-            ).addTo(map_61ad9d48a9fc46afb5d329456115c4e8);
-        
-    
-            var circle_0d1b6c6f07f6479ba8cc76d5621909fa = L.circle(
+            var circle_758c3d0467804b6fa69879a5f1c7f470 = L.circle(
                 [42.28889, -71.06569],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_a5f7aee579184251816eef250f35ba3f);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
         
     
-        var popup_e8d5c35fd7af411fb36af6bcc4e97763 = L.popup({"maxWidth": "100%"});
+        var popup_369d99da6f8f47178c1cb609d79627a6 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_333f000e34a242588ee755752a00afc7 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTgxNTk5ODEnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzE4MTU5OTgxPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_e8d5c35fd7af411fb36af6bcc4e97763.setContent(i_frame_333f000e34a242588ee755752a00afc7);
+            var html_343fe342c7d0475e8bd2f41106d94d0c = $(`<div id="html_343fe342c7d0475e8bd2f41106d94d0c" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-2.html'>                                 <b>Cluster 204-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_369d99da6f8f47178c1cb609d79627a6.setContent(html_343fe342c7d0475e8bd2f41106d94d0c);
         
 
-        circle_0d1b6c6f07f6479ba8cc76d5621909fa.bindPopup(popup_e8d5c35fd7af411fb36af6bcc4e97763)
+        circle_758c3d0467804b6fa69879a5f1c7f470.bindPopup(popup_369d99da6f8f47178c1cb609d79627a6)
         ;
 
         
     
     
-            circle_0d1b6c6f07f6479ba8cc76d5621909fa.bindTooltip(
+            circle_758c3d0467804b6fa69879a5f1c7f470.bindTooltip(
                 `<div>
                      
-            Jeffery | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 18159981</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #265.1<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>204-2</b></p>
+                        Host: <b>Jeffery </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_8e55c99209d04ea19c16f02274b0d0a7 = L.circle(
+            var circle_64f74235cd964390a8279d1adf46dc63 = L.circle(
                 [42.29078, -71.06551],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_a5f7aee579184251816eef250f35ba3f);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
         
     
-        var popup_520f2d756a0042be9a87ce933b21de5e = L.popup({"maxWidth": "100%"});
+        var popup_9c19844e35d94866bf12ce6a2be532fb = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_bdbcdd193d37482caa116f17f61d3497 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjY0NTMyMzInIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzI2NDUzMjMyPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_520f2d756a0042be9a87ce933b21de5e.setContent(i_frame_bdbcdd193d37482caa116f17f61d3497);
+            var html_781cc798044b4dc992af4052c9aa375e = $(`<div id="html_781cc798044b4dc992af4052c9aa375e" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-3.html'>                                 <b>Cluster 204-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9c19844e35d94866bf12ce6a2be532fb.setContent(html_781cc798044b4dc992af4052c9aa375e);
         
 
-        circle_8e55c99209d04ea19c16f02274b0d0a7.bindPopup(popup_520f2d756a0042be9a87ce933b21de5e)
+        circle_64f74235cd964390a8279d1adf46dc63.bindPopup(popup_9c19844e35d94866bf12ce6a2be532fb)
         ;
 
         
     
     
-            circle_8e55c99209d04ea19c16f02274b0d0a7.bindTooltip(
+            circle_64f74235cd964390a8279d1adf46dc63.bindTooltip(
                 `<div>
                      
-            Jeffery | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 26453232</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #265.1<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>204-3</b></p>
+                        Host: <b>Jeffery </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_f1e1dfdf2dc541529e279eff8f7fe565 = L.circle(
+            var circle_997c719e55884885addeb34ddc7390e7 = L.circle(
                 [42.29096, -71.0676],
-                {"bubblingMouseEvents": true, "color": "#455A64", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_a5f7aee579184251816eef250f35ba3f);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
         
     
-        var popup_a8036b830c3e496a838b3640db7e5ac7 = L.popup({"maxWidth": "100%"});
+        var popup_6dbfcfd8a97a43418750b5b930791dcc = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_49739ca9606142d8800daa32b22761b1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDE5OTI3ODYnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzQxOTkyNzg2PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_a8036b830c3e496a838b3640db7e5ac7.setContent(i_frame_49739ca9606142d8800daa32b22761b1);
+            var html_90127a6705024d948d2976010247d4ff = $(`<div id="html_90127a6705024d948d2976010247d4ff" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-1.html'>                                 <b>Cluster 204-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_6dbfcfd8a97a43418750b5b930791dcc.setContent(html_90127a6705024d948d2976010247d4ff);
         
 
-        circle_f1e1dfdf2dc541529e279eff8f7fe565.bindPopup(popup_a8036b830c3e496a838b3640db7e5ac7)
+        circle_997c719e55884885addeb34ddc7390e7.bindPopup(popup_6dbfcfd8a97a43418750b5b930791dcc)
         ;
 
         
     
     
-            circle_f1e1dfdf2dc541529e279eff8f7fe565.bindTooltip(
+            circle_997c719e55884885addeb34ddc7390e7.bindTooltip(
                 `<div>
                      
-            Jeffery | License: <span style="color:#455A64">Missing</span> (None claimed)
-            <br> <i class="fa fa-dot-circle-o" style="color:#455A64; margin-right:3px;"></i>
-            <b>Listing 41992786</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #265.2<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>204-1</b></p>
+                        Host: <b>Jeffery </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var layer_control_564f091aebcc49ba9a15f71249295e0a = {
+            var circle_b449cb6e939f47b8ba08ab365e2006c2 = L.circle(
+                [42.28889, -71.06569],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
+        
+    
+        var popup_551b0e560341434e838b00a84e99e2f2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_551330944ba04a57a44a3baaf97483f5 = $(`<div id="html_551330944ba04a57a44a3baaf97483f5" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-2.html'>                                 <b>Cluster 204-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_551b0e560341434e838b00a84e99e2f2.setContent(html_551330944ba04a57a44a3baaf97483f5);
+        
+
+        circle_b449cb6e939f47b8ba08ab365e2006c2.bindPopup(popup_551b0e560341434e838b00a84e99e2f2)
+        ;
+
+        
+    
+    
+            circle_b449cb6e939f47b8ba08ab365e2006c2.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>204-2</b></p>
+                        Host: <b>Jeffery </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4eb50ec080314f9c8ea577d48e10c7bb = L.circle(
+                [42.29078, -71.06551],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
+        
+    
+        var popup_d14b5b32584e4e449cb8e4bef4aad608 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4869ad0755d34122838ae71c45a20303 = $(`<div id="html_4869ad0755d34122838ae71c45a20303" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-3.html'>                                 <b>Cluster 204-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d14b5b32584e4e449cb8e4bef4aad608.setContent(html_4869ad0755d34122838ae71c45a20303);
+        
+
+        circle_4eb50ec080314f9c8ea577d48e10c7bb.bindPopup(popup_d14b5b32584e4e449cb8e4bef4aad608)
+        ;
+
+        
+    
+    
+            circle_4eb50ec080314f9c8ea577d48e10c7bb.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>204-3</b></p>
+                        Host: <b>Jeffery </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_1232720d015249b98160764e09c670e3 = L.featureGroup(
+                {}
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
+        
+    
+            var circle_63064364980b477ba17f7fe538b7f0de = L.circle(
+                [42.28889, -71.06569],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_1232720d015249b98160764e09c670e3);
+        
+    
+        var popup_80462b04946e47528188a4b0a34432fa = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6487d6fb977f4d6c9e0ddedc94c31827 = $(`<div id="html_6487d6fb977f4d6c9e0ddedc94c31827" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-2.html'>                                 <b>Cluster 204-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_80462b04946e47528188a4b0a34432fa.setContent(html_6487d6fb977f4d6c9e0ddedc94c31827);
+        
+
+        circle_63064364980b477ba17f7fe538b7f0de.bindPopup(popup_80462b04946e47528188a4b0a34432fa)
+        ;
+
+        
+    
+    
+            circle_63064364980b477ba17f7fe538b7f0de.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>18159981</b></p>
+        Cluster: <span style='color:#448AFF'><b>204-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Jeffery </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_226ceeb2830b47329644593e7da127d5 = L.circle(
+                [42.29078, -71.06551],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_1232720d015249b98160764e09c670e3);
+        
+    
+        var popup_0494d2b280194ac88890e602bdd06191 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_10785ac3948d4b0aa468bbd3a7cf3a41 = $(`<div id="html_10785ac3948d4b0aa468bbd3a7cf3a41" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-3.html'>                                 <b>Cluster 204-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_0494d2b280194ac88890e602bdd06191.setContent(html_10785ac3948d4b0aa468bbd3a7cf3a41);
+        
+
+        circle_226ceeb2830b47329644593e7da127d5.bindPopup(popup_0494d2b280194ac88890e602bdd06191)
+        ;
+
+        
+    
+    
+            circle_226ceeb2830b47329644593e7da127d5.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>26453232</b></p>
+        Cluster: <span style='color:#448AFF'><b>204-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Jeffery </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d90f9491f9a24b0a9fbf48f50630d7e1 = L.circle(
+                [42.29096, -71.0676],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_1232720d015249b98160764e09c670e3);
+        
+    
+        var popup_60293f932bb14b13a4cd404f12126355 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8561339bbfaf4475a50be60bcaa91c01 = $(`<div id="html_8561339bbfaf4475a50be60bcaa91c01" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/204-1.html'>                                 <b>Cluster 204-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_60293f932bb14b13a4cd404f12126355.setContent(html_8561339bbfaf4475a50be60bcaa91c01);
+        
+
+        circle_d90f9491f9a24b0a9fbf48f50630d7e1.bindPopup(popup_60293f932bb14b13a4cd404f12126355)
+        ;
+
+        
+    
+    
+            circle_d90f9491f9a24b0a9fbf48f50630d7e1.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41992786</b></p>
+        Cluster: <span style='color:#448AFF'><b>204-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Jeffery </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_b8bdd0888a7a49098d585a4776a73739 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_dde2217bb21a4962a5b8f8c162a5b1fb,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_1232720d015249b98160764e09c670e3,
                 },
             };
             L.control.layers(
-                layer_control_564f091aebcc49ba9a15f71249295e0a.base_layers,
-                layer_control_564f091aebcc49ba9a15f71249295e0a.overlays,
+                layer_control_b8bdd0888a7a49098d585a4776a73739.base_layers,
+                layer_control_b8bdd0888a7a49098d585a4776a73739.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_61ad9d48a9fc46afb5d329456115c4e8);
-            feature_group_dde2217bb21a4962a5b8f8c162a5b1fb.remove();
+            ).addTo(map_e0e841e30b214f08aaa874731e9156e5);
         
 </script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

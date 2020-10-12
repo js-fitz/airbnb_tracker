@@ -1,0 +1,2146 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            <a href='/clusters.html'>Clusters</a> &#62;
+                            <span style='color:#448AFF'>2-2</span>
+                            <a href='/host/Churchill.html' style='color:#9C9C9C'>(Churchill)</a>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+        <h2 style='font-size:2.2em; margin:0 0 10px'> Cluster 2-2 </h2>
+
+        <h3 style='margin-bottom:5px'>
+            <b>30 listings</b> |
+            2 accounts</b> 
+        </h3> 
+        
+        <p class='text-lite'>
+            <b>128<b/> total accommodations
+        </p> 
+        
+        <h3 style='font-size: 1.6em; margin:15px 0 5px'>
+        Host: <a href='/host/CorpGroup2.html' class='host-info-link'> Churchill</a> </h3>
+        
+        
+        
+        
+        
+        <p class='text-lite'> This host represents a corporation using multiple alias accounts at this location</p>
+             <ul style='margin:0; line-height:22px; font-size:16px; color: white; padding-left:15px;margin-left:10px' >
+        <li>
+            "<a target='_blank' href='https://www.airbnb.com/users/show/9419684'>
+                Mike</a>" (5 listings)</li><li>
+            "<a target='_blank' href='https://www.airbnb.com/users/show/30283594'>
+                Global Luxury Suites</a>" (25 listings)</li></ul>
+        <hr class='hr-lite'>
+
+        <h3>License Status Summary</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    28 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#455A64">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    None claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                                                   
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    2 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Listings</h3>
+        
+        
+        <a href='https://www.airbnb.com/rooms/1863443' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>1863443</b></p>
+                <p style='font-size:1.1em'>Perfect location in Fenway - washer/dryer & WIFI</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Mike</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: executive suite</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/1863443'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/3309941' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>3309941</b></p>
+                <p style='font-size:1.1em'>*Prime Location* in the heart of Fenway w/WiFi</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Mike</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/3309941'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/3903324' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>3903324</b></p>
+                <p style='font-size:1.1em'>Amazing location - walk to Fenway Park!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Mike</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/3903324'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/5834413' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>5834413</b></p>
+                <p style='font-size:1.1em'>"Luxury 2BR in Boston/Fenway- with great amenities</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/5834413'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/6356533' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>6356533</b></p>
+                <p style='font-size:1.1em'>Super location in Fenway - washer/dryer & WIFI</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Mike</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/6356533'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/6790961' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>6790961</b></p>
+                <p style='font-size:1.1em'>Luxury 2BR Boston apt. by Longwood area Hospitals.</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/6790961'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/6844012' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>6844012</b></p>
+                <p style='font-size:1.1em'>Luxury Furnished 2-Bedroom Boston Apartment</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/6844012'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/6951829' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>6951829</b></p>
+                <p style='font-size:1.1em'>Furnished 2BR | Spacious Floorplan | Fenway Area</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/6951829'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8063815' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8063815</b></p>
+                <p style='font-size:1.1em'>Modern 1BR | Work Desk WiFi| Fenway near Hospitals</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8063815'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8081935' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8081935</b></p>
+                <p style='font-size:1.1em'>Fenway Park | Spacious 1BR | Free WiFi & Work Desk</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8081935'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8097453' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8097453</b></p>
+                <p style='font-size:1.1em'>Fenway 1BR | Work from Home | Close to Hospitals</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8097453'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8162168' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8162168</b></p>
+                <p style='font-size:1.1em'>Stylish 2BR  Apt-walking distance to Fenway Park!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>91</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8162168'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8163273' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8163273</b></p>
+                <p style='font-size:1.1em'>Lovely 2BR apt near Fenway Park</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8163273'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8164146' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8164146</b></p>
+                <p style='font-size:1.1em'>Furnished 2-BR Apartment near Boston University</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8164146'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8164953' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8164953</b></p>
+                <p style='font-size:1.1em'>Fenway 2BR | Full Kitchen |Steps from Hospitals</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8164953'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8165898' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8165898</b></p>
+                <p style='font-size:1.1em'>Luxury 2BR apt located minutes from Fenway Park!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8165898'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8187052' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8187052</b></p>
+                <p style='font-size:1.1em'>Luxury 2BR/2Bath near the Boston University!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8187052'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8325544' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8325544</b></p>
+                <p style='font-size:1.1em'>2BR Lux Apt. in Boston Fenway</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8325544'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8334845' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8334845</b></p>
+                <p style='font-size:1.1em'>Lux Furnished Boston Fenway 2BR Apt</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8334845'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8335210' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8335210</b></p>
+                <p style='font-size:1.1em'>2br furnished Apt. in Boston Fenway</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>91</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Exemption: hospital contracts</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8335210'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/8336609' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>8336609</b></p>
+                <p style='font-size:1.1em'>Modern 2BR apt near Boston's Children Hospital!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/8336609'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/10241577' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>10241577</b></p>
+                <p style='font-size:1.1em'>Fenway 1BR |Work Desk & WiFi |near Longwood Med</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/10241577'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/12246137' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>12246137</b></p>
+                <p style='font-size:1.1em'>Spacious 1BR | WiFi & Desk | Fenway Park | GLS</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/12246137'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/12247217' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>12247217</b></p>
+                <p style='font-size:1.1em'>Furnished 2BR Boston Apt near Children's Hospital!</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/12247217'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/22260527' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>22260527</b></p>
+                <p style='font-size:1.1em'>Your home away from home in the heart of Fenway</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Mike</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/22260527'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/22648759' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>22648759</b></p>
+                <p style='font-size:1.1em'>Spacious 1BR |Full Kitchen/Wi-Fi |Fenway Hospitals</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/22648759'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/22649219' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>22649219</b></p>
+                <p style='font-size:1.1em'>Modern 1BR |Full Kitchen W/D | near Fenway Medical</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/22649219'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/22651826' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>22651826</b></p>
+                <p style='font-size:1.1em'>Private 1BR | Full Kitchen|Fenway Boston Hospitals</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/22651826'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/22654177' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>22654177</b></p>
+                <p style='font-size:1.1em'>Spacious 2BR | Full Kitchen | Close to Hospitals</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/22654177'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/22664808' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>22664808</b></p>
+                <p style='font-size:1.1em'>Upscale 2BR near Fenway Park with upscale finishes</p>
+            
+                <p><span class='text-lite'>Alias account:</span>
+                    Global Luxury Suites</p> 
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>28</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b></p>
+                    
+                <a href='https://www.airbnb.com/rooms/22664808'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_7e97c57bf42d4f9687defaf29d192389 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
+         font-size:12px">
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
+          </div> 
+    
+            <div class="folium-map" id="map_7e97c57bf42d4f9687defaf29d192389" ></div>
+        
+</body>
+<script>    
+    
+            var map_7e97c57bf42d4f9687defaf29d192389 = L.map(
+                "map_7e97c57bf42d4f9687defaf29d192389",
+                {
+                    center: [42.344466333333344, -71.10096433333334],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 17,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_444702e125464352a75eb3eef6606d7b = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_7e97c57bf42d4f9687defaf29d192389);
+        
+    
+            var circle_20c5665850414c9f81454da889df515a = L.circle(
+                [42.344466333333344, -71.10096433333334],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.5585470007730354, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8585470007730354, "radius": 141.59490096000002, "stroke": true, "weight": 2}
+            ).addTo(map_7e97c57bf42d4f9687defaf29d192389);
+        
+    
+            circle_20c5665850414c9f81454da889df515a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>2-2</b></p>
+        Host: <b>Churchill </b> | Listings: <b>30</b>
+        <br><span style='text-align:center; color:#448AFF'>
+        </span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d69593e027a94c45a817df3898153d2a = L.circle(
+                [42.344466333333344, -71.10096433333334],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_7e97c57bf42d4f9687defaf29d192389);
+        
+    
+            circle_d69593e027a94c45a817df3898153d2a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>2-2</b></p>
+        Host: <b>Churchill </b> | Listings: <b>30</b>
+        <br><span style='text-align:center; color:#448AFF'>
+        </span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_88fd3e1240fb443494566fb7b3be2844 = L.featureGroup(
+                {}
+            ).addTo(map_7e97c57bf42d4f9687defaf29d192389);
+        
+    
+            var circle_8c8f755d52474f9abafd6351f453025e = L.circle(
+                [42.34411, -71.1013],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_8c8f755d52474f9abafd6351f453025e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>1863443</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E65100';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: executive suite</b>
+        <br>License status: <span style='color:#E65100'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_88859e06192b415fa70a7ac1fcf451b6 = L.circle(
+                [42.34411, -71.1013],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_88859e06192b415fa70a7ac1fcf451b6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>3309941</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5f34883e5143430b8a27576b28bae530 = L.circle(
+                [42.34411, -71.1013],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_5f34883e5143430b8a27576b28bae530.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>3903324</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cd356b6d23b7434288418f32511d9d0f = L.circle(
+                [42.3445, -71.10204],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_cd356b6d23b7434288418f32511d9d0f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>5834413</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b9143372f0c249d7b461ac9b05752162 = L.circle(
+                [42.34429, -71.10089],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_b9143372f0c249d7b461ac9b05752162.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6356533</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_dc6be243d74d44fb98244a6d6d1aa578 = L.circle(
+                [42.34457, -71.09980999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_dc6be243d74d44fb98244a6d6d1aa578.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6790961</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_59793780afb84001b9c59f42e210d0a6 = L.circle(
+                [42.34375, -71.10035],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_59793780afb84001b9c59f42e210d0a6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6844012</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e4694d7067614d9289054e03406843e6 = L.circle(
+                [42.34506, -71.10173],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_e4694d7067614d9289054e03406843e6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>6951829</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5517cab19f1847ad876a2a6ef84909c1 = L.circle(
+                [42.34548, -71.10136999999997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_5517cab19f1847ad876a2a6ef84909c1.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8063815</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7400a036e8094753b12b0b68533c1ec6 = L.circle(
+                [42.3447, -71.10115],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_7400a036e8094753b12b0b68533c1ec6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8081935</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8b41df8c763f4361817ec084bd2bf68d = L.circle(
+                [42.34387, -71.10226999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_8b41df8c763f4361817ec084bd2bf68d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8097453</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_951d637064bf40ffbeb3088ebf589d95 = L.circle(
+                [42.34472, -71.0993],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_951d637064bf40ffbeb3088ebf589d95.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8162168</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e26fbb7131ab4505b38ae1feececa112 = L.circle(
+                [42.34476, -71.10061999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_e26fbb7131ab4505b38ae1feececa112.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8163273</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_238d9b6c89464c3ca1289565620f19b5 = L.circle(
+                [42.3434, -71.09945],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_238d9b6c89464c3ca1289565620f19b5.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8164146</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_75d3d2d83c5b445ea14c8281d86ea924 = L.circle(
+                [42.34454, -71.09931],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_75d3d2d83c5b445ea14c8281d86ea924.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8164953</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_27f74bc242c14c3d90e854a97b59c28d = L.circle(
+                [42.34338, -71.10128],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_27f74bc242c14c3d90e854a97b59c28d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8165898</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0d5a662124fe4f26938a35daacffe78c = L.circle(
+                [42.34586, -71.10011999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_0d5a662124fe4f26938a35daacffe78c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8187052</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7afd6b06263848e6ac2e163365c41f2d = L.circle(
+                [42.34535, -71.10203],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_7afd6b06263848e6ac2e163365c41f2d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8325544</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c47dae0dd55e4da78ea675ee46e94156 = L.circle(
+                [42.34302, -71.09985999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_c47dae0dd55e4da78ea675ee46e94156.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8334845</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3a56e80e8bf3493796de5a4b40501ab0 = L.circle(
+                [42.34472, -71.10175],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_3a56e80e8bf3493796de5a4b40501ab0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8335210</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_719f5d81df744c559179c2ba21b987e9 = L.circle(
+                [42.34507, -71.10144],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_719f5d81df744c559179c2ba21b987e9.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>8336609</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_68f35c681eed4c54964263361c72da5b = L.circle(
+                [42.34388, -71.10161],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_68f35c681eed4c54964263361c72da5b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>10241577</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_40c27a4c0047486f86a08891b7860c1c = L.circle(
+                [42.34474, -71.0997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_40c27a4c0047486f86a08891b7860c1c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>12246137</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_569605b36ccb4768a64ebe827aa8dc3d = L.circle(
+                [42.34523, -71.10038],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_569605b36ccb4768a64ebe827aa8dc3d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>12247217</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_bfc2ffe86c534d44bf6662a5acbe4026 = L.circle(
+                [42.34439, -71.10094000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_bfc2ffe86c534d44bf6662a5acbe4026.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>22260527</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_55ef18bba0b94f46b537804b033b271b = L.circle(
+                [42.34413, -71.1015],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_55ef18bba0b94f46b537804b033b271b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>22648759</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ec728d1b54a24ce88b580e0b5ae67e82 = L.circle(
+                [42.34533, -71.10198000000003],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_ec728d1b54a24ce88b580e0b5ae67e82.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>22649219</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d7211f3c6c26474e8a6045903b9d5d0d = L.circle(
+                [42.34406, -71.102],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_d7211f3c6c26474e8a6045903b9d5d0d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>22651826</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b18088888c5145e68c0925f3325ea8f6 = L.circle(
+                [42.3436, -71.10002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_b18088888c5145e68c0925f3325ea8f6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>22654177</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_049239597399426089844f83f337daa6 = L.circle(
+                [42.34526, -71.10213],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#455A64", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_88fd3e1240fb443494566fb7b3be2844);
+        
+    
+            circle_049239597399426089844f83f337daa6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>22664808</b></p>
+        Cluster: <span style='color:#448AFF'><b>2-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Churchill </b></span>
+        
+        <br>Alias account: <span style='color:#636363'><b>Churchill </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#455A64';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License status: <span style='color:#455A64'> <b>None claimed</b> </span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_92c5f41f7d07484585c507772c133cdd = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_88fd3e1240fb443494566fb7b3be2844,
+                },
+            };
+            L.control.layers(
+                layer_control_92c5f41f7d07484585c507772c133cdd.base_layers,
+                layer_control_92c5f41f7d07484585c507772c133cdd.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_7e97c57bf42d4f9687defaf29d192389);
+        
+</script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

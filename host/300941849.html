@@ -1,4 +1,466 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Luxury Medical Suites</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Luxury Medical Suites </h2>
+        <h3>
+            <b>9 listings</b> | 
+            3 clusters
+        </h3> 
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    9 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/36-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>36-1</b> (7 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Boston Marriott Copley Place, 110, Huntington Avenue, Back Bay </p>
+            <a href='/centroid/36-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/36-2.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>36-2</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Hynes Convention Center, 900, Boylston Street, Block F, Back Bay </p>
+            <a href='/centroid/36-2.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/36-3.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>36-3</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Public Alley 441, Block E, Back Bay </p>
+            <a href='/centroid/36-3.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
 <head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
@@ -23,7 +485,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_0d957f998fda4f819dc9079e309e80ec {
+                #map_eaea02aac8cf4d339316b818a446e292 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,133 +497,31 @@
 </head>
 <body>    
     
-         <div style="position: fixed; z-index:699; 
-         top: 10px; right: 10px; max-width: 300px; height:100%;
-         display:block;">
-
-            <div style='width:auto; display:inline-block; overflow:auto;
-                        max-height:calc(100% - 60px);
-                        padding: 10px 10px; font-size:14px; 
-                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
-                        border-radius:5px;
-                        background-color:rgba(255, 255, 255, .8);'>
-                        
-                <div><a style='font-size:14px;color:#636363;'
-                href='https://air-monitor.onrender.com/home.html#hosts'>
-                    <b>&#8592; All hosts</b></a> </div>   
-                
-                <hr style='margin:10px 40px 0 0;'>
-                
-            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
-                        
-                <div style='margin:0; text-align:center'>
-                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
-                        3 Clusters
-                        &nbsp;|&nbsp;
-                    <i class="fa fa-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-                        9 Listings
-                    </b>
-                </div>
-                <hr style='margin:8px 0 0;'>
-                <div style='margin:10px 0 5px; font-size:14px'>
-                           Host listings by <b>registration status</b>:</div>
-                       
-                <i class="fa fa-circle"
-                style="font-size:14px; color:#E65100; margin-right:3px"></i>
-                Not verified - <b>9</b> listings
-                <br>
-                <hr style='margin:8px 0 0;'>
-               
-    <div style='margin:10px 0 3px; font-size:14px'>
-        <b>Listing clusters</b></div>
-    <div style='margin:0 0 8px; font-size:12px'>
-        Addresses inferred from cluster centers.
-        Nearby STR buildings sourced from ADCO research.
-    </div> 
-    
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>Boston Marriott Copley Place, 110, Huntington Avenue, Back Bay</b>
-                    <span style='color:black'>(7 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>within 200 ft.</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <div style='font-size:12px'>
-                Possible matches in STR building database:
-            </div><ul style='margin:0'><li style='margin:2px 0;'>2-16 Harcourt St</li><li style='margin:2px 0;'>30 Garrison Street</li></ul></div>
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>Public Alley 441, Block E, Back Bay</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <div style='font-size:12px'>
-                Possible matches in STR building database:
-            </div><ul style='margin:0'><li style='margin:2px 0;'>234 Newbury Street</li><li style='margin:2px 0;'>776 Boylston St</li></ul></div>
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>Hynes Convention Center, 900, Boylston Street, Block F, Back Bay</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <div style='font-size:12px'>
-                Possible matches in STR building database:
-            </div><ul style='margin:0'><li style='margin:2px 0;'>790 Boylston Street</li><li style='margin:2px 0;'>800 Boylston St</li></ul></div>
-            </div>
-          </div> 
-    
          <div style="
          position: fixed; z-index:699; 
-         bottom: 12px; right: 0px; width: 355px; height: 24px; 
-         background-color:rgba(255, 255, 255, .8);
-         padding: 2px 6px;
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
          font-size:12px">
-            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-08-31 | STR registry: 2020-08-05
+            </span>
           </div> 
     
-            <div class="folium-map" id="map_0d957f998fda4f819dc9079e309e80ec" ></div>
+            <div class="folium-map" id="map_eaea02aac8cf4d339316b818a446e292" ></div>
         
 </body>
 <script>    
     
-            var map_0d957f998fda4f819dc9079e309e80ec = L.map(
-                "map_0d957f998fda4f819dc9079e309e80ec",
+            var map_eaea02aac8cf4d339316b818a446e292 = L.map(
+                "map_eaea02aac8cf4d339316b818a446e292",
                 {
-                    center: [42.34554, -71.052],
+                    center: [42.34789428571429, -71.08103214285714],
                     crs: L.CRS.EPSG3857,
-                    zoom: 13,
+                    zoom: 15,
                     zoomControl: true,
                     preferCanvas: false,
                 }
@@ -171,567 +531,747 @@
 
         
     
-            var tile_layer_4637637018934019b948923a10efced7 = L.tileLayer(
+            var tile_layer_8f13c013f12447b2bc4bf683bbe46313 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_0d957f998fda4f819dc9079e309e80ec);
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
     
-            var feature_group_f3730fd0b9664ea9ad9ff64cadd596a8 = L.featureGroup(
-                {}
-            ).addTo(map_0d957f998fda4f819dc9079e309e80ec);
-        
-    
-            var circle_7872560d57c349c8bef590240f055d1b = L.circle(
+            var circle_b50ec217927e47d4b3986fa74a3f3e17 = L.circle(
                 [42.34647857142858, -71.07856428571428],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 53.644800000000004, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f3730fd0b9664ea9ad9ff64cadd596a8);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4907087073422826, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7907087073422826, "radius": 74.56252296000001, "stroke": true, "weight": 2}
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
     
-            circle_7872560d57c349c8bef590240f055d1b.bindTooltip(
+        var popup_6e0cbde8ad5247acbe18ae619fd227b2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_635bb2d9e85f4fa2a69dfe5fe19e7f69 = $(`<div id="html_635bb2d9e85f4fa2a69dfe5fe19e7f69" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_6e0cbde8ad5247acbe18ae619fd227b2.setContent(html_635bb2d9e85f4fa2a69dfe5fe19e7f69);
+        
+
+        circle_b50ec217927e47d4b3986fa74a3f3e17.bindPopup(popup_6e0cbde8ad5247acbe18ae619fd227b2)
+        ;
+
+        
+    
+    
+            circle_b50ec217927e47d4b3986fa74a3f3e17.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #37.1 | 7 listings | Luxury Medical Suites</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (7 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (7 listings)</li></ul>
-            <span style='color:#0D47A1;'>Boston Marriott Copley Place, 110, Huntington Avenue, Back Bay</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>36-1</b></p>
+                        Host: <b>Luxury Medical Suites </b> | Listings: <b>7</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_d399e7094d36431ba5fbe0929115af36 = L.circle(
-                [42.34931, -71.08188],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f3730fd0b9664ea9ad9ff64cadd596a8);
-        
-    
-            circle_d399e7094d36431ba5fbe0929115af36.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #37.2 | 1 listings | Luxury Medical Suites</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>Public Alley 441, Block E, Back Bay</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_b7b84c78831a417d8cca0ffbeea60376 = L.circle(
+            var circle_c60d9ab4353a430b9bd12e8198d554ee = L.circle(
                 [42.34782, -71.0835],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f3730fd0b9664ea9ad9ff64cadd596a8);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
     
-            circle_b7b84c78831a417d8cca0ffbeea60376.bindTooltip(
+        var popup_d11c845082a4473483c8f698bba08e35 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_217657b941bc4137b01df00bbd0745b5 = $(`<div id="html_217657b941bc4137b01df00bbd0745b5" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-2.html'>                                 <b>Cluster 36-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d11c845082a4473483c8f698bba08e35.setContent(html_217657b941bc4137b01df00bbd0745b5);
+        
+
+        circle_c60d9ab4353a430b9bd12e8198d554ee.bindPopup(popup_d11c845082a4473483c8f698bba08e35)
+        ;
+
+        
+    
+    
+            circle_c60d9ab4353a430b9bd12e8198d554ee.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #37.3 | 1 listings | Luxury Medical Suites</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>Hynes Convention Center, 900, Boylston Street, Block F, Back Bay</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>36-2</b></p>
+                        Host: <b>Luxury Medical Suites </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_marker_7b1a9af3ef3c40069372c24d13147123 = L.circleMarker(
+            var circle_e7925d2d468d483a825f257265959206 = L.circle(
+                [42.34931, -71.08188],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
+        
+    
+        var popup_dc7cb42c5b2b43b7a3b24df71565b45b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b5a7386d8c7b44438c90a6f6c5e406ee = $(`<div id="html_b5a7386d8c7b44438c90a6f6c5e406ee" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-3.html'>                                 <b>Cluster 36-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_dc7cb42c5b2b43b7a3b24df71565b45b.setContent(html_b5a7386d8c7b44438c90a6f6c5e406ee);
+        
+
+        circle_e7925d2d468d483a825f257265959206.bindPopup(popup_dc7cb42c5b2b43b7a3b24df71565b45b)
+        ;
+
+        
+    
+    
+            circle_e7925d2d468d483a825f257265959206.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>36-3</b></p>
+                        Host: <b>Luxury Medical Suites </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c11890ee69aa428493a4dd2670e6eb3e = L.circle(
                 [42.34647857142858, -71.07856428571428],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_f3730fd0b9664ea9ad9ff64cadd596a8);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
     
-            circle_marker_7b1a9af3ef3c40069372c24d13147123.bindTooltip(
+        var popup_2a13449904d94be1be57bebf5d8f3984 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1aa14670543b4cc6b7f12bfa2b3f9f42 = $(`<div id="html_1aa14670543b4cc6b7f12bfa2b3f9f42" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_2a13449904d94be1be57bebf5d8f3984.setContent(html_1aa14670543b4cc6b7f12bfa2b3f9f42);
+        
+
+        circle_c11890ee69aa428493a4dd2670e6eb3e.bindPopup(popup_2a13449904d94be1be57bebf5d8f3984)
+        ;
+
+        
+    
+    
+            circle_c11890ee69aa428493a4dd2670e6eb3e.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #37.1 | 7 listings | Luxury Medical Suites</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (7 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (7 listings)</li></ul>
-            <span style='color:#0D47A1;'>Boston Marriott Copley Place, 110, Huntington Avenue, Back Bay</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>36-1</b></p>
+                        Host: <b>Luxury Medical Suites </b> | Listings: <b>7</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_marker_782d9b97d7fd4e4eaf210d628c9a0ff0 = L.circleMarker(
-                [42.34931, -71.08188],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_f3730fd0b9664ea9ad9ff64cadd596a8);
-        
-    
-            circle_marker_782d9b97d7fd4e4eaf210d628c9a0ff0.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #37.2 | 1 listings | Luxury Medical Suites</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>Public Alley 441, Block E, Back Bay</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_d0ff9217abbc4e89947fa68b2fa8a2d3 = L.circleMarker(
+            var circle_2e8eb518166a49cc9d8152b7744a7153 = L.circle(
                 [42.34782, -71.0835],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_f3730fd0b9664ea9ad9ff64cadd596a8);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
     
-            circle_marker_d0ff9217abbc4e89947fa68b2fa8a2d3.bindTooltip(
+        var popup_ff3ba009ffd44edb86cf68a5559c87d6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_711c9cd894c5478fa910afb4ad9b7a64 = $(`<div id="html_711c9cd894c5478fa910afb4ad9b7a64" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-2.html'>                                 <b>Cluster 36-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ff3ba009ffd44edb86cf68a5559c87d6.setContent(html_711c9cd894c5478fa910afb4ad9b7a64);
+        
+
+        circle_2e8eb518166a49cc9d8152b7744a7153.bindPopup(popup_ff3ba009ffd44edb86cf68a5559c87d6)
+        ;
+
+        
+    
+    
+            circle_2e8eb518166a49cc9d8152b7744a7153.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #37.3 | 1 listings | Luxury Medical Suites</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>Hynes Convention Center, 900, Boylston Street, Block F, Back Bay</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>36-2</b></p>
+                        Host: <b>Luxury Medical Suites </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var feature_group_cd816fca89ed4161a45d46d768407d67 = L.featureGroup(
+            var circle_f34e102e6e12445c924a4c2cef3faff6 = L.circle(
+                [42.34931, -71.08188],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
+        
+    
+        var popup_1e68da8c8b4941beac8e9d7fc33540f0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7c577d5fdf4c4290a047f7b81f64d576 = $(`<div id="html_7c577d5fdf4c4290a047f7b81f64d576" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-3.html'>                                 <b>Cluster 36-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_1e68da8c8b4941beac8e9d7fc33540f0.setContent(html_7c577d5fdf4c4290a047f7b81f64d576);
+        
+
+        circle_f34e102e6e12445c924a4c2cef3faff6.bindPopup(popup_1e68da8c8b4941beac8e9d7fc33540f0)
+        ;
+
+        
+    
+    
+            circle_f34e102e6e12445c924a4c2cef3faff6.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>36-3</b></p>
+                        Host: <b>Luxury Medical Suites </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_a9a29f0cabf64dfeb47bf4eca507aa03 = L.featureGroup(
                 {}
-            ).addTo(map_0d957f998fda4f819dc9079e309e80ec);
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
     
-            var marker_96cf62f5e4a24d8f85acb0ac0ebd02dc = L.marker(
-                [42.346537, -71.0788632],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cd816fca89ed4161a45d46d768407d67);
+            var circle_2d0d255251ed4746a2c9b0842df5be63 = L.circle(
+                [42.34931, -71.08188],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-            var icon_f62d3ac5c4a34db09379150f30fb3d65 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_96cf62f5e4a24d8f85acb0ac0ebd02dc.setIcon(icon_f62d3ac5c4a34db09379150f30fb3d65);
+        var popup_dd8e4cbafd924b6589bf652b3224725d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_cd86157afb9247c7a9bbc67629e00d66 = $(`<div id="html_cd86157afb9247c7a9bbc67629e00d66" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-3.html'>                                 <b>Cluster 36-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_dd8e4cbafd924b6589bf652b3224725d.setContent(html_cd86157afb9247c7a9bbc67629e00d66);
+        
+
+        circle_2d0d255251ed4746a2c9b0842df5be63.bindPopup(popup_dd8e4cbafd924b6589bf652b3224725d)
+        ;
+
         
     
-            marker_96cf62f5e4a24d8f85acb0ac0ebd02dc.bindTooltip(
+    
+            circle_2d0d255251ed4746a2c9b0842df5be63.bindTooltip(
                 `<div>
-                     2-16 Harcourt St, Boston MA 02116</b><br>Units: nan | Floors: 9.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39218524</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var marker_c5e932b1e78642ccb1a3603b9717cecf = L.marker(
-                [42.3456536, -71.07872619999999],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cd816fca89ed4161a45d46d768407d67);
-        
-    
-            var icon_c07ae710701a4f1e942fbce8a14631c5 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_c5e932b1e78642ccb1a3603b9717cecf.setIcon(icon_c07ae710701a4f1e942fbce8a14631c5);
-        
-    
-            marker_c5e932b1e78642ccb1a3603b9717cecf.bindTooltip(
-                `<div>
-                     <b>Garrison Square Apartments<br>30 Garrison Street, Boston MA 02116</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Churchill Corporate Housing, Furnished Quarters, Global Luxury Suites, National Corporate Housing, Northeast Suites, Seamless Transitions
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_8773279a9e9d4a82a9cb65972126bbf6 = L.marker(
-                [42.3496398, -71.08155599999999],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cd816fca89ed4161a45d46d768407d67);
-        
-    
-            var icon_ea5af1f2ce0b4dffa2e5d0e4f42c0bdb = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_8773279a9e9d4a82a9cb65972126bbf6.setIcon(icon_ea5af1f2ce0b4dffa2e5d0e4f42c0bdb);
-        
-    
-            marker_8773279a9e9d4a82a9cb65972126bbf6.bindTooltip(
-                `<div>
-                     234 Newbury Street, Boston MA 02116</b><br>Units: nan | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Oakwood Worldwide
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_1cff90f4a2764ac0b25d63c0317d9ee9 = L.marker(
-                [42.3487748, -71.0813479],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cd816fca89ed4161a45d46d768407d67);
-        
-    
-            var icon_f6c3c01423544a658cba460e73557bc1 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_1cff90f4a2764ac0b25d63c0317d9ee9.setIcon(icon_f6c3c01423544a658cba460e73557bc1);
-        
-    
-            marker_1cff90f4a2764ac0b25d63c0317d9ee9.bindTooltip(
-                `<div>
-                     776 Boylston St, Boston MA 02199</b><br>Units: nan | Floors: 14.0 | Source: AirBPDBjn<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_51105b629e3e4550a5142c6415d21558 = L.marker(
-                [42.34819239999999, -71.0816562],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cd816fca89ed4161a45d46d768407d67);
-        
-    
-            var icon_c5ac3cbcfb0e4983b1b1d7eb5a371ac7 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_51105b629e3e4550a5142c6415d21558.setIcon(icon_c5ac3cbcfb0e4983b1b1d7eb5a371ac7);
-        
-    
-            marker_51105b629e3e4550a5142c6415d21558.bindTooltip(
-                `<div>
-                     <b>AVA Back Bay<br>790 Boylston Street, Boston MA 02199</b><br>Units: 250.0 | Floors: 26.0 | Source: RichCorpSS<br><b>Hosts: </b>Compass , Furnished Quarters, Northeast Suites
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_b17371062a444c5b979b4e870e5974e1 = L.marker(
-                [42.3483326, -71.082475],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cd816fca89ed4161a45d46d768407d67);
-        
-    
-            var icon_dd68149e29884c3ea54048f9a7528bce = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_b17371062a444c5b979b4e870e5974e1.setIcon(icon_dd68149e29884c3ea54048f9a7528bce);
-        
-    
-            marker_b17371062a444c5b979b4e870e5974e1.bindTooltip(
-                `<div>
-                     800 Boylston St, Boston MA 02199</b><br>Units: nan | Floors: 25.0 | Source: AirBPDBjn<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var feature_group_f6211d86605040819d4409ea657177df = L.featureGroup(
-                {}
-            ).addTo(map_0d957f998fda4f819dc9079e309e80ec);
-        
-    
-            var circle_844b47f68ac144c39e5e167ff837f11d = L.circle(
+            var circle_8b9c7d089f824aa18a6285e2841a7845 = L.circle(
                 [42.34673, -71.07898],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_0b72d8054dbb4606912f6b44a4198bed = L.popup({"maxWidth": "100%"});
+        var popup_c9fcf8bd10f5432b9f372aca65cd5541 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_5448e8c2c8364d1f9a0c55ce2d11d4a1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDQzNzUnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ0Mzc1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_0b72d8054dbb4606912f6b44a4198bed.setContent(i_frame_5448e8c2c8364d1f9a0c55ce2d11d4a1);
+            var html_034ae244d80c4001819ad7db0e65dc04 = $(`<div id="html_034ae244d80c4001819ad7db0e65dc04" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_c9fcf8bd10f5432b9f372aca65cd5541.setContent(html_034ae244d80c4001819ad7db0e65dc04);
         
 
-        circle_844b47f68ac144c39e5e167ff837f11d.bindPopup(popup_0b72d8054dbb4606912f6b44a4198bed)
+        circle_8b9c7d089f824aa18a6285e2841a7845.bindPopup(popup_c9fcf8bd10f5432b9f372aca65cd5541)
         ;
 
         
     
     
-            circle_844b47f68ac144c39e5e167ff837f11d.bindTooltip(
+            circle_8b9c7d089f824aa18a6285e2841a7845.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39444375</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39444375</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_7f2dace9ccad4bec8da16765294bbc25 = L.circle(
+            var circle_ae9a646d358e425dabe94587b9c6245b = L.circle(
                 [42.34616, -71.07907],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_bf2699f4ca0f45e9bcfab56f3da6a1f7 = L.popup({"maxWidth": "100%"});
+        var popup_f60c6cd483a3434e9f339a6d6865823c = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_a7df1e1941a2498bafa9b0b55a30bd2e = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDQ3MDYnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ0NzA2PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_bf2699f4ca0f45e9bcfab56f3da6a1f7.setContent(i_frame_a7df1e1941a2498bafa9b0b55a30bd2e);
+            var html_888e0c21e7ca43ab92c21833293506d1 = $(`<div id="html_888e0c21e7ca43ab92c21833293506d1" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f60c6cd483a3434e9f339a6d6865823c.setContent(html_888e0c21e7ca43ab92c21833293506d1);
         
 
-        circle_7f2dace9ccad4bec8da16765294bbc25.bindPopup(popup_bf2699f4ca0f45e9bcfab56f3da6a1f7)
+        circle_ae9a646d358e425dabe94587b9c6245b.bindPopup(popup_f60c6cd483a3434e9f339a6d6865823c)
         ;
 
         
     
     
-            circle_7f2dace9ccad4bec8da16765294bbc25.bindTooltip(
+            circle_ae9a646d358e425dabe94587b9c6245b.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39444706</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39444706</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_cb857d5f7d174ee2b9a31432b27a6d92 = L.circle(
+            var circle_55880eb826284067b17e32eb29d74ef4 = L.circle(
                 [42.34666, -71.07851],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_f0c33c38fca4486a83bb42a3e22a6ea6 = L.popup({"maxWidth": "100%"});
+        var popup_07e73fd005c5425c9b1e7841b0e25603 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_5e3e895b967a44eba7d987c3562565ca = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDU4MDcnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ1ODA3PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_f0c33c38fca4486a83bb42a3e22a6ea6.setContent(i_frame_5e3e895b967a44eba7d987c3562565ca);
+            var html_5f893d51a4574af291148b640544b951 = $(`<div id="html_5f893d51a4574af291148b640544b951" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_07e73fd005c5425c9b1e7841b0e25603.setContent(html_5f893d51a4574af291148b640544b951);
         
 
-        circle_cb857d5f7d174ee2b9a31432b27a6d92.bindPopup(popup_f0c33c38fca4486a83bb42a3e22a6ea6)
+        circle_55880eb826284067b17e32eb29d74ef4.bindPopup(popup_07e73fd005c5425c9b1e7841b0e25603)
         ;
 
         
     
     
-            circle_cb857d5f7d174ee2b9a31432b27a6d92.bindTooltip(
+            circle_55880eb826284067b17e32eb29d74ef4.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39445807</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39445807</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_cfa5bf99770d475c81e64df6f05b2c97 = L.circle(
+            var circle_be1b9f1b2751403c81c0418c22145c10 = L.circle(
                 [42.34659, -71.07915],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_81f15c8fac834b2ebeb72dc7fa616a5a = L.popup({"maxWidth": "100%"});
+        var popup_cea2056a4f924207b104bb33628630c1 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_94b793b7112f475890c7290bc59f688f = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDY3NzQnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ2Nzc0PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_81f15c8fac834b2ebeb72dc7fa616a5a.setContent(i_frame_94b793b7112f475890c7290bc59f688f);
+            var html_0b8dd0d95aec44b4b2f32a02b115f079 = $(`<div id="html_0b8dd0d95aec44b4b2f32a02b115f079" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_cea2056a4f924207b104bb33628630c1.setContent(html_0b8dd0d95aec44b4b2f32a02b115f079);
         
 
-        circle_cfa5bf99770d475c81e64df6f05b2c97.bindPopup(popup_81f15c8fac834b2ebeb72dc7fa616a5a)
+        circle_be1b9f1b2751403c81c0418c22145c10.bindPopup(popup_cea2056a4f924207b104bb33628630c1)
         ;
 
         
     
     
-            circle_cfa5bf99770d475c81e64df6f05b2c97.bindTooltip(
+            circle_be1b9f1b2751403c81c0418c22145c10.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39446774</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39446774</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_7e86b5c525364ef2b9ebb9b0baa01784 = L.circle(
+            var circle_9999695d56d74aea915673a3a2f74599 = L.circle(
                 [42.34646, -71.07755999999998],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_6b02d82dc2664041b52e499e3c0a5691 = L.popup({"maxWidth": "100%"});
+        var popup_8a66c5a0372e47af9bd61ea2d7c37083 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_ad91a0ed67224bd6b29e5352206029ed = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDcyOTcnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ3Mjk3PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_6b02d82dc2664041b52e499e3c0a5691.setContent(i_frame_ad91a0ed67224bd6b29e5352206029ed);
+            var html_7f286366d4164ea480db3c66a5c0b392 = $(`<div id="html_7f286366d4164ea480db3c66a5c0b392" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_8a66c5a0372e47af9bd61ea2d7c37083.setContent(html_7f286366d4164ea480db3c66a5c0b392);
         
 
-        circle_7e86b5c525364ef2b9ebb9b0baa01784.bindPopup(popup_6b02d82dc2664041b52e499e3c0a5691)
+        circle_9999695d56d74aea915673a3a2f74599.bindPopup(popup_8a66c5a0372e47af9bd61ea2d7c37083)
         ;
 
         
     
     
-            circle_7e86b5c525364ef2b9ebb9b0baa01784.bindTooltip(
+            circle_9999695d56d74aea915673a3a2f74599.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39447297</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39447297</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_4dbbd2b14f0c46e38068833a0c68789d = L.circle(
+            var circle_5d2a2e2643ab4f2fa7cea60ca65e163d = L.circle(
                 [42.34647, -71.07763],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_faac6accf60241c4aa5cecd79f8fd65a = L.popup({"maxWidth": "100%"});
+        var popup_7acf4165738c4b598676ad767069ee2c = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_cda4f27b3cd34826aee82b2a0212c4e6 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDc0NjInIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ3NDYyPC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_faac6accf60241c4aa5cecd79f8fd65a.setContent(i_frame_cda4f27b3cd34826aee82b2a0212c4e6);
+            var html_0327d0c714f2468aa8d8246e4847abb2 = $(`<div id="html_0327d0c714f2468aa8d8246e4847abb2" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_7acf4165738c4b598676ad767069ee2c.setContent(html_0327d0c714f2468aa8d8246e4847abb2);
         
 
-        circle_4dbbd2b14f0c46e38068833a0c68789d.bindPopup(popup_faac6accf60241c4aa5cecd79f8fd65a)
+        circle_5d2a2e2643ab4f2fa7cea60ca65e163d.bindPopup(popup_7acf4165738c4b598676ad767069ee2c)
         ;
 
         
     
     
-            circle_4dbbd2b14f0c46e38068833a0c68789d.bindTooltip(
+            circle_5d2a2e2643ab4f2fa7cea60ca65e163d.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39447462</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39447462</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_5d8cee405c474ffa913e24a135501b88 = L.circle(
-                [42.34628, -71.07905],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
-        
-    
-        var popup_05da0361440c4031b2ef1cc1a16ac1c3 = L.popup({"maxWidth": "100%"});
-
-        
-            var i_frame_24d0375bfe1a45ba9d28c2e62c57b68b = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvNDI1NzkxMTUnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzQyNTc5MTE1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_05da0361440c4031b2ef1cc1a16ac1c3.setContent(i_frame_24d0375bfe1a45ba9d28c2e62c57b68b);
-        
-
-        circle_5d8cee405c474ffa913e24a135501b88.bindPopup(popup_05da0361440c4031b2ef1cc1a16ac1c3)
-        ;
-
-        
-    
-    
-            circle_5d8cee405c474ffa913e24a135501b88.bindTooltip(
-                `<div>
-                     
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 42579115</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.1<br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_fff08dde4bcf4525bfdb08b9d6dcadfd = L.circle(
+            var circle_9e49039fb65e4e4d844284dea5d786b3 = L.circle(
                 [42.34782, -71.0835],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_d0213cae250440c18a51b47b18bf9780 = L.popup({"maxWidth": "100%"});
+        var popup_badc191117d54d50a88e8568683d1625 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_ae534f1d93de4de0bef5595087ebfdbb = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzk0NDc1NjUnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5NDQ3NTY1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_d0213cae250440c18a51b47b18bf9780.setContent(i_frame_ae534f1d93de4de0bef5595087ebfdbb);
+            var html_702b9be3e01544b59ff9e8abd874a49b = $(`<div id="html_702b9be3e01544b59ff9e8abd874a49b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-2.html'>                                 <b>Cluster 36-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_badc191117d54d50a88e8568683d1625.setContent(html_702b9be3e01544b59ff9e8abd874a49b);
         
 
-        circle_fff08dde4bcf4525bfdb08b9d6dcadfd.bindPopup(popup_d0213cae250440c18a51b47b18bf9780)
+        circle_9e49039fb65e4e4d844284dea5d786b3.bindPopup(popup_badc191117d54d50a88e8568683d1625)
         ;
 
         
     
     
-            circle_fff08dde4bcf4525bfdb08b9d6dcadfd.bindTooltip(
+            circle_9e49039fb65e4e4d844284dea5d786b3.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39447565</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.3<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39447565</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_e42290206ed74c3a8666393e252126a3 = L.circle(
-                [42.34931, -71.08188],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_f6211d86605040819d4409ea657177df);
+            var circle_90e58145d88f4a709c8ea56749d8ba48 = L.circle(
+                [42.34628, -71.07905],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_a9a29f0cabf64dfeb47bf4eca507aa03);
         
     
-        var popup_95b94a66dc494853a9346715dc4d5bd3 = L.popup({"maxWidth": "100%"});
+        var popup_ab1e40dca95042aeb932d28ec0b46ef6 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_d721010ea43d4e99aa26e4a13a89c961 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzkyMTg1MjQnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM5MjE4NTI0PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_95b94a66dc494853a9346715dc4d5bd3.setContent(i_frame_d721010ea43d4e99aa26e4a13a89c961);
+            var html_0b368f68cf3b4ab3b5944ef0d1036a7d = $(`<div id="html_0b368f68cf3b4ab3b5944ef0d1036a7d" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/36-1.html'>                                 <b>Cluster 36-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ab1e40dca95042aeb932d28ec0b46ef6.setContent(html_0b368f68cf3b4ab3b5944ef0d1036a7d);
         
 
-        circle_e42290206ed74c3a8666393e252126a3.bindPopup(popup_95b94a66dc494853a9346715dc4d5bd3)
+        circle_90e58145d88f4a709c8ea56749d8ba48.bindPopup(popup_ab1e40dca95042aeb932d28ec0b46ef6)
         ;
 
         
     
     
-            circle_e42290206ed74c3a8666393e252126a3.bindTooltip(
+            circle_90e58145d88f4a709c8ea56749d8ba48.bindTooltip(
                 `<div>
                      
-            Luxury Medical Suites | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 39218524</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #37.2<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42579115</b></p>
+        Cluster: <span style='color:#448AFF'><b>36-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Luxury Medical Suites </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var layer_control_2b5eb9cfd67948dabbfaae0c059ca5b2 = {
+            var layer_control_0ec80a24154e4853a3cd427f3c01fc79 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_cd816fca89ed4161a45d46d768407d67,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_a9a29f0cabf64dfeb47bf4eca507aa03,
                 },
             };
             L.control.layers(
-                layer_control_2b5eb9cfd67948dabbfaae0c059ca5b2.base_layers,
-                layer_control_2b5eb9cfd67948dabbfaae0c059ca5b2.overlays,
+                layer_control_0ec80a24154e4853a3cd427f3c01fc79.base_layers,
+                layer_control_0ec80a24154e4853a3cd427f3c01fc79.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_0d957f998fda4f819dc9079e309e80ec);
-            feature_group_cd816fca89ed4161a45d46d768407d67.remove();
+            ).addTo(map_eaea02aac8cf4d339316b818a446e292);
         
 </script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

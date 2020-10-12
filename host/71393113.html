@@ -1,4 +1,448 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Eric</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Eric </h2>
+        <h3>
+            <b>5 listings</b> | 
+            1 cluster
+        </h3> 
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    5 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/54-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>54-1</b> (5 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Berklee Communications Office, 1123, Boylston Street, Charles Newcomb Square, Back Bay </p>
+            <a href='/centroid/54-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
 <head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
@@ -23,7 +467,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_96d4dc0842eb428a90c1f120f1edf715 {
+                #map_80597ad85abf4ed8b06b5718fad2034e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,93 +479,31 @@
 </head>
 <body>    
     
-         <div style="position: fixed; z-index:699; 
-         top: 10px; right: 10px; max-width: 300px; height:100%;
-         display:block;">
-
-            <div style='width:auto; display:inline-block; overflow:auto;
-                        max-height:calc(100% - 60px);
-                        padding: 10px 10px; font-size:14px; 
-                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
-                        border-radius:5px;
-                        background-color:rgba(255, 255, 255, .8);'>
-                        
-                <div><a style='font-size:14px;color:#636363;'
-                href='https://air-monitor.onrender.com/home.html#hosts'>
-                    <b>&#8592; All hosts</b></a> </div>   
-                
-                <hr style='margin:10px 40px 0 0;'>
-                
-            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
-                        
-                <div style='margin:0; text-align:center'>
-                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
-                        1 Cluster
-                        &nbsp;|&nbsp;
-                    <i class="fa fa-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-                        5 Listings
-                    </b>
-                </div>
-                <hr style='margin:8px 0 0;'>
-                <div style='margin:10px 0 5px; font-size:14px'>
-                           Host listings by <b>registration status</b>:</div>
-                       
-                <i class="fa fa-circle"
-                style="font-size:14px; color:#E65100; margin-right:3px"></i>
-                Not verified - <b>5</b> listings
-                <br>
-                <hr style='margin:8px 0 0;'>
-               
-    <div style='margin:10px 0 3px; font-size:14px'>
-        <b>Listing clusters</b></div>
-    <div style='margin:0 0 8px; font-size:12px'>
-        Addresses inferred from cluster centers.
-        Nearby STR buildings sourced from ADCO research.
-    </div> 
-    
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>Berklee Communications Office, 1123, Boylston Street, Charles Newcomb Square, Back Bay</b>
-                    <span style='color:black'>(5 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>within 200 ft.</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <div style='font-size:12px'>
-                Possible matches in STR building database:
-            </div><ul style='margin:0'><li style='margin:2px 0;'>100-112 Norway St</li><li style='margin:2px 0;'>1085 Boylston Street</li></ul></div>
-            </div>
-          </div> 
-    
          <div style="
          position: fixed; z-index:699; 
-         bottom: 12px; right: 0px; width: 355px; height: 24px; 
-         background-color:rgba(255, 255, 255, .8);
-         padding: 2px 6px;
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
          font-size:12px">
-            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-08-31 | STR registry: 2020-08-05
+            </span>
           </div> 
     
-            <div class="folium-map" id="map_96d4dc0842eb428a90c1f120f1edf715" ></div>
+            <div class="folium-map" id="map_80597ad85abf4ed8b06b5718fad2034e" ></div>
         
 </body>
 <script>    
     
-            var map_96d4dc0842eb428a90c1f120f1edf715 = L.map(
-                "map_96d4dc0842eb428a90c1f120f1edf715",
+            var map_80597ad85abf4ed8b06b5718fad2034e = L.map(
+                "map_80597ad85abf4ed8b06b5718fad2034e",
                 {
-                    center: [42.34554, -71.052],
+                    center: [42.346932, -71.089004],
                     crs: L.CRS.EPSG3857,
-                    zoom: 13,
+                    zoom: 16,
                     zoomControl: true,
                     preferCanvas: false,
                 }
@@ -131,279 +513,455 @@
 
         
     
-            var tile_layer_35d9cfd3dc594819a924b475e6b592c3 = L.tileLayer(
+            var tile_layer_16023dd9b16f496eb1b320a6f56521d1 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_96d4dc0842eb428a90c1f120f1edf715);
+            ).addTo(map_80597ad85abf4ed8b06b5718fad2034e);
         
     
-            var feature_group_6d7d4e7e7ddd45f380626a47009ff3bb = L.featureGroup(
-                {}
-            ).addTo(map_96d4dc0842eb428a90c1f120f1edf715);
-        
-    
-            var circle_b224ce19f99147c886b79bff53668786 = L.circle(
+            var circle_c7888c3aaad147599af5ab389ba9a401 = L.circle(
                 [42.346932, -71.089004],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 56.388000000000005, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6d7d4e7e7ddd45f380626a47009ff3bb);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4750240357477108, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7750240357477107, "radius": 91.37913144000001, "stroke": true, "weight": 2}
+            ).addTo(map_80597ad85abf4ed8b06b5718fad2034e);
         
     
-            circle_b224ce19f99147c886b79bff53668786.bindTooltip(
+        var popup_a989e24d1a2c47789325ad5e37817d7f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_734758ffe8474fba8d74fc7b4c1df776 = $(`<div id="html_734758ffe8474fba8d74fc7b4c1df776" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a989e24d1a2c47789325ad5e37817d7f.setContent(html_734758ffe8474fba8d74fc7b4c1df776);
+        
+
+        circle_c7888c3aaad147599af5ab389ba9a401.bindPopup(popup_a989e24d1a2c47789325ad5e37817d7f)
+        ;
+
+        
+    
+    
+            circle_c7888c3aaad147599af5ab389ba9a401.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #61.1 | 5 listings | Eric</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (5 listings)</li></ul>
-            <span style='color:#0D47A1;'>Berklee Communications Office, 1123, Boylston Street, Charles Newcomb Square, Back Bay</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>54-1</b></p>
+                        Host: <b>Eric </b> | Listings: <b>5</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_marker_d4a265437561427c8b139bc3587ac6ac = L.circleMarker(
+            var circle_02d78aac10a844fda59d23d47bb527c4 = L.circle(
                 [42.346932, -71.089004],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_6d7d4e7e7ddd45f380626a47009ff3bb);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_80597ad85abf4ed8b06b5718fad2034e);
         
     
-            circle_marker_d4a265437561427c8b139bc3587ac6ac.bindTooltip(
+        var popup_97b8f3680db94526aee4af44e565e773 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ee3d87bbf50a4378b50ab77a7238587c = $(`<div id="html_ee3d87bbf50a4378b50ab77a7238587c" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_97b8f3680db94526aee4af44e565e773.setContent(html_ee3d87bbf50a4378b50ab77a7238587c);
+        
+
+        circle_02d78aac10a844fda59d23d47bb527c4.bindPopup(popup_97b8f3680db94526aee4af44e565e773)
+        ;
+
+        
+    
+    
+            circle_02d78aac10a844fda59d23d47bb527c4.bindTooltip(
                 `<div>
                      
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #61.1 | 5 listings | Eric</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (5 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (5 listings)</li></ul>
-            <span style='color:#0D47A1;'>Berklee Communications Office, 1123, Boylston Street, Charles Newcomb Square, Back Bay</span><br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>54-1</b></p>
+                        Host: <b>Eric </b> | Listings: <b>5</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var feature_group_cbcceaa9b6be473ea46c3ddd06fd58e6 = L.featureGroup(
+            var feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d = L.featureGroup(
                 {}
-            ).addTo(map_96d4dc0842eb428a90c1f120f1edf715);
+            ).addTo(map_80597ad85abf4ed8b06b5718fad2034e);
         
     
-            var marker_022a3f09b17f4e2396830998cd5a7cf2 = L.marker(
-                [42.3449253, -71.08830449999999],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cbcceaa9b6be473ea46c3ddd06fd58e6);
-        
-    
-            var icon_def73caa7d3247dd80a03f7d973e5881 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_022a3f09b17f4e2396830998cd5a7cf2.setIcon(icon_def73caa7d3247dd80a03f7d973e5881);
-        
-    
-            marker_022a3f09b17f4e2396830998cd5a7cf2.bindTooltip(
-                `<div>
-                     100-112 Norway St, Boston MA 02115</b><br>Units: nan | Floors: 12.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_f6bed7313d194564bd079341334e3908 = L.marker(
-                [42.3472473, -71.0890768],
-                {"opacity": 0.7}
-            ).addTo(feature_group_cbcceaa9b6be473ea46c3ddd06fd58e6);
-        
-    
-            var icon_635efbf69cdf494bbeeca7530206b26d = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_f6bed7313d194564bd079341334e3908.setIcon(icon_635efbf69cdf494bbeeca7530206b26d);
-        
-    
-            marker_f6bed7313d194564bd079341334e3908.bindTooltip(
-                `<div>
-                     <b>Artlab Back Bay<br>1085 Boylston Street, Boston MA 02215</b><br>Units: 30.0 | Floors: nan | Source: RichCorpSS<br><b>Hosts: </b>Compass , Northeast Suites
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var feature_group_b91b9aad366544f8baaee9210d0912a1 = L.featureGroup(
-                {}
-            ).addTo(map_96d4dc0842eb428a90c1f120f1edf715);
-        
-    
-            var circle_957febf951f043098c85b4c4413df151 = L.circle(
+            var circle_7ff54ec561444895833020d10b5bf7ff = L.circle(
                 [42.34753, -71.08894000000002],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_b91b9aad366544f8baaee9210d0912a1);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d);
         
     
-        var popup_48b99ec8e43b45e6a808609d98ceea75 = L.popup({"maxWidth": "100%"});
+        var popup_a3b96dde6dfe4ecba3127e5c903d796d = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_ddb5a48aa1dd444d873c47ebcce2d3dd = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTI5NzMzMDgnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzEyOTczMzA4PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_48b99ec8e43b45e6a808609d98ceea75.setContent(i_frame_ddb5a48aa1dd444d873c47ebcce2d3dd);
+            var html_13c6827bbf7743d8b5263437b37dda6b = $(`<div id="html_13c6827bbf7743d8b5263437b37dda6b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a3b96dde6dfe4ecba3127e5c903d796d.setContent(html_13c6827bbf7743d8b5263437b37dda6b);
         
 
-        circle_957febf951f043098c85b4c4413df151.bindPopup(popup_48b99ec8e43b45e6a808609d98ceea75)
+        circle_7ff54ec561444895833020d10b5bf7ff.bindPopup(popup_a3b96dde6dfe4ecba3127e5c903d796d)
         ;
 
         
     
     
-            circle_957febf951f043098c85b4c4413df151.bindTooltip(
+            circle_7ff54ec561444895833020d10b5bf7ff.bindTooltip(
                 `<div>
                      
-            Eric | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 12973308</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #61.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>12973308</b></p>
+        Cluster: <span style='color:#448AFF'><b>54-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Eric </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_cd329eb026fa4feabfae052eb09d054d = L.circle(
+            var circle_294d1e20209f4f82ab89040c4257f8c9 = L.circle(
                 [42.34678, -71.08951],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_b91b9aad366544f8baaee9210d0912a1);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d);
         
     
-        var popup_d0d9beeea98849be946d09a671917dcb = L.popup({"maxWidth": "100%"});
+        var popup_60487efa1c5348c59eb7b660e56471e9 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_43169961ae7b41a595c5a9511c2fb8c9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTMwNzgwMjUnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzEzMDc4MDI1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_d0d9beeea98849be946d09a671917dcb.setContent(i_frame_43169961ae7b41a595c5a9511c2fb8c9);
+            var html_93f3abe462d04f4a8727d057f75f780e = $(`<div id="html_93f3abe462d04f4a8727d057f75f780e" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_60487efa1c5348c59eb7b660e56471e9.setContent(html_93f3abe462d04f4a8727d057f75f780e);
         
 
-        circle_cd329eb026fa4feabfae052eb09d054d.bindPopup(popup_d0d9beeea98849be946d09a671917dcb)
+        circle_294d1e20209f4f82ab89040c4257f8c9.bindPopup(popup_60487efa1c5348c59eb7b660e56471e9)
         ;
 
         
     
     
-            circle_cd329eb026fa4feabfae052eb09d054d.bindTooltip(
+            circle_294d1e20209f4f82ab89040c4257f8c9.bindTooltip(
                 `<div>
                      
-            Eric | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 13078025</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #61.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>13078025</b></p>
+        Cluster: <span style='color:#448AFF'><b>54-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Eric </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_f830639b0d2441c19d3cddbf0061e770 = L.circle(
+            var circle_4e945bba1fac46b28809b7982fe3354f = L.circle(
                 [42.34599, -71.08865],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_b91b9aad366544f8baaee9210d0912a1);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d);
         
     
-        var popup_0d93ce493e614ee5a3f65c0b18bfd6ce = L.popup({"maxWidth": "100%"});
+        var popup_b854b87977ea418aa573ac1b37a3640c = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_d71e6df9de68419cba92eca96ff80446 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ0Njk4OTQnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzE0NDY5ODk0PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_0d93ce493e614ee5a3f65c0b18bfd6ce.setContent(i_frame_d71e6df9de68419cba92eca96ff80446);
+            var html_52e4553cb5254cad868449d34380ad8f = $(`<div id="html_52e4553cb5254cad868449d34380ad8f" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b854b87977ea418aa573ac1b37a3640c.setContent(html_52e4553cb5254cad868449d34380ad8f);
         
 
-        circle_f830639b0d2441c19d3cddbf0061e770.bindPopup(popup_0d93ce493e614ee5a3f65c0b18bfd6ce)
+        circle_4e945bba1fac46b28809b7982fe3354f.bindPopup(popup_b854b87977ea418aa573ac1b37a3640c)
         ;
 
         
     
     
-            circle_f830639b0d2441c19d3cddbf0061e770.bindTooltip(
+            circle_4e945bba1fac46b28809b7982fe3354f.bindTooltip(
                 `<div>
                      
-            Eric | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 14469894</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #61.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>14469894</b></p>
+        Cluster: <span style='color:#448AFF'><b>54-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Eric </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_f0acbffdf560476e848ec53e81782dde = L.circle(
+            var circle_32bb6d77a5a84983b1fdc2c2d5083fb4 = L.circle(
                 [42.34737, -71.08906],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_b91b9aad366544f8baaee9210d0912a1);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d);
         
     
-        var popup_42d11b26354d4111ba583567ffc55428 = L.popup({"maxWidth": "100%"});
+        var popup_a8905276d8d3442482356031049b93c8 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_34022324c69f4d63b7d7322fdfc8f1f1 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ0ODYyMzcnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzE0NDg2MjM3PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_42d11b26354d4111ba583567ffc55428.setContent(i_frame_34022324c69f4d63b7d7322fdfc8f1f1);
+            var html_8cfd8643e9e5416e8889b4753a96e5de = $(`<div id="html_8cfd8643e9e5416e8889b4753a96e5de" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a8905276d8d3442482356031049b93c8.setContent(html_8cfd8643e9e5416e8889b4753a96e5de);
         
 
-        circle_f0acbffdf560476e848ec53e81782dde.bindPopup(popup_42d11b26354d4111ba583567ffc55428)
+        circle_32bb6d77a5a84983b1fdc2c2d5083fb4.bindPopup(popup_a8905276d8d3442482356031049b93c8)
         ;
 
         
     
     
-            circle_f0acbffdf560476e848ec53e81782dde.bindTooltip(
+            circle_32bb6d77a5a84983b1fdc2c2d5083fb4.bindTooltip(
                 `<div>
                      
-            Eric | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 14486237</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #61.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>14486237</b></p>
+        Cluster: <span style='color:#448AFF'><b>54-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Eric </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_518a6798442c46359f840482becfa2e8 = L.circle(
+            var circle_40a01abb4d854d01bdb0efd54ea4793b = L.circle(
                 [42.34699000000001, -71.08886],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_b91b9aad366544f8baaee9210d0912a1);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d);
         
     
-        var popup_59a43e5d11e4477e96407dfd170a175a = L.popup({"maxWidth": "100%"});
+        var popup_f04737654d0646a4bb3a294549396954 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_cba55caf0afc47ffbdc2edfd1eeb3be4 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMTQ2ODI1ODgnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzE0NjgyNTg4PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_59a43e5d11e4477e96407dfd170a175a.setContent(i_frame_cba55caf0afc47ffbdc2edfd1eeb3be4);
+            var html_3bbe1a31cce145ac9bc7004e8ee38885 = $(`<div id="html_3bbe1a31cce145ac9bc7004e8ee38885" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/54-1.html'>                                 <b>Cluster 54-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f04737654d0646a4bb3a294549396954.setContent(html_3bbe1a31cce145ac9bc7004e8ee38885);
         
 
-        circle_518a6798442c46359f840482becfa2e8.bindPopup(popup_59a43e5d11e4477e96407dfd170a175a)
+        circle_40a01abb4d854d01bdb0efd54ea4793b.bindPopup(popup_f04737654d0646a4bb3a294549396954)
         ;
 
         
     
     
-            circle_518a6798442c46359f840482becfa2e8.bindTooltip(
+            circle_40a01abb4d854d01bdb0efd54ea4793b.bindTooltip(
                 `<div>
                      
-            Eric | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 14682588</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #61.1<br>
-            
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>14682588</b></p>
+        Cluster: <span style='color:#448AFF'><b>54-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Eric </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var layer_control_505ddfee60024ff7991320da686e7e61 = {
+            var layer_control_b782d4c158504888a37bff6d28a3ba85 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_cbcceaa9b6be473ea46c3ddd06fd58e6,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_c8bb4bc2d1ee40abbfb9ae703c70754d,
                 },
             };
             L.control.layers(
-                layer_control_505ddfee60024ff7991320da686e7e61.base_layers,
-                layer_control_505ddfee60024ff7991320da686e7e61.overlays,
+                layer_control_b782d4c158504888a37bff6d28a3ba85.base_layers,
+                layer_control_b782d4c158504888a37bff6d28a3ba85.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_96d4dc0842eb428a90c1f120f1edf715);
-            feature_group_cbcceaa9b6be473ea46c3ddd06fd58e6.remove();
+            ).addTo(map_80597ad85abf4ed8b06b5718fad2034e);
         
 </script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

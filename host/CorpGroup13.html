@@ -1,0 +1,2164 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Temple Place</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Temple Place </h2>
+        <h3>
+            <b>34 listings</b> | 
+            1 cluster
+        </h3> 
+
+        <p> <b>Note:</b> This host represents a corporation using the following 
+             alias accounts</p>
+             
+             <ul style='margin:0; font-size:15px; color: white; padding-left:15px;margin-left:10px' >
+        <li>
+            <a target='_blank' href='https://www.airbnb.com/users/show/205269848'>
+                "Temple Place"</a> - 34 listings</li></ul>
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    34 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#D32F2F">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Not found (fabricated)
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/4-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>4-1</b> (34 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 10, Winter Place, Phillips Square, Downtown Crossing, Financial District </p>
+            <a href='/centroid/4-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_35be36142f8a44dd958f63dfeeb7a373 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
+         font-size:12px">
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
+          </div> 
+    
+            <div class="folium-map" id="map_35be36142f8a44dd958f63dfeeb7a373" ></div>
+        
+</body>
+<script>    
+    
+            var map_35be36142f8a44dd958f63dfeeb7a373 = L.map(
+                "map_35be36142f8a44dd958f63dfeeb7a373",
+                {
+                    center: [42.35539029411764, -71.0616388235294],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 16,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d2a71f6e52454f9a85f6728b8b50b8a5 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_35be36142f8a44dd958f63dfeeb7a373);
+        
+    
+            var circle_267afde6807f4da680a2b615ea1083a2 = L.circle(
+                [42.35539029411764, -71.0616388235294],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.5643814874834147, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8643814874834146, "radius": 120.27298272000002, "stroke": true, "weight": 2}
+            ).addTo(map_35be36142f8a44dd958f63dfeeb7a373);
+        
+    
+        var popup_077f5f9af6224e17a87648097ed0f7d8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_31b466f2872d45f08bbb36ccf07c1557 = $(`<div id="html_31b466f2872d45f08bbb36ccf07c1557" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_077f5f9af6224e17a87648097ed0f7d8.setContent(html_31b466f2872d45f08bbb36ccf07c1557);
+        
+
+        circle_267afde6807f4da680a2b615ea1083a2.bindPopup(popup_077f5f9af6224e17a87648097ed0f7d8)
+        ;
+
+        
+    
+    
+            circle_267afde6807f4da680a2b615ea1083a2.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>4-1</b></p>
+                        Host: <b>Temple Place </b> | Listings: <b>34</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4ec0a0b15ef347bfabf6e9bdb3604f9c = L.circle(
+                [42.35539029411764, -71.0616388235294],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_35be36142f8a44dd958f63dfeeb7a373);
+        
+    
+        var popup_e50b34e967be4217bf1049cf69a38921 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6ef6ab060d464cf0be9ff41235c82fd0 = $(`<div id="html_6ef6ab060d464cf0be9ff41235c82fd0" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e50b34e967be4217bf1049cf69a38921.setContent(html_6ef6ab060d464cf0be9ff41235c82fd0);
+        
+
+        circle_4ec0a0b15ef347bfabf6e9bdb3604f9c.bindPopup(popup_e50b34e967be4217bf1049cf69a38921)
+        ;
+
+        
+    
+    
+            circle_4ec0a0b15ef347bfabf6e9bdb3604f9c.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>4-1</b></p>
+                        Host: <b>Temple Place </b> | Listings: <b>34</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_ded32b44230c428d9759d4065afb40d3 = L.featureGroup(
+                {}
+            ).addTo(map_35be36142f8a44dd958f63dfeeb7a373);
+        
+    
+            var circle_611efc0895704b82bfe165b138108465 = L.circle(
+                [42.35595, -71.06137],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_ea636ebdb12446c89a1ccef4799ee098 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e819d5075b914a5788b64ff604568ea4 = $(`<div id="html_e819d5075b914a5788b64ff604568ea4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_ea636ebdb12446c89a1ccef4799ee098.setContent(html_e819d5075b914a5788b64ff604568ea4);
+        
+
+        circle_611efc0895704b82bfe165b138108465.bindPopup(popup_ea636ebdb12446c89a1ccef4799ee098)
+        ;
+
+        
+    
+    
+            circle_611efc0895704b82bfe165b138108465.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330037</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e8014154a8a543d9901a4da7662564b8 = L.circle(
+                [42.35581, -71.06115],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_243c33fcec56498cb7922208f64ff09f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4f6dedd87cc248b9ac722ab634ae1a82 = $(`<div id="html_4f6dedd87cc248b9ac722ab634ae1a82" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_243c33fcec56498cb7922208f64ff09f.setContent(html_4f6dedd87cc248b9ac722ab634ae1a82);
+        
+
+        circle_e8014154a8a543d9901a4da7662564b8.bindPopup(popup_243c33fcec56498cb7922208f64ff09f)
+        ;
+
+        
+    
+    
+            circle_e8014154a8a543d9901a4da7662564b8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330038</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4eb6948807194cf58cccbc34a053d3ee = L.circle(
+                [42.35534000000001, -71.06168000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_a7921e8d34c9426cbc35e5c04834f301 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_defccad8d82043a7a11b371fe4a68ef1 = $(`<div id="html_defccad8d82043a7a11b371fe4a68ef1" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a7921e8d34c9426cbc35e5c04834f301.setContent(html_defccad8d82043a7a11b371fe4a68ef1);
+        
+
+        circle_4eb6948807194cf58cccbc34a053d3ee.bindPopup(popup_a7921e8d34c9426cbc35e5c04834f301)
+        ;
+
+        
+    
+    
+            circle_4eb6948807194cf58cccbc34a053d3ee.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330132</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cf026ad48c1d46e2827c85eac87f8428 = L.circle(
+                [42.3544, -71.0615],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_5b2317b73e6a4a37814d8811d512d9ef = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9319f61fc67e421abdd1cd4b8a160013 = $(`<div id="html_9319f61fc67e421abdd1cd4b8a160013" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_5b2317b73e6a4a37814d8811d512d9ef.setContent(html_9319f61fc67e421abdd1cd4b8a160013);
+        
+
+        circle_cf026ad48c1d46e2827c85eac87f8428.bindPopup(popup_5b2317b73e6a4a37814d8811d512d9ef)
+        ;
+
+        
+    
+    
+            circle_cf026ad48c1d46e2827c85eac87f8428.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330134</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4126e03dfd1145d3a0cfe9d2ff2796d3 = L.circle(
+                [42.35595, -71.06194],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_60267e4c02924463baccce6355d19e2c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_effc2e0f572d469eade36d7d60609487 = $(`<div id="html_effc2e0f572d469eade36d7d60609487" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_60267e4c02924463baccce6355d19e2c.setContent(html_effc2e0f572d469eade36d7d60609487);
+        
+
+        circle_4126e03dfd1145d3a0cfe9d2ff2796d3.bindPopup(popup_60267e4c02924463baccce6355d19e2c)
+        ;
+
+        
+    
+    
+            circle_4126e03dfd1145d3a0cfe9d2ff2796d3.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330185</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_96a2f38eb45f45fe92b3bee235b8623d = L.circle(
+                [42.35545, -71.06085],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_f70b1370ed59416987ec38da625a44fd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_67b4ff5688d04ce59c34342ead0c704f = $(`<div id="html_67b4ff5688d04ce59c34342ead0c704f" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f70b1370ed59416987ec38da625a44fd.setContent(html_67b4ff5688d04ce59c34342ead0c704f);
+        
+
+        circle_96a2f38eb45f45fe92b3bee235b8623d.bindPopup(popup_f70b1370ed59416987ec38da625a44fd)
+        ;
+
+        
+    
+    
+            circle_96a2f38eb45f45fe92b3bee235b8623d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330288</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_045f4acd3c624214ab7e495bdf460af4 = L.circle(
+                [42.35589, -71.06251],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_a4d959dd82d14d4bb3bb1d672cf26062 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_984a138d4fe643859e61bcbf2bb526f6 = $(`<div id="html_984a138d4fe643859e61bcbf2bb526f6" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a4d959dd82d14d4bb3bb1d672cf26062.setContent(html_984a138d4fe643859e61bcbf2bb526f6);
+        
+
+        circle_045f4acd3c624214ab7e495bdf460af4.bindPopup(popup_a4d959dd82d14d4bb3bb1d672cf26062)
+        ;
+
+        
+    
+    
+            circle_045f4acd3c624214ab7e495bdf460af4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330292</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0fe78f8bd3a546b489705f26d4e93e20 = L.circle(
+                [42.3563, -71.06092],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_b53773dd4abe4a42a448e7edcf6f8024 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_077c126fdd62462eb95f72ee00cb4281 = $(`<div id="html_077c126fdd62462eb95f72ee00cb4281" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b53773dd4abe4a42a448e7edcf6f8024.setContent(html_077c126fdd62462eb95f72ee00cb4281);
+        
+
+        circle_0fe78f8bd3a546b489705f26d4e93e20.bindPopup(popup_b53773dd4abe4a42a448e7edcf6f8024)
+        ;
+
+        
+    
+    
+            circle_0fe78f8bd3a546b489705f26d4e93e20.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330395</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c91cc678ab91439eba7ca8296f447610 = L.circle(
+                [42.35586, -71.06159],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_8ae21aa74aa94385b31353a977973905 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_71029815123746bfb21ec9207443b38b = $(`<div id="html_71029815123746bfb21ec9207443b38b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_8ae21aa74aa94385b31353a977973905.setContent(html_71029815123746bfb21ec9207443b38b);
+        
+
+        circle_c91cc678ab91439eba7ca8296f447610.bindPopup(popup_8ae21aa74aa94385b31353a977973905)
+        ;
+
+        
+    
+    
+            circle_c91cc678ab91439eba7ca8296f447610.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330398</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_204ffe5c1ca0459da078429db2ae140c = L.circle(
+                [42.35575, -71.06267],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_2cfbd8bb37d049dfac63a97693651096 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a2224c3be3424015abe417d7f395b3b4 = $(`<div id="html_a2224c3be3424015abe417d7f395b3b4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_2cfbd8bb37d049dfac63a97693651096.setContent(html_a2224c3be3424015abe417d7f395b3b4);
+        
+
+        circle_204ffe5c1ca0459da078429db2ae140c.bindPopup(popup_2cfbd8bb37d049dfac63a97693651096)
+        ;
+
+        
+    
+    
+            circle_204ffe5c1ca0459da078429db2ae140c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330401</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f2e47b4316d4436498e9e1468fddb5dd = L.circle(
+                [42.35621, -71.06108],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_cac64c89fce84a1f9f5a501867380e47 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_469baa2272f649f499c26b88539bd0ce = $(`<div id="html_469baa2272f649f499c26b88539bd0ce" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_cac64c89fce84a1f9f5a501867380e47.setContent(html_469baa2272f649f499c26b88539bd0ce);
+        
+
+        circle_f2e47b4316d4436498e9e1468fddb5dd.bindPopup(popup_cac64c89fce84a1f9f5a501867380e47)
+        ;
+
+        
+    
+    
+            circle_f2e47b4316d4436498e9e1468fddb5dd.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330465</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4c1e8f83247741c6a9bc3678f74fb876 = L.circle(
+                [42.35579, -71.06262],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_6d7225f404fe4875a74f73ab8e036e66 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_55e40b7d05804bfe8baa3fad4760a827 = $(`<div id="html_55e40b7d05804bfe8baa3fad4760a827" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_6d7225f404fe4875a74f73ab8e036e66.setContent(html_55e40b7d05804bfe8baa3fad4760a827);
+        
+
+        circle_4c1e8f83247741c6a9bc3678f74fb876.bindPopup(popup_6d7225f404fe4875a74f73ab8e036e66)
+        ;
+
+        
+    
+    
+            circle_4c1e8f83247741c6a9bc3678f74fb876.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330468</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4fd2b866d9434e2481cfe4f57bced7ae = L.circle(
+                [42.35541, -71.06293000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_4c8f664c9af14c499e4ee6d1b3030c6f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_77a355ff161f402093c09876efac76e7 = $(`<div id="html_77a355ff161f402093c09876efac76e7" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_4c8f664c9af14c499e4ee6d1b3030c6f.setContent(html_77a355ff161f402093c09876efac76e7);
+        
+
+        circle_4fd2b866d9434e2481cfe4f57bced7ae.bindPopup(popup_4c8f664c9af14c499e4ee6d1b3030c6f)
+        ;
+
+        
+    
+    
+            circle_4fd2b866d9434e2481cfe4f57bced7ae.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330630</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_282263dcce714d5f9d5b376978ce7eda = L.circle(
+                [42.35395, -71.06119],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_5420ee4836904b91af6771491d28189f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_727500ac28f24d7caf743df2fe0310e8 = $(`<div id="html_727500ac28f24d7caf743df2fe0310e8" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_5420ee4836904b91af6771491d28189f.setContent(html_727500ac28f24d7caf743df2fe0310e8);
+        
+
+        circle_282263dcce714d5f9d5b376978ce7eda.bindPopup(popup_5420ee4836904b91af6771491d28189f)
+        ;
+
+        
+    
+    
+            circle_282263dcce714d5f9d5b376978ce7eda.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330730</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b715440b1d724cedb6536fbdf91d001c = L.circle(
+                [42.35605, -71.06124],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_e77360a94fb64e43923d26f5b06d6def = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a147861e2e624980816931e38a021d9f = $(`<div id="html_a147861e2e624980816931e38a021d9f" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e77360a94fb64e43923d26f5b06d6def.setContent(html_a147861e2e624980816931e38a021d9f);
+        
+
+        circle_b715440b1d724cedb6536fbdf91d001c.bindPopup(popup_e77360a94fb64e43923d26f5b06d6def)
+        ;
+
+        
+    
+    
+            circle_b715440b1d724cedb6536fbdf91d001c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330935</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_97cf244150d14fa29128a862318dc20e = L.circle(
+                [42.35429, -71.06109000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_a219dc4ffb544d32a81265bce1a94a92 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b970fdfc4e5f433b8ef2f4882df26238 = $(`<div id="html_b970fdfc4e5f433b8ef2f4882df26238" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_a219dc4ffb544d32a81265bce1a94a92.setContent(html_b970fdfc4e5f433b8ef2f4882df26238);
+        
+
+        circle_97cf244150d14fa29128a862318dc20e.bindPopup(popup_a219dc4ffb544d32a81265bce1a94a92)
+        ;
+
+        
+    
+    
+            circle_97cf244150d14fa29128a862318dc20e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32330936</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ee0712fdbbf442c8b0730fd445ec0bfe = L.circle(
+                [42.35458, -71.06109000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_26020af368c445ed9d4e55c0dafb0f1c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8e4fa822b510448a8c6c76c2aa953e29 = $(`<div id="html_8e4fa822b510448a8c6c76c2aa953e29" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_26020af368c445ed9d4e55c0dafb0f1c.setContent(html_8e4fa822b510448a8c6c76c2aa953e29);
+        
+
+        circle_ee0712fdbbf442c8b0730fd445ec0bfe.bindPopup(popup_26020af368c445ed9d4e55c0dafb0f1c)
+        ;
+
+        
+    
+    
+            circle_ee0712fdbbf442c8b0730fd445ec0bfe.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331040</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6473cc9c5bef46869f3dfbcfaa40c885 = L.circle(
+                [42.3548, -71.06174],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_85f89b7e53f545f7beb74567953d4e4d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_78e998ee7591400cae956409fd54aee4 = $(`<div id="html_78e998ee7591400cae956409fd54aee4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_85f89b7e53f545f7beb74567953d4e4d.setContent(html_78e998ee7591400cae956409fd54aee4);
+        
+
+        circle_6473cc9c5bef46869f3dfbcfaa40c885.bindPopup(popup_85f89b7e53f545f7beb74567953d4e4d)
+        ;
+
+        
+    
+    
+            circle_6473cc9c5bef46869f3dfbcfaa40c885.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331042</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_b80af3f74f45442991bd241b54fd7f18 = L.circle(
+                [42.35453, -71.06175999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_f10dba32d1854959be2b0b4e9e36887c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_86fdedba075741e2b7169d6b28c538b3 = $(`<div id="html_86fdedba075741e2b7169d6b28c538b3" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f10dba32d1854959be2b0b4e9e36887c.setContent(html_86fdedba075741e2b7169d6b28c538b3);
+        
+
+        circle_b80af3f74f45442991bd241b54fd7f18.bindPopup(popup_f10dba32d1854959be2b0b4e9e36887c)
+        ;
+
+        
+    
+    
+            circle_b80af3f74f45442991bd241b54fd7f18.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331101</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_74d7436e4c3c4c5b86901a1f07c521e8 = L.circle(
+                [42.35471, -71.06189],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_7ef28c2e158843bcbf80f3f85711b764 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_dff4f8efe4de490cada4ddcd8d06a862 = $(`<div id="html_dff4f8efe4de490cada4ddcd8d06a862" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_7ef28c2e158843bcbf80f3f85711b764.setContent(html_dff4f8efe4de490cada4ddcd8d06a862);
+        
+
+        circle_74d7436e4c3c4c5b86901a1f07c521e8.bindPopup(popup_7ef28c2e158843bcbf80f3f85711b764)
+        ;
+
+        
+    
+    
+            circle_74d7436e4c3c4c5b86901a1f07c521e8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331103</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4afde38db70a4c37b66c6c5fffcbcf93 = L.circle(
+                [42.35591, -71.06143],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_668b7d0a03e54930b8f9da718cb3b316 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e0c0d503f9824a8a8ace733b09ae2fca = $(`<div id="html_e0c0d503f9824a8a8ace733b09ae2fca" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_668b7d0a03e54930b8f9da718cb3b316.setContent(html_e0c0d503f9824a8a8ace733b09ae2fca);
+        
+
+        circle_4afde38db70a4c37b66c6c5fffcbcf93.bindPopup(popup_668b7d0a03e54930b8f9da718cb3b316)
+        ;
+
+        
+    
+    
+            circle_4afde38db70a4c37b66c6c5fffcbcf93.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331199</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_974d684ef0af462ea1ec79dc0acd4ee1 = L.circle(
+                [42.35533, -71.06124],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_6f673388ea4c4875af7b12188342ecfb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_103fb57ca08c403bb59ae5f111fae277 = $(`<div id="html_103fb57ca08c403bb59ae5f111fae277" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_6f673388ea4c4875af7b12188342ecfb.setContent(html_103fb57ca08c403bb59ae5f111fae277);
+        
+
+        circle_974d684ef0af462ea1ec79dc0acd4ee1.bindPopup(popup_6f673388ea4c4875af7b12188342ecfb)
+        ;
+
+        
+    
+    
+            circle_974d684ef0af462ea1ec79dc0acd4ee1.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331200</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7f3e52347d944b868636599a7c2f3945 = L.circle(
+                [42.35526, -71.06115],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_b536acc6c48b4ffeba81ca87b96743f7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_15bcb28dddc0425ea49b7d0abe5f9768 = $(`<div id="html_15bcb28dddc0425ea49b7d0abe5f9768" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b536acc6c48b4ffeba81ca87b96743f7.setContent(html_15bcb28dddc0425ea49b7d0abe5f9768);
+        
+
+        circle_7f3e52347d944b868636599a7c2f3945.bindPopup(popup_b536acc6c48b4ffeba81ca87b96743f7)
+        ;
+
+        
+    
+    
+            circle_7f3e52347d944b868636599a7c2f3945.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32331262</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_be8b3299297048a2834918bfa005ac47 = L.circle(
+                [42.35414, -71.06134],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_0ff126f7a3f34281916354c74eb13a01 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6ce7b7fad51b4413880457fe48b4b076 = $(`<div id="html_6ce7b7fad51b4413880457fe48b4b076" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_0ff126f7a3f34281916354c74eb13a01.setContent(html_6ce7b7fad51b4413880457fe48b4b076);
+        
+
+        circle_be8b3299297048a2834918bfa005ac47.bindPopup(popup_0ff126f7a3f34281916354c74eb13a01)
+        ;
+
+        
+    
+    
+            circle_be8b3299297048a2834918bfa005ac47.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32780617</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8d2a1d0f0b7f41cd952404dbbcb68cfa = L.circle(
+                [42.35547, -71.06099],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_d89a70d785fd461fb700bfbc3e087da3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fca61d51e5e240c9b96c788baaf125aa = $(`<div id="html_fca61d51e5e240c9b96c788baaf125aa" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d89a70d785fd461fb700bfbc3e087da3.setContent(html_fca61d51e5e240c9b96c788baaf125aa);
+        
+
+        circle_8d2a1d0f0b7f41cd952404dbbcb68cfa.bindPopup(popup_d89a70d785fd461fb700bfbc3e087da3)
+        ;
+
+        
+    
+    
+            circle_8d2a1d0f0b7f41cd952404dbbcb68cfa.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32834946</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a05133e54e3044008dd57749a967472c = L.circle(
+                [42.35559, -71.0616],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_e93ee6e2efb147c9bb3cd58c45c4b2ba = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5bbdef819f2348e98c23b5293ef0aa7b = $(`<div id="html_5bbdef819f2348e98c23b5293ef0aa7b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e93ee6e2efb147c9bb3cd58c45c4b2ba.setContent(html_5bbdef819f2348e98c23b5293ef0aa7b);
+        
+
+        circle_a05133e54e3044008dd57749a967472c.bindPopup(popup_e93ee6e2efb147c9bb3cd58c45c4b2ba)
+        ;
+
+        
+    
+    
+            circle_a05133e54e3044008dd57749a967472c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32834949</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_409a92dcca8c439aa20f9c9e0008f43e = L.circle(
+                [42.3557, -71.06152],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_27301d096b5949319e1821aff7950ff4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2d98029c857148ddad00c15596e189cf = $(`<div id="html_2d98029c857148ddad00c15596e189cf" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_27301d096b5949319e1821aff7950ff4.setContent(html_2d98029c857148ddad00c15596e189cf);
+        
+
+        circle_409a92dcca8c439aa20f9c9e0008f43e.bindPopup(popup_27301d096b5949319e1821aff7950ff4)
+        ;
+
+        
+    
+    
+            circle_409a92dcca8c439aa20f9c9e0008f43e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32834950</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_45b3d347977440578cc6a7f3d66d62c0 = L.circle(
+                [42.3559, -71.0618],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_63b64885a71b47889718fdb2f12b7abb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d14dc0b562b44dc1a3ae184b8aafe47c = $(`<div id="html_d14dc0b562b44dc1a3ae184b8aafe47c" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_63b64885a71b47889718fdb2f12b7abb.setContent(html_d14dc0b562b44dc1a3ae184b8aafe47c);
+        
+
+        circle_45b3d347977440578cc6a7f3d66d62c0.bindPopup(popup_63b64885a71b47889718fdb2f12b7abb)
+        ;
+
+        
+    
+    
+            circle_45b3d347977440578cc6a7f3d66d62c0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32835029</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ed7290dd39a8442bbd9a24277d61cb90 = L.circle(
+                [42.3553, -71.06177],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_9a69ef929a664f22a9c92bc3ca0a7d6c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_487febdd87174a75b041c9393c68ae23 = $(`<div id="html_487febdd87174a75b041c9393c68ae23" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9a69ef929a664f22a9c92bc3ca0a7d6c.setContent(html_487febdd87174a75b041c9393c68ae23);
+        
+
+        circle_ed7290dd39a8442bbd9a24277d61cb90.bindPopup(popup_9a69ef929a664f22a9c92bc3ca0a7d6c)
+        ;
+
+        
+    
+    
+            circle_ed7290dd39a8442bbd9a24277d61cb90.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32835033</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_699e17943f0f4579b1bd9136c2ef2325 = L.circle(
+                [42.35625, -71.06194],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_cf8597b41ebd453d99eae7f0ab0b573b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_775cb53702c843d7822939cead002930 = $(`<div id="html_775cb53702c843d7822939cead002930" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_cf8597b41ebd453d99eae7f0ab0b573b.setContent(html_775cb53702c843d7822939cead002930);
+        
+
+        circle_699e17943f0f4579b1bd9136c2ef2325.bindPopup(popup_cf8597b41ebd453d99eae7f0ab0b573b)
+        ;
+
+        
+    
+    
+            circle_699e17943f0f4579b1bd9136c2ef2325.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41621247</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_03c083cb625241829f06292c3175f2d0 = L.circle(
+                [42.35538, -71.06253000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_5c66d76267f04123af6aa47f6db6f208 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_598c42a99acb405cb3b74c2506b1c262 = $(`<div id="html_598c42a99acb405cb3b74c2506b1c262" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_5c66d76267f04123af6aa47f6db6f208.setContent(html_598c42a99acb405cb3b74c2506b1c262);
+        
+
+        circle_03c083cb625241829f06292c3175f2d0.bindPopup(popup_5c66d76267f04123af6aa47f6db6f208)
+        ;
+
+        
+    
+    
+            circle_03c083cb625241829f06292c3175f2d0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41838589</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ccc55531e71643848c85c3d38977a67c = L.circle(
+                [42.35396, -71.06111],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_8aa8f65d064647d88b08afb6f7f303ef = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4b1db0519557406ca69ec64177b2ace9 = $(`<div id="html_4b1db0519557406ca69ec64177b2ace9" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_8aa8f65d064647d88b08afb6f7f303ef.setContent(html_4b1db0519557406ca69ec64177b2ace9);
+        
+
+        circle_ccc55531e71643848c85c3d38977a67c.bindPopup(popup_8aa8f65d064647d88b08afb6f7f303ef)
+        ;
+
+        
+    
+    
+            circle_ccc55531e71643848c85c3d38977a67c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41841244</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_88877158b375423ab3d645c9cd0998bd = L.circle(
+                [42.35555, -71.06281],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_289b223b6252477a99ed2b6b55d5237f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fef32f9861dc4b6a910930fd8bdff8ff = $(`<div id="html_fef32f9861dc4b6a910930fd8bdff8ff" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_289b223b6252477a99ed2b6b55d5237f.setContent(html_fef32f9861dc4b6a910930fd8bdff8ff);
+        
+
+        circle_88877158b375423ab3d645c9cd0998bd.bindPopup(popup_289b223b6252477a99ed2b6b55d5237f)
+        ;
+
+        
+    
+    
+            circle_88877158b375423ab3d645c9cd0998bd.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41842246</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4c25ae391c3844e4bb213c29169099f4 = L.circle(
+                [42.35651, -71.06168000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ded32b44230c428d9759d4065afb40d3);
+        
+    
+        var popup_e336cb2ae5434423b528e7724c406cdd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_316fd8a1b1eb42b18af1edfbdd2f0cb2 = $(`<div id="html_316fd8a1b1eb42b18af1edfbdd2f0cb2" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/4-1.html'>                                 <b>Cluster 4-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_e336cb2ae5434423b528e7724c406cdd.setContent(html_316fd8a1b1eb42b18af1edfbdd2f0cb2);
+        
+
+        circle_4c25ae391c3844e4bb213c29169099f4.bindPopup(popup_e336cb2ae5434423b528e7724c406cdd)
+        ;
+
+        
+    
+    
+            circle_4c25ae391c3844e4bb213c29169099f4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>43440937</b></p>
+        Cluster: <span style='color:#448AFF'><b>4-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Temple Place </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#D32F2F';
+                       class='fa fa-file-text'></i>
+                <b> 390690</b>
+        <br>License status: <span style='color:#D32F2F'> <b>Not found (fabricated)</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_821039c02efc4006a2c0c25b09f04e16 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_ded32b44230c428d9759d4065afb40d3,
+                },
+            };
+            L.control.layers(
+                layer_control_821039c02efc4006a2c0c25b09f04e16.base_layers,
+                layer_control_821039c02efc4006a2c0c25b09f04e16.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_35be36142f8a44dd958f63dfeeb7a373);
+        
+</script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

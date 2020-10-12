@@ -1,0 +1,1376 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Boston Park Plaza</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Boston Park Plaza </h2>
+        <h3>
+            <b>13 listings</b> | 
+            2 clusters
+        </h3> 
+
+        <p> <b>Note:</b> This host represents a corporation using the following 
+             alias accounts</p>
+             
+             <ul style='margin:0; font-size:15px; color: white; padding-left:15px;margin-left:10px' >
+        <li>
+            <a target='_blank' href='https://www.airbnb.com/users/show/243931054'>
+                "Boston Park Plaza"</a> - 13 listings</li></ul>
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    13 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/17-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>17-1</b> (12 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Boston Park Plaza, 50, Park Plaza, Downtown Crossing, Beacon Hill </p>
+            <a href='/centroid/17-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/17-2.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>17-2</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> Park Square Building, 31, Saint James Avenue, Back Bay </p>
+            <a href='/centroid/17-2.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_356f58d9029e441488252b57b4693464 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
+         font-size:12px">
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
+          </div> 
+    
+            <div class="folium-map" id="map_356f58d9029e441488252b57b4693464" ></div>
+        
+</body>
+<script>    
+    
+            var map_356f58d9029e441488252b57b4693464 = L.map(
+                "map_356f58d9029e441488252b57b4693464",
+                {
+                    center: [42.35088833333334, -71.07091708333334],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_824ec4ece836442cbd4932ba85d76117 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+    
+            var circle_61daefdf6ef340178bda33fc0e2dcfc1 = L.circle(
+                [42.35107666666667, -71.06971416666669],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.5158340585139239, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8158340585139239, "radius": 107.47235808, "stroke": true, "weight": 2}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+    
+        var popup_aa38f11cec8a4b2792a5de9234d3e54f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2ebc1b60b5014381b6e36fce2e60c72e = $(`<div id="html_2ebc1b60b5014381b6e36fce2e60c72e" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_aa38f11cec8a4b2792a5de9234d3e54f.setContent(html_2ebc1b60b5014381b6e36fce2e60c72e);
+        
+
+        circle_61daefdf6ef340178bda33fc0e2dcfc1.bindPopup(popup_aa38f11cec8a4b2792a5de9234d3e54f)
+        ;
+
+        
+    
+    
+            circle_61daefdf6ef340178bda33fc0e2dcfc1.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>17-1</b></p>
+                        Host: <b>Boston Park Plaza </b> | Listings: <b>12</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a6ae3464d60e48be855b43e9494f0564 = L.circle(
+                [42.3507, -71.07212],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+    
+        var popup_658802b23c60450fa82919803ccf05f4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_12874745f06148ebb0c04815f59df6f2 = $(`<div id="html_12874745f06148ebb0c04815f59df6f2" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-2.html'>                                 <b>Cluster 17-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_658802b23c60450fa82919803ccf05f4.setContent(html_12874745f06148ebb0c04815f59df6f2);
+        
+
+        circle_a6ae3464d60e48be855b43e9494f0564.bindPopup(popup_658802b23c60450fa82919803ccf05f4)
+        ;
+
+        
+    
+    
+            circle_a6ae3464d60e48be855b43e9494f0564.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>17-2</b></p>
+                        Host: <b>Boston Park Plaza </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f18fbbe6209e4a4d8399bb30c1f88073 = L.circle(
+                [42.35107666666667, -71.06971416666669],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+    
+        var popup_285a2d8ac7544a6b9cf7c1cc8fd506b8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a970a6776f754d10a553cd413d83fcf4 = $(`<div id="html_a970a6776f754d10a553cd413d83fcf4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_285a2d8ac7544a6b9cf7c1cc8fd506b8.setContent(html_a970a6776f754d10a553cd413d83fcf4);
+        
+
+        circle_f18fbbe6209e4a4d8399bb30c1f88073.bindPopup(popup_285a2d8ac7544a6b9cf7c1cc8fd506b8)
+        ;
+
+        
+    
+    
+            circle_f18fbbe6209e4a4d8399bb30c1f88073.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>17-1</b></p>
+                        Host: <b>Boston Park Plaza </b> | Listings: <b>12</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_704c439aad644d4f9b90096605092160 = L.circle(
+                [42.3507, -71.07212],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+    
+        var popup_4fc1356831d84775bfc7089672383b8f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_459517d082a34f47b473ad23f8c03ec5 = $(`<div id="html_459517d082a34f47b473ad23f8c03ec5" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-2.html'>                                 <b>Cluster 17-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_4fc1356831d84775bfc7089672383b8f.setContent(html_459517d082a34f47b473ad23f8c03ec5);
+        
+
+        circle_704c439aad644d4f9b90096605092160.bindPopup(popup_4fc1356831d84775bfc7089672383b8f)
+        ;
+
+        
+    
+    
+            circle_704c439aad644d4f9b90096605092160.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>17-2</b></p>
+                        Host: <b>Boston Park Plaza </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_5e97cd52269442b6816e7980962ab68c = L.featureGroup(
+                {}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+    
+            var circle_a43a32a71e27458babf090c4cbcf0676 = L.circle(
+                [42.35104000000001, -71.0697],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_d7b5c4e4082e478598d0dc1db0bc8fe3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_af690de6e969480dbb8c2e25e0838b4a = $(`<div id="html_af690de6e969480dbb8c2e25e0838b4a" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d7b5c4e4082e478598d0dc1db0bc8fe3.setContent(html_af690de6e969480dbb8c2e25e0838b4a);
+        
+
+        circle_a43a32a71e27458babf090c4cbcf0676.bindPopup(popup_d7b5c4e4082e478598d0dc1db0bc8fe3)
+        ;
+
+        
+    
+    
+            circle_a43a32a71e27458babf090c4cbcf0676.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33352469</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fddcb862f4bb471fbe3c91d39335ecca = L.circle(
+                [42.35132, -71.0698],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_677104f4a8e04bd98e2bf1191cfee73d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bbdfc3f4e99747fa8d807e002662785c = $(`<div id="html_bbdfc3f4e99747fa8d807e002662785c" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_677104f4a8e04bd98e2bf1191cfee73d.setContent(html_bbdfc3f4e99747fa8d807e002662785c);
+        
+
+        circle_fddcb862f4bb471fbe3c91d39335ecca.bindPopup(popup_677104f4a8e04bd98e2bf1191cfee73d)
+        ;
+
+        
+    
+    
+            circle_fddcb862f4bb471fbe3c91d39335ecca.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33352470</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_45394b9dc312460fb1d72bd683d785b0 = L.circle(
+                [42.3507, -71.07212],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_3f129908b49b4facb52963f2d1869d46 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ce1c8b609d1e4bde8bfabbb4923c941a = $(`<div id="html_ce1c8b609d1e4bde8bfabbb4923c941a" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-2.html'>                                 <b>Cluster 17-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_3f129908b49b4facb52963f2d1869d46.setContent(html_ce1c8b609d1e4bde8bfabbb4923c941a);
+        
+
+        circle_45394b9dc312460fb1d72bd683d785b0.bindPopup(popup_3f129908b49b4facb52963f2d1869d46)
+        ;
+
+        
+    
+    
+            circle_45394b9dc312460fb1d72bd683d785b0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33352471</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_08ee0ffe2c754f37875af8bce418eaf4 = L.circle(
+                [42.35104000000001, -71.0697],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_468ceb4f8802428ab94d10047ca9b3e1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_57691ab921624b14aa01fedd10a038b9 = $(`<div id="html_57691ab921624b14aa01fedd10a038b9" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_468ceb4f8802428ab94d10047ca9b3e1.setContent(html_57691ab921624b14aa01fedd10a038b9);
+        
+
+        circle_08ee0ffe2c754f37875af8bce418eaf4.bindPopup(popup_468ceb4f8802428ab94d10047ca9b3e1)
+        ;
+
+        
+    
+    
+            circle_08ee0ffe2c754f37875af8bce418eaf4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33352473</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2436278787dc4debb287fb61f529bd5d = L.circle(
+                [42.35104000000001, -71.0697],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_fb67865e51ef43c9aad148e2a58a3792 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f283d9cd8aa14cd9a70c37a14c73e2b4 = $(`<div id="html_f283d9cd8aa14cd9a70c37a14c73e2b4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_fb67865e51ef43c9aad148e2a58a3792.setContent(html_f283d9cd8aa14cd9a70c37a14c73e2b4);
+        
+
+        circle_2436278787dc4debb287fb61f529bd5d.bindPopup(popup_fb67865e51ef43c9aad148e2a58a3792)
+        ;
+
+        
+    
+    
+            circle_2436278787dc4debb287fb61f529bd5d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33352475</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6f2e74bb8a814970bc7c129607b037dd = L.circle(
+                [42.35104000000001, -71.0697],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_d220dc70ee7b4cad8bb93ac86e882383 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ea461108714b404b8fd83ff8ab460814 = $(`<div id="html_ea461108714b404b8fd83ff8ab460814" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d220dc70ee7b4cad8bb93ac86e882383.setContent(html_ea461108714b404b8fd83ff8ab460814);
+        
+
+        circle_6f2e74bb8a814970bc7c129607b037dd.bindPopup(popup_d220dc70ee7b4cad8bb93ac86e882383)
+        ;
+
+        
+    
+    
+            circle_6f2e74bb8a814970bc7c129607b037dd.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33352477</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2fb0b26d711d4c69932004c197d864fb = L.circle(
+                [42.35104000000001, -71.0697],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_cd3c7d91b2d54388958bd153f544eb8a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ae5acd9e0b3d4a37b2393d627368f1b4 = $(`<div id="html_ae5acd9e0b3d4a37b2393d627368f1b4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_cd3c7d91b2d54388958bd153f544eb8a.setContent(html_ae5acd9e0b3d4a37b2393d627368f1b4);
+        
+
+        circle_2fb0b26d711d4c69932004c197d864fb.bindPopup(popup_cd3c7d91b2d54388958bd153f544eb8a)
+        ;
+
+        
+    
+    
+            circle_2fb0b26d711d4c69932004c197d864fb.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>34709924</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_3030d4aae3314f278ecc6cda67795086 = L.circle(
+                [42.3503, -71.07033],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_1e49b9d9c3404194b57bbef671300ea3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_11d714180c444f9797bd821c0735b3a1 = $(`<div id="html_11d714180c444f9797bd821c0735b3a1" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_1e49b9d9c3404194b57bbef671300ea3.setContent(html_11d714180c444f9797bd821c0735b3a1);
+        
+
+        circle_3030d4aae3314f278ecc6cda67795086.bindPopup(popup_1e49b9d9c3404194b57bbef671300ea3)
+        ;
+
+        
+    
+    
+            circle_3030d4aae3314f278ecc6cda67795086.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>35682239</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2d34e1df8fe2446eb6135bf7333cb524 = L.circle(
+                [42.35042, -71.06875],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_3f0e8e30209e4654830b3bdeefe541f4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f9183eb192a64c34a4b50f1041b90358 = $(`<div id="html_f9183eb192a64c34a4b50f1041b90358" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_3f0e8e30209e4654830b3bdeefe541f4.setContent(html_f9183eb192a64c34a4b50f1041b90358);
+        
+
+        circle_2d34e1df8fe2446eb6135bf7333cb524.bindPopup(popup_3f0e8e30209e4654830b3bdeefe541f4)
+        ;
+
+        
+    
+    
+            circle_2d34e1df8fe2446eb6135bf7333cb524.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>35682265</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ef929780b4114793ad259b499d27fcd2 = L.circle(
+                [42.35191, -71.06899],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_967ec7da375c4cc5a8122a3865d3658c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a41e545625f94790b182656de56abb64 = $(`<div id="html_a41e545625f94790b182656de56abb64" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_967ec7da375c4cc5a8122a3865d3658c.setContent(html_a41e545625f94790b182656de56abb64);
+        
+
+        circle_ef929780b4114793ad259b499d27fcd2.bindPopup(popup_967ec7da375c4cc5a8122a3865d3658c)
+        ;
+
+        
+    
+    
+            circle_ef929780b4114793ad259b499d27fcd2.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>35682280</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_99be8e5175eb449aa2cc8122a0194bd8 = L.circle(
+                [42.35027, -71.07056],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_d0cdd030faa640ca9bccadcb2be1c310 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3f0563858f734102917ec4ce7c000aba = $(`<div id="html_3f0563858f734102917ec4ce7c000aba" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d0cdd030faa640ca9bccadcb2be1c310.setContent(html_3f0563858f734102917ec4ce7c000aba);
+        
+
+        circle_99be8e5175eb449aa2cc8122a0194bd8.bindPopup(popup_d0cdd030faa640ca9bccadcb2be1c310)
+        ;
+
+        
+    
+    
+            circle_99be8e5175eb449aa2cc8122a0194bd8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>35682301</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f52b4d2a0a5e4d8a9f0c74c779337cbc = L.circle(
+                [42.35183, -71.06906],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_f75c93b761e3417985a1258ae9a7b14e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bfe1bb06797f4009b7f9838ddfa64905 = $(`<div id="html_bfe1bb06797f4009b7f9838ddfa64905" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_f75c93b761e3417985a1258ae9a7b14e.setContent(html_bfe1bb06797f4009b7f9838ddfa64905);
+        
+
+        circle_f52b4d2a0a5e4d8a9f0c74c779337cbc.bindPopup(popup_f75c93b761e3417985a1258ae9a7b14e)
+        ;
+
+        
+    
+    
+            circle_f52b4d2a0a5e4d8a9f0c74c779337cbc.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>35682313</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_df44260cc8db4b27b3841b6b26e81f07 = L.circle(
+                [42.35167, -71.07058],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8F00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5e97cd52269442b6816e7980962ab68c);
+        
+    
+        var popup_b9ea6c7c104f4c9094438acd3b265223 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4607737366bc461da3eda0a665c6ba51 = $(`<div id="html_4607737366bc461da3eda0a665c6ba51" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/17-1.html'>                                 <b>Cluster 17-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_b9ea6c7c104f4c9094438acd3b265223.setContent(html_4607737366bc461da3eda0a665c6ba51);
+        
+
+        circle_df44260cc8db4b27b3841b6b26e81f07.bindPopup(popup_b9ea6c7c104f4c9094438acd3b265223)
+        ;
+
+        
+    
+    
+            circle_df44260cc8db4b27b3841b6b26e81f07.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>43715032</b></p>
+        Cluster: <span style='color:#448AFF'><b>17-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Boston Park Plaza </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF8F00';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hotel/motel</b>
+        <br>License status: <span style='color:#FF8F00'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_3fc9e28392fa43dc9fd656b3b8930336 = {
+                base_layers : {
+                },
+                overlays :  {
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_5e97cd52269442b6816e7980962ab68c,
+                },
+            };
+            L.control.layers(
+                layer_control_3fc9e28392fa43dc9fd656b3b8930336.base_layers,
+                layer_control_3fc9e28392fa43dc9fd656b3b8930336.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_356f58d9029e441488252b57b4693464);
+        
+</script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    

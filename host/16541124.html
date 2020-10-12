@@ -1,4 +1,466 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+
+
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:18px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:8px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:10px 0;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+    }
+    
+    .centroid-list-item a:hover {
+        text-decoration:none !important;
+    }
+    
+    
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+
+
+    </style>
+
+    <head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            Hosts &#62;
+                            <span style='color:#448AFF'>Ramanvir</span>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+
+        <h2 style='margin: 0 0 10px; font-size:2em; line-height:2.15em'> Ramanvir </h2>
+        <h3>
+            <b>3 listings</b> | 
+            3 clusters
+        </h3> 
+        <hr class='hr-lite'>
+
+        <h3>License Status Verification</h3>
+        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
+             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
+        </p>
+
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       listings<p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        license</p>
+                                </td>
+                            </tr>
+                            
+                                                       
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    3 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E65100">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Exemption claimed
+                                </p></td>
+                                
+                            </tr>
+                        
+                        </table>
+        
+        <hr class='hr-lite'>
+
+        <h3 style='margin-bottom:18px'>Host clusters</h3>
+        
+        
+        <a href='/centroid/193-1.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>193-1</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 74, Albano Street, Mount Hope, West Roxbury </p>
+            <a href='/centroid/193-1.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/193-2.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>193-2</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 844, Shawmut Avenue, Nubian Square, Roxbury </p>
+            <a href='/centroid/193-2.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+        <a href='/centroid/193-3.html'>
+        <div class='centroid-list-item'>
+            <p style='font-size:1.2em'><b>193-3</b> (1 listings)</p>
+            <p><span class='text-lite'>At or near:</span> 25, Ruggles Street, Nubian Square, South End </p>
+            <a href='/centroid/193-3.html'>View cluster listings & details &#8594;</a>
+        </div>
+        </a>
+
+        
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
 <head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
@@ -23,7 +485,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_c19d9b38d32b4b99b62f23bc6b619580 {
+                #map_30f62623a53f4442a2d50734f1ad98a4 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,129 +497,29 @@
 </head>
 <body>    
     
-         <div style="position: fixed; z-index:699; 
-         top: 10px; right: 10px; max-width: 300px; height:100%;
-         display:block;">
-
-            <div style='width:auto; display:inline-block; overflow:auto;
-                        max-height:calc(100% - 60px);
-                        padding: 10px 10px; font-size:14px; 
-                        box-shadow:0 1px 5px rgba(0,0,0,0.4);
-                        border-radius:5px;
-                        background-color:rgba(255, 255, 255, .8);'>
-                        
-                <div><a style='font-size:14px;color:#636363;'
-                href='https://air-monitor.onrender.com/home.html#hosts'>
-                    <b>&#8592; All hosts</b></a> </div>   
-                
-                <hr style='margin:10px 40px 0 0;'>
-                
-            <div style='margin:8px 0; font-size:13px;color:#545454'><b>Host account</b></div>
-                        
-                <div style='margin:0; text-align:center'>
-                    <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i>
-                        3 Clusters
-                        &nbsp;|&nbsp;
-                    <i class="fa fa-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-                        3 Listings
-                    </b>
-                </div>
-                <hr style='margin:8px 0 0;'>
-                <div style='margin:10px 0 5px; font-size:14px'>
-                           Host listings by <b>registration status</b>:</div>
-                       
-                <i class="fa fa-circle"
-                style="font-size:14px; color:#E65100; margin-right:3px"></i>
-                Not verified - <b>3</b> listings
-                <br>
-                <hr style='margin:8px 0 0;'>
-               
-    <div style='margin:10px 0 3px; font-size:14px'>
-        <b>Listing clusters</b></div>
-    <div style='margin:0 0 8px; font-size:12px'>
-        Addresses inferred from cluster centers.
-        Nearby STR buildings sourced from ADCO research.
-    </div> 
-    
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>844, Shawmut Avenue, Nubian Square, Roxbury</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <div style='font-size:12px'>
-                Possible matches in STR building database:
-            </div><ul style='margin:0'><li style='margin:2px 0;'>725-751 Shawmut Av</li><li style='margin:2px 0;'>767 Shawmut Ave</li></ul></div>
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>25, Ruggles Street, Nubian Square, South End</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <div style='font-size:12px'>
-                Possible matches in STR building database:
-            </div><ul style='margin:0'><li style='margin:2px 0;'>725-751 Shawmut Av</li><li style='margin:2px 0;'>767 Shawmut Ave</li></ul></div>
-        <div class='row-container' style='display:block;
-                    margin:10px 0; background-color:#F0F0F0;
-                    padding:8px;border-radius:5px'>
-            <div style='display:inline-block; width:15px;  vertical-align:top'>
-                <i class="fa fa-bullseye" style="color:#448AFF;
-                          font-size: 14px; margin: 0 5px 0 0;"></i>
-            </div>
-            <div style='display:inline-block; width:calc(100% - 20px); color: #0D47A1; font-size:12px'>
-                  <div>
-                    <b>74, Albano Street, Mount Hope, West Roxbury</b>
-                    <span style='color:black'>(1 listings)</span>
-                  </div>
-                  <div style='color:#458AFF'>
-                     Location accuracy: <b style='color:#474747'>low (within 500 ft.)</b>
-                  </div>
-            </div> 
-            <hr style='border-color: #9C9C9C; margin:6px 0'>
-        <ul style='margin:0'><li>No known STR buildings nearby</li></ul></div>
-            </div>
-          </div> 
-    
          <div style="
          position: fixed; z-index:699; 
-         bottom: 12px; right: 0px; width: 355px; height: 24px; 
-         background-color:rgba(255, 255, 255, .8);
-         padding: 2px 6px;
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
          font-size:12px">
-            Data sources: insideairbnb (8/31/2020) | IDP registry (8/5/2020) 
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
           </div> 
     
-            <div class="folium-map" id="map_c19d9b38d32b4b99b62f23bc6b619580" ></div>
+            <div class="folium-map" id="map_30f62623a53f4442a2d50734f1ad98a4" ></div>
         
 </body>
 <script>    
     
-            var map_c19d9b38d32b4b99b62f23bc6b619580 = L.map(
-                "map_c19d9b38d32b4b99b62f23bc6b619580",
+            var map_30f62623a53f4442a2d50734f1ad98a4 = L.map(
+                "map_30f62623a53f4442a2d50734f1ad98a4",
                 {
-                    center: [42.34554, -71.052],
+                    center: [42.307680000000005, -71.107685],
                     crs: L.CRS.EPSG3857,
                     zoom: 13,
                     zoomControl: true,
@@ -169,335 +531,501 @@
 
         
     
-            var tile_layer_f1e269ecfff241e3961609a3214846a3 = L.tileLayer(
+            var tile_layer_680b061544f04fbb84411e184c58a22e = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_c19d9b38d32b4b99b62f23bc6b619580);
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
         
     
-            var feature_group_fa0fb5ccbf8446e4ada230fb57d678df = L.featureGroup(
-                {}
-            ).addTo(map_c19d9b38d32b4b99b62f23bc6b619580);
-        
-    
-            var circle_7b338b88400243fba6605af905ff0181 = L.circle(
-                [42.33004, -71.08556999999998],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_fa0fb5ccbf8446e4ada230fb57d678df);
-        
-    
-            circle_7b338b88400243fba6605af905ff0181.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #294.2 | 1 listings | Ramanvir</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>844, Shawmut Avenue, Nubian Square, Roxbury</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_43d6f3352ab24c7ba42e02851cc44185 = L.circle(
-                [42.33162, -71.08326],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_fa0fb5ccbf8446e4ada230fb57d678df);
-        
-    
-            circle_43d6f3352ab24c7ba42e02851cc44185.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #294.3 | 1 listings | Ramanvir</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>25, Ruggles Street, Nubian Square, South End</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_8571caf963514a83befe27141db7a7da = L.circle(
+            var circle_7982e0aef18f485d9d8b755c5071c580 = L.circle(
                 [42.28374, -71.13211],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.25, "radius": 76.2, "stroke": true, "weight": 3}
-            ).addTo(feature_group_fa0fb5ccbf8446e4ada230fb57d678df);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
         
     
-            circle_8571caf963514a83befe27141db7a7da.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #294.1 | 1 listings | Ramanvir</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>74, Albano Street, Mount Hope, West Roxbury</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_a9d1e0052a524329a04e2e4e359e3093 = L.circleMarker(
-                [42.33004, -71.08556999999998],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_fa0fb5ccbf8446e4ada230fb57d678df);
-        
-    
-            circle_marker_a9d1e0052a524329a04e2e4e359e3093.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #294.2 | 1 listings | Ramanvir</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>844, Shawmut Avenue, Nubian Square, Roxbury</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_b5f25b8ad5394221834d623c7e54b97e = L.circleMarker(
-                [42.33162, -71.08326],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_fa0fb5ccbf8446e4ada230fb57d678df);
-        
-    
-            circle_marker_b5f25b8ad5394221834d623c7e54b97e.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #294.3 | 1 listings | Ramanvir</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>25, Ruggles Street, Nubian Square, South End</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var circle_marker_871dcaf18e1b4b58be0d0c67c177a997 = L.circleMarker(
-                [42.28374, -71.13211],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2979FF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1, "radius": 3, "stroke": true, "weight": "1"}
-            ).addTo(feature_group_fa0fb5ccbf8446e4ada230fb57d678df);
-        
-    
-            circle_marker_871dcaf18e1b4b58be0d0c67c177a997.bindTooltip(
-                `<div>
-                     
-            <span stle='font-size:13px'>
-                <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i><b> Centroid #294.1 | 1 listings | Ramanvir</b> 
-            </span>
-            <br><b>License:</b><ul style='margin:0'><li>Exemption claimed: hospital contracts (1 listings) </li></ul> <b>License status:</b><ul style='margin:0'><li>Not verified - (1 listings)</li></ul>
-            <span style='color:#0D47A1;'>74, Albano Street, Mount Hope, West Roxbury</span><br>
-            
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var feature_group_aa90b6b85eff4df394836da833393e7d = L.featureGroup(
-                {}
-            ).addTo(map_c19d9b38d32b4b99b62f23bc6b619580);
-        
-    
-            var marker_9d7a13c008564f17b8ec412eb733ead2 = L.marker(
-                [42.3329469, -71.0835061],
-                {"opacity": 0.7}
-            ).addTo(feature_group_aa90b6b85eff4df394836da833393e7d);
-        
-    
-            var icon_5d7fc239837240feb72b736364aef3ae = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_9d7a13c008564f17b8ec412eb733ead2.setIcon(icon_5d7fc239837240feb72b736364aef3ae);
-        
-    
-            marker_9d7a13c008564f17b8ec412eb733ead2.bindTooltip(
-                `<div>
-                     725-751 Shawmut Av, Roxbury MA 02119</b><br>Units: nan | Floors: 7.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_df7609ce88d14279ad72fba654fb7eda = L.marker(
-                [42.3315021, -71.0847196],
-                {"opacity": 0.7}
-            ).addTo(feature_group_aa90b6b85eff4df394836da833393e7d);
-        
-    
-            var icon_c454d4b7c3014d94b71eb99ebc77224b = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_df7609ce88d14279ad72fba654fb7eda.setIcon(icon_c454d4b7c3014d94b71eb99ebc77224b);
-        
-    
-            marker_df7609ce88d14279ad72fba654fb7eda.bindTooltip(
-                `<div>
-                     767 Shawmut Ave, Roxbury MA 02119</b><br>Units: nan | Floors: 12.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_3c78fad1f0dc40cd8a51ae3d4e0c17ea = L.marker(
-                [42.3329469, -71.0835061],
-                {"opacity": 0.7}
-            ).addTo(feature_group_aa90b6b85eff4df394836da833393e7d);
-        
-    
-            var icon_9576b1c625ea424ba55ab99b1c6cfb1e = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_3c78fad1f0dc40cd8a51ae3d4e0c17ea.setIcon(icon_9576b1c625ea424ba55ab99b1c6cfb1e);
-        
-    
-            marker_3c78fad1f0dc40cd8a51ae3d4e0c17ea.bindTooltip(
-                `<div>
-                     725-751 Shawmut Av, Roxbury MA 02119</b><br>Units: nan | Floors: 7.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_3740aae3a7cd4551a8f33df5d1246a27 = L.marker(
-                [42.3315021, -71.0847196],
-                {"opacity": 0.7}
-            ).addTo(feature_group_aa90b6b85eff4df394836da833393e7d);
-        
-    
-            var icon_90662335755049b1895ba56270c55217 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "fa-building", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
-            );
-            marker_3740aae3a7cd4551a8f33df5d1246a27.setIcon(icon_90662335755049b1895ba56270c55217);
-        
-    
-            marker_3740aae3a7cd4551a8f33df5d1246a27.bindTooltip(
-                `<div>
-                     767 Shawmut Ave, Roxbury MA 02119</b><br>Units: nan | Floors: 12.0 | Source: BigBldgDB<br><b>Hosts: </b>unknown
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var feature_group_69bef65a6c43405784093b715a71b9b6 = L.featureGroup(
-                {}
-            ).addTo(map_c19d9b38d32b4b99b62f23bc6b619580);
-        
-    
-            var circle_710c1e28acd44705b74dc7573e795455 = L.circle(
-                [42.28374, -71.13211],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_69bef65a6c43405784093b715a71b9b6);
-        
-    
-        var popup_9ffdc1f614ae456baa90b2bcf0768803 = L.popup({"maxWidth": "100%"});
+        var popup_4a5f3c044f094cc7aae1e16755ff3533 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_dd3d3fe784804c69a29cd29304b88687 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMzg3NjAyMTUnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzM4NzYwMjE1PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_9ffdc1f614ae456baa90b2bcf0768803.setContent(i_frame_dd3d3fe784804c69a29cd29304b88687);
+            var html_2fabaa2bbbd3472fa7ea6f47014de526 = $(`<div id="html_2fabaa2bbbd3472fa7ea6f47014de526" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-1.html'>                                 <b>Cluster 193-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_4a5f3c044f094cc7aae1e16755ff3533.setContent(html_2fabaa2bbbd3472fa7ea6f47014de526);
         
 
-        circle_710c1e28acd44705b74dc7573e795455.bindPopup(popup_9ffdc1f614ae456baa90b2bcf0768803)
+        circle_7982e0aef18f485d9d8b755c5071c580.bindPopup(popup_4a5f3c044f094cc7aae1e16755ff3533)
         ;
 
         
     
     
-            circle_710c1e28acd44705b74dc7573e795455.bindTooltip(
+            circle_7982e0aef18f485d9d8b755c5071c580.bindTooltip(
                 `<div>
                      
-            Ramanvir | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 38760215</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #294.1<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>193-1</b></p>
+                        Host: <b>Ramanvir </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_0c6c1edb11d546c6aefa99174a38a4bf = L.circle(
+            var circle_70dd161ee62e49aba22f542145e20223 = L.circle(
                 [42.33004, -71.08556999999998],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_69bef65a6c43405784093b715a71b9b6);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
         
     
-        var popup_d000c1cbf7b14b00ba75511fa9780d43 = L.popup({"maxWidth": "100%"});
+        var popup_75188de2dcad4778bb81c050466469ff = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_6f47f4e6a1e74a88bcd99d11c8adf06d = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjQzMTU2MzknIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzI0MzE1NjM5PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_d000c1cbf7b14b00ba75511fa9780d43.setContent(i_frame_6f47f4e6a1e74a88bcd99d11c8adf06d);
+            var html_1894f49f248b4f8699d6239f2f5170e1 = $(`<div id="html_1894f49f248b4f8699d6239f2f5170e1" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-2.html'>                                 <b>Cluster 193-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_75188de2dcad4778bb81c050466469ff.setContent(html_1894f49f248b4f8699d6239f2f5170e1);
         
 
-        circle_0c6c1edb11d546c6aefa99174a38a4bf.bindPopup(popup_d000c1cbf7b14b00ba75511fa9780d43)
+        circle_70dd161ee62e49aba22f542145e20223.bindPopup(popup_75188de2dcad4778bb81c050466469ff)
         ;
 
         
     
     
-            circle_0c6c1edb11d546c6aefa99174a38a4bf.bindTooltip(
+            circle_70dd161ee62e49aba22f542145e20223.bindTooltip(
                 `<div>
                      
-            Ramanvir | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 24315639</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #294.2<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>193-2</b></p>
+                        Host: <b>Ramanvir </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var circle_9cc870a7a45b44fb94ad6a8c333b265c = L.circle(
+            var circle_f10bbfdcdc554af7ab15f051745ce2ae = L.circle(
                 [42.33162, -71.08326],
-                {"bubblingMouseEvents": true, "color": "#F57F17", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(feature_group_69bef65a6c43405784093b715a71b9b6);
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
         
     
-        var popup_764412e9f12c4a53b05ff84695d54a54 = L.popup({"maxWidth": "100%"});
+        var popup_3135fd3b063b4232963c43b20679a9e3 = L.popup({"maxWidth": "100%"});
 
         
-            var i_frame_ab5dd5ee2e89489a8e11dfa43f2db179 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9J2ZvbnQtZmFtaWx5OiAiSGVsdmV0aWNhIE5ldWUiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4OwogICAgICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXInPgogICAgICAgIDxhIGhyZWY9J2h0dHBzOi8vd3d3LmFpcmJuYi5jb20vcm9vbXMvMjA1MDQyMDcnIHRhcmdldD0nX2JsYW5rJz5odHRwczovL3d3dy5haXJibmIuY29tL3Jvb21zLzIwNTA0MjA3PC9hPgogICAgPC9kaXY+CiAgICA=" width="240px" style="border:none !important;" height="25px"></iframe>`)[0];
-            popup_764412e9f12c4a53b05ff84695d54a54.setContent(i_frame_ab5dd5ee2e89489a8e11dfa43f2db179);
+            var html_091bad9ee4404be482dd06593f9788b6 = $(`<div id="html_091bad9ee4404be482dd06593f9788b6" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-3.html'>                                 <b>Cluster 193-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_3135fd3b063b4232963c43b20679a9e3.setContent(html_091bad9ee4404be482dd06593f9788b6);
         
 
-        circle_9cc870a7a45b44fb94ad6a8c333b265c.bindPopup(popup_764412e9f12c4a53b05ff84695d54a54)
+        circle_f10bbfdcdc554af7ab15f051745ce2ae.bindPopup(popup_3135fd3b063b4232963c43b20679a9e3)
         ;
 
         
     
     
-            circle_9cc870a7a45b44fb94ad6a8c333b265c.bindTooltip(
+            circle_f10bbfdcdc554af7ab15f051745ce2ae.bindTooltip(
                 `<div>
                      
-            Ramanvir | License: <span style="color:#F57F17">Exemption claimed: hospital contracts</span> (Not verified)
-            <br> <i class="fa fa-dot-circle-o" style="color:#F57F17; margin-right:3px;"></i>
-            <b>Listing 20504207</b> &nbsp;|&nbsp;
-            <i class="fa fa-bullseye" style="color:#448AFF; margin-right:3px;"></i> Centroid #294.3<br>
-            
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>193-3</b></p>
+                        Host: <b>Ramanvir </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var layer_control_548fd57edfc44505a2b28a5d98e72252 = {
+            var circle_689eeec639ef4f409f3746d718589ab6 = L.circle(
+                [42.28374, -71.13211],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
+        
+    
+        var popup_92969147f6d1400da09212fbf4dc6586 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eac016e67e7d43778bfd1bbd4ece8716 = $(`<div id="html_eac016e67e7d43778bfd1bbd4ece8716" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-1.html'>                                 <b>Cluster 193-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_92969147f6d1400da09212fbf4dc6586.setContent(html_eac016e67e7d43778bfd1bbd4ece8716);
+        
+
+        circle_689eeec639ef4f409f3746d718589ab6.bindPopup(popup_92969147f6d1400da09212fbf4dc6586)
+        ;
+
+        
+    
+    
+            circle_689eeec639ef4f409f3746d718589ab6.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>193-1</b></p>
+                        Host: <b>Ramanvir </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fcc6ecb8429e46e399365d012ae36e49 = L.circle(
+                [42.33004, -71.08556999999998],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
+        
+    
+        var popup_d4c5a5dec8914f5eadc20ee5b9008db4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1887e626a058474e92d0014d61024856 = $(`<div id="html_1887e626a058474e92d0014d61024856" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-2.html'>                                 <b>Cluster 193-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_d4c5a5dec8914f5eadc20ee5b9008db4.setContent(html_1887e626a058474e92d0014d61024856);
+        
+
+        circle_fcc6ecb8429e46e399365d012ae36e49.bindPopup(popup_d4c5a5dec8914f5eadc20ee5b9008db4)
+        ;
+
+        
+    
+    
+            circle_fcc6ecb8429e46e399365d012ae36e49.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>193-2</b></p>
+                        Host: <b>Ramanvir </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cb73b702000847e1802297592e0fae50 = L.circle(
+                [42.33162, -71.08326],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
+        
+    
+        var popup_51ff7453247d4071b51c5c8b96c5c054 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1ad820c218554284a64e0232e1221af4 = $(`<div id="html_1ad820c218554284a64e0232e1221af4" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-3.html'>                                 <b>Cluster 193-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_51ff7453247d4071b51c5c8b96c5c054.setContent(html_1ad820c218554284a64e0232e1221af4);
+        
+
+        circle_cb73b702000847e1802297592e0fae50.bindPopup(popup_51ff7453247d4071b51c5c8b96c5c054)
+        ;
+
+        
+    
+    
+            circle_cb73b702000847e1802297592e0fae50.bindTooltip(
+                `<div>
+                     
+                        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>193-3</b></p>
+                        Host: <b>Ramanvir </b> | Listings: <b>1</b>
+                        <br><span style='text-align:center; color:#448AFF'>
+                            <b>Click for more details</b></span>
+                        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_ae2447974e5e470e849da9e60979f7eb = L.featureGroup(
+                {}
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
+        
+    
+            var circle_fbdc5dde72d34c368973a883bafe8b71 = L.circle(
+                [42.33162, -71.08326],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ae2447974e5e470e849da9e60979f7eb);
+        
+    
+        var popup_bf34aa94683547b4ba18ff670b90da86 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_80d1ee286e554f5cbe6c5d177538387b = $(`<div id="html_80d1ee286e554f5cbe6c5d177538387b" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-3.html'>                                 <b>Cluster 193-3</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_bf34aa94683547b4ba18ff670b90da86.setContent(html_80d1ee286e554f5cbe6c5d177538387b);
+        
+
+        circle_fbdc5dde72d34c368973a883bafe8b71.bindPopup(popup_bf34aa94683547b4ba18ff670b90da86)
+        ;
+
+        
+    
+    
+            circle_fbdc5dde72d34c368973a883bafe8b71.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>20504207</b></p>
+        Cluster: <span style='color:#448AFF'><b>193-3</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Ramanvir </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0de9bf1de70a46599ae72c3e6265692e = L.circle(
+                [42.33004, -71.08556999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ae2447974e5e470e849da9e60979f7eb);
+        
+    
+        var popup_9fc584124078445a9d942810f0bb2345 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d5e35074d9ed41f1a8b650935194348c = $(`<div id="html_d5e35074d9ed41f1a8b650935194348c" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-2.html'>                                 <b>Cluster 193-2</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_9fc584124078445a9d942810f0bb2345.setContent(html_d5e35074d9ed41f1a8b650935194348c);
+        
+
+        circle_0de9bf1de70a46599ae72c3e6265692e.bindPopup(popup_9fc584124078445a9d942810f0bb2345)
+        ;
+
+        
+    
+    
+            circle_0de9bf1de70a46599ae72c3e6265692e.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>24315639</b></p>
+        Cluster: <span style='color:#448AFF'><b>193-2</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Ramanvir </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2212db67bd0d4199b915adbbf53de20d = L.circle(
+                [42.28374, -71.13211],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_ae2447974e5e470e849da9e60979f7eb);
+        
+    
+        var popup_76f7e4be56a44f87b5da0d02926ed670 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b880424cd8304db79383113d68dacbff = $(`<div id="html_b880424cd8304db79383113d68dacbff" style="width: 100.0%; height: 100.0%;"><div style="white-space: nowrap; text-align:center">                             <a class='centroid-link-btn'                                href='/centroid/193-1.html'>                                 <b>Cluster 193-1</b> |                                 Details <i class="fa fa-arrow-right" aria-hidden="true"></i>                                                      </div>                         </div>`)[0];
+            popup_76f7e4be56a44f87b5da0d02926ed670.setContent(html_b880424cd8304db79383113d68dacbff);
+        
+
+        circle_2212db67bd0d4199b915adbbf53de20d.bindPopup(popup_76f7e4be56a44f87b5da0d02926ed670)
+        ;
+
+        
+    
+    
+            circle_2212db67bd0d4199b915adbbf53de20d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38760215</b></p>
+        Cluster: <span style='color:#448AFF'><b>193-1</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Ramanvir </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#F57F17';
+                       class='fa fa-file-text'></i>
+                <b> Exemption: hospital contracts</b>
+        <br>License status: <span style='color:#F57F17'> <b>Not verified</b> </span>
+
+        <br><span style='text-align:center; color:#448AFF'>
+            <b>Click or see cluster for more details</b></span>
+        
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_5ae2f1db8fa6441d89b0651d5c10f803 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:12px\u0027\u003eShow nearby buildings\u003c/span\u003e" : feature_group_aa90b6b85eff4df394836da833393e7d,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_ae2447974e5e470e849da9e60979f7eb,
                 },
             };
             L.control.layers(
-                layer_control_548fd57edfc44505a2b28a5d98e72252.base_layers,
-                layer_control_548fd57edfc44505a2b28a5d98e72252.overlays,
+                layer_control_5ae2f1db8fa6441d89b0651d5c10f803.base_layers,
+                layer_control_5ae2f1db8fa6441d89b0651d5c10f803.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_c19d9b38d32b4b99b62f23bc6b619580);
-            feature_group_aa90b6b85eff4df394836da833393e7d.remove();
+            ).addTo(map_30f62623a53f4442a2d50734f1ad98a4);
         
 </script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+        </script>
+    <script>
+    
+
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < 10; i++) {  
+                    x[i].style.display="list-item"; 
+                } 
+                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input==""){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+            }
+            let msg_init = document.getElementById('search-init'); 
+            msg_init.style.maxHeight = "0";
+            msg_init.style.margin = "0";
+            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
+            
+        }
+    )
+
+    
+    function search_item() { 
+        
+        let sb = document.getElementById('searchbar')
+        let input = document.getElementById('searchbar').value;
+        input=input.toLowerCase(); 
+        let searchList = document.getElementById('search-list');
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+
+
+
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+        
+            for (i = 0; i < 10; i++) {  
+                x[i].style.display="list-item"; 
+                    visible += 1
+            } 
+        }
+        else {
+            for (i = 0; i < x.length; i++) {  
+                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "271px";                    
+                    }
+ 
+            
+          }         
+        else {
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    
