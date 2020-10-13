@@ -8,6 +8,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: center;
+  white-space: pre;
+  padding: 3px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -18,6 +61,7 @@
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -28,20 +72,6 @@
         display: none !important
     }
     
-    
-        .leaflet-pane .leaflet-interactive {
-            transition: fill-opacity .12s ease-in-out;
-            transition: stroke .12s ease-in-out;
-
-        }
-
-        .leaflet-pane .leaflet-interactive:hover {
-            fill-opacity:.8 !important;
-            stroke:white !important;
-
-
-        }
-        
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -421,8 +451,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -432,19 +461,32 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
         
         
     .license-claim-container ul {
         padding-left:18px; 
-        list-style: none;
-        
+        list-style: disc;
+        color: white !important;
     }
 
     .license-claim-container ul li::before {
-      content: "2"
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
       color: white; 
       font-weight: bold; 
     }
@@ -635,7 +677,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_f2aa5d1be0de41f1940d63130d82f9ae {
+                #map_30e90311a99e48fd80cf3e517a6a195c {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -661,13 +703,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_f2aa5d1be0de41f1940d63130d82f9ae" ></div>
+            <div class="folium-map" id="map_30e90311a99e48fd80cf3e517a6a195c" ></div>
         
 </body>
 <script>    
     
-            var map_f2aa5d1be0de41f1940d63130d82f9ae = L.map(
-                "map_f2aa5d1be0de41f1940d63130d82f9ae",
+            var map_30e90311a99e48fd80cf3e517a6a195c = L.map(
+                "map_30e90311a99e48fd80cf3e517a6a195c",
                 {
                     center: [42.3213, -71.05495],
                     crs: L.CRS.EPSG3857,
@@ -681,19 +723,19 @@
 
         
     
-            var tile_layer_bdabafaad3eb479da2028097c6ada757 = L.tileLayer(
+            var tile_layer_38b72614e4b64a1a90725307784d3a08 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_f2aa5d1be0de41f1940d63130d82f9ae);
+            ).addTo(map_30e90311a99e48fd80cf3e517a6a195c);
         
     
-            var circle_dd6d2e85588e40c08e210fc8d21a8208 = L.circle(
+            var circle_efbc5ed7eec847fab2e038c0fccf0223 = L.circle(
                 [42.3213, -71.05495],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
-            ).addTo(map_f2aa5d1be0de41f1940d63130d82f9ae);
+            ).addTo(map_30e90311a99e48fd80cf3e517a6a195c);
         
     
-            circle_dd6d2e85588e40c08e210fc8d21a8208.bindTooltip(
+            circle_efbc5ed7eec847fab2e038c0fccf0223.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>207-3</b></p>
@@ -708,13 +750,13 @@
             );
         
     
-            var circle_ddeeee48112a4599bf326e95c0b3ff03 = L.circle(
+            var circle_0a63e796883948d5995979f81d27bc25 = L.circle(
                 [42.3213, -71.05495],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_f2aa5d1be0de41f1940d63130d82f9ae);
+            ).addTo(map_30e90311a99e48fd80cf3e517a6a195c);
         
     
-            circle_ddeeee48112a4599bf326e95c0b3ff03.bindTooltip(
+            circle_0a63e796883948d5995979f81d27bc25.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>207-3</b></p>
@@ -729,18 +771,18 @@
             );
         
     
-            var feature_group_718cfa550b9c452fa3fde989a941aad7 = L.featureGroup(
+            var feature_group_8da8879fcb2542cbb72dd59b4841513a = L.featureGroup(
                 {}
-            ).addTo(map_f2aa5d1be0de41f1940d63130d82f9ae);
+            ).addTo(map_30e90311a99e48fd80cf3e517a6a195c);
         
     
-            var circle_3451b9f7fcde412ea2475a951b50374d = L.circle(
+            var circle_f49528b379144603a0c713b1d98371f6 = L.circle(
                 [42.3213, -71.05495],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_718cfa550b9c452fa3fde989a941aad7);
+            ).addTo(feature_group_8da8879fcb2542cbb72dd59b4841513a);
         
     
-            circle_3451b9f7fcde412ea2475a951b50374d.bindTooltip(
+            circle_f49528b379144603a0c713b1d98371f6.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42830138</b></p>
@@ -761,24 +803,24 @@
             );
         
     
-            var feature_group_e29e118c3eaa4473b62b410d41788c6d = L.featureGroup(
+            var feature_group_5be9a79663094636938aac3b10284d59 = L.featureGroup(
                 {}
-            ).addTo(map_f2aa5d1be0de41f1940d63130d82f9ae);
+            ).addTo(map_30e90311a99e48fd80cf3e517a6a195c);
         
     
-            var marker_9cdf6c4e12314a7d89be981c12054af5 = L.marker(
+            var marker_ce967583eee84cf29a5a49e245c4abc9 = L.marker(
                 [42.3196966, -71.0508548],
                 {}
-            ).addTo(feature_group_e29e118c3eaa4473b62b410d41788c6d);
+            ).addTo(feature_group_5be9a79663094636938aac3b10284d59);
         
     
-            var icon_400fec18c5d44a4c86db4e040ca81cb5 = L.AwesomeMarkers.icon(
+            var icon_7bc96370ce044278af31c5a059aacac5 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "building", "iconColor": "#5E35B1", "markerColor": "lightgray", "prefix": "fa"}
             );
-            marker_9cdf6c4e12314a7d89be981c12054af5.setIcon(icon_400fec18c5d44a4c86db4e040ca81cb5);
+            marker_ce967583eee84cf29a5a49e245c4abc9.setIcon(icon_7bc96370ce044278af31c5a059aacac5);
         
     
-            marker_9cdf6c4e12314a7d89be981c12054af5.bindTooltip(
+            marker_ce967583eee84cf29a5a49e245c4abc9.bindTooltip(
                 `<div>
                      <b style='font-size:.88em'>Known STR Building</b><br>Hub 25<br><b style='font-size:1.2em; color:#5E35B1'>25-35 Morrissey Blvd, Boston MA 02125</b><br>Units: 278.0 | Floors: (unknown) | Source: RichCorpSS<br><b>Known operators: </b><br>Northeast Suites<div style='height:4px'></div><span style='color:#448AFF' >Distance from cluster center: <b>1252 ft.</b></span>
                  </div>`,
@@ -786,19 +828,19 @@
             );
         
     
-            var layer_control_02f7e325f16e4fb48ed27ad02b384235 = {
+            var layer_control_ef32e90efa8b4887bab08c5e865f3b5b = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_e29e118c3eaa4473b62b410d41788c6d,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_5be9a79663094636938aac3b10284d59,
                 },
             };
             L.control.layers(
-                layer_control_02f7e325f16e4fb48ed27ad02b384235.base_layers,
-                layer_control_02f7e325f16e4fb48ed27ad02b384235.overlays,
+                layer_control_ef32e90efa8b4887bab08c5e865f3b5b.base_layers,
+                layer_control_ef32e90efa8b4887bab08c5e865f3b5b.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_f2aa5d1be0de41f1940d63130d82f9ae);
-            feature_group_e29e118c3eaa4473b62b410d41788c6d.remove();
+            ).addTo(map_30e90311a99e48fd80cf3e517a6a195c);
+            feature_group_5be9a79663094636938aac3b10284d59.remove();
         
 </script>
             </div>
@@ -856,7 +898,21 @@
     </script>
     <script>
     
-
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
@@ -899,16 +955,15 @@
                 msg_init.style.margin = "0";
             }
 
-            
         }
     )
 
     
     function search_item() { 
-        initOpenState = "False"
-        let sb = document.getElementById('searchbar')
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
         searchList.scrollTop = 0;
 
@@ -939,8 +994,9 @@
         }
         
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 

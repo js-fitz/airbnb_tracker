@@ -8,6 +8,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: center;
+  white-space: pre;
+  padding: 3px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -18,6 +61,7 @@
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -28,20 +72,6 @@
         display: none !important
     }
     
-    
-        .leaflet-pane .leaflet-interactive {
-            transition: fill-opacity .12s ease-in-out;
-            transition: stroke .12s ease-in-out;
-
-        }
-
-        .leaflet-pane .leaflet-interactive:hover {
-            fill-opacity:.8 !important;
-            stroke:white !important;
-
-
-        }
-        
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -421,8 +451,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -432,19 +461,32 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
         
         
     .license-claim-container ul {
         padding-left:18px; 
-        list-style: none;
-        
+        list-style: disc;
+        color: white !important;
     }
 
     .license-claim-container ul li::before {
-      content: "2"
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
       color: white; 
       font-weight: bold; 
     }
@@ -494,7 +536,7 @@
         
         <h3 style='margin-bottom:12px'>License Status Details</h3>
         <p style='font-size:1.2em; margin: 3px 0; color:#FFEE58'>
-        <i class="fa fa-warning"></i> Licenses for <b>4</b> listing are <b>not active</b>
+        <i class="fa fa-warning"></i> Licenses for <b>4</b> listings are <b>not active</b>
             </p>
         
         <table class='listings-status-legend'>
@@ -745,7 +787,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_7ac914c30c7a4977bf987a4d763cdc94 {
+                #map_b9c3dd3c6f7b4383b831d9fb2af2e084 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -771,13 +813,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_7ac914c30c7a4977bf987a4d763cdc94" ></div>
+            <div class="folium-map" id="map_b9c3dd3c6f7b4383b831d9fb2af2e084" ></div>
         
 </body>
 <script>    
     
-            var map_7ac914c30c7a4977bf987a4d763cdc94 = L.map(
-                "map_7ac914c30c7a4977bf987a4d763cdc94",
+            var map_b9c3dd3c6f7b4383b831d9fb2af2e084 = L.map(
+                "map_b9c3dd3c6f7b4383b831d9fb2af2e084",
                 {
                     center: [42.275191666666665, -71.07714499999999],
                     crs: L.CRS.EPSG3857,
@@ -791,24 +833,24 @@
 
         
     
-            var tile_layer_76bf3347291d437a86395193d6782173 = L.tileLayer(
+            var tile_layer_2f256b9a46c5408da69bb78637e38479 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_7ac914c30c7a4977bf987a4d763cdc94);
+            ).addTo(map_b9c3dd3c6f7b4383b831d9fb2af2e084);
         
     
-            var circle_4b24ad28b23244ee9a94ba1dcfc5180b = L.circle(
+            var circle_4c705b3cd9eb4d3aa7a40ed0792e0b6c = L.circle(
                 [42.275191666666665, -71.07714499999999],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.48352296502532466, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7835229650253246, "radius": 66.29646888, "stroke": true, "weight": 2}
-            ).addTo(map_7ac914c30c7a4977bf987a4d763cdc94);
+            ).addTo(map_b9c3dd3c6f7b4383b831d9fb2af2e084);
         
     
-            circle_4b24ad28b23244ee9a94ba1dcfc5180b.bindTooltip(
+            circle_4c705b3cd9eb4d3aa7a40ed0792e0b6c.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>71-1</b></p>
         <p style='font-size:1.1em; margin: 3px 0; color:#F9A825'>
-            <i class="fa fa-warning"></i> Licenses for <b>4</b> listing are <b>not active</b> 
+            <i class="fa fa-warning"></i> Licenses for <b>4</b> listings are <b>not active</b> 
                 </p>
         Host: <b>Althea </b> | Listings: <b>6</b>
         <br><span style='text-align:center; color:#448AFF'>
@@ -818,18 +860,18 @@
             );
         
     
-            var circle_18cb078206be4f81aee4b5f0fb03ac79 = L.circle(
+            var circle_507671de3ca94c258be267b933092358 = L.circle(
                 [42.275191666666665, -71.07714499999999],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_7ac914c30c7a4977bf987a4d763cdc94);
+            ).addTo(map_b9c3dd3c6f7b4383b831d9fb2af2e084);
         
     
-            circle_18cb078206be4f81aee4b5f0fb03ac79.bindTooltip(
+            circle_507671de3ca94c258be267b933092358.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>71-1</b></p>
         <p style='font-size:1.1em; margin: 3px 0; color:#F9A825'>
-            <i class="fa fa-warning"></i> Licenses for <b>4</b> listing are <b>not active</b> 
+            <i class="fa fa-warning"></i> Licenses for <b>4</b> listings are <b>not active</b> 
                 </p>
         Host: <b>Althea </b> | Listings: <b>6</b>
         <br><span style='text-align:center; color:#448AFF'>
@@ -839,18 +881,18 @@
             );
         
     
-            var feature_group_de463bfebe2744f588fa8e658e559236 = L.featureGroup(
+            var feature_group_cd6c055f318a4edb874ea34706c2c457 = L.featureGroup(
                 {}
-            ).addTo(map_7ac914c30c7a4977bf987a4d763cdc94);
+            ).addTo(map_b9c3dd3c6f7b4383b831d9fb2af2e084);
         
     
-            var circle_847f35b365fc463a8ca4537894266c88 = L.circle(
+            var circle_6320f19bfb31480f94ed153f5ee20218 = L.circle(
                 [42.27516, -71.07661999999998],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B71C1C", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_de463bfebe2744f588fa8e658e559236);
+            ).addTo(feature_group_cd6c055f318a4edb874ea34706c2c457);
         
     
-            circle_847f35b365fc463a8ca4537894266c88.bindTooltip(
+            circle_6320f19bfb31480f94ed153f5ee20218.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>12901078</b></p>
@@ -871,13 +913,13 @@
             );
         
     
-            var circle_955bfacd74294cd091b87cc424674d8d = L.circle(
+            var circle_f9b9792d1d5449af90c677d0209b7e3a = L.circle(
                 [42.27514, -71.0774],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_de463bfebe2744f588fa8e658e559236);
+            ).addTo(feature_group_cd6c055f318a4edb874ea34706c2c457);
         
     
-            circle_955bfacd74294cd091b87cc424674d8d.bindTooltip(
+            circle_f9b9792d1d5449af90c677d0209b7e3a.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>14086516</b></p>
@@ -898,13 +940,13 @@
             );
         
     
-            var circle_50a2444fe25046ea86e22adc09bef4a7 = L.circle(
+            var circle_fc2511510dfe412b85c3b3b475f2010c = L.circle(
                 [42.2749, -71.07706999999998],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_de463bfebe2744f588fa8e658e559236);
+            ).addTo(feature_group_cd6c055f318a4edb874ea34706c2c457);
         
     
-            circle_50a2444fe25046ea86e22adc09bef4a7.bindTooltip(
+            circle_fc2511510dfe412b85c3b3b475f2010c.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>14242888</b></p>
@@ -925,13 +967,13 @@
             );
         
     
-            var circle_7b48ab0b6d914d38a38e903ed5114243 = L.circle(
+            var circle_17981507ac244cc4aa2614c88aba2400 = L.circle(
                 [42.27597, -71.07737],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_de463bfebe2744f588fa8e658e559236);
+            ).addTo(feature_group_cd6c055f318a4edb874ea34706c2c457);
         
     
-            circle_7b48ab0b6d914d38a38e903ed5114243.bindTooltip(
+            circle_17981507ac244cc4aa2614c88aba2400.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>20634420</b></p>
@@ -952,13 +994,13 @@
             );
         
     
-            var circle_bbd4944de620478fb29d4d8c406a8ec2 = L.circle(
+            var circle_39ae06e0f45e47969bc45d4f2455eed4 = L.circle(
                 [42.27508, -71.07696],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_de463bfebe2744f588fa8e658e559236);
+            ).addTo(feature_group_cd6c055f318a4edb874ea34706c2c457);
         
     
-            circle_bbd4944de620478fb29d4d8c406a8ec2.bindTooltip(
+            circle_39ae06e0f45e47969bc45d4f2455eed4.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>24598890</b></p>
@@ -979,13 +1021,13 @@
             );
         
     
-            var circle_56afda96c91d47e2b16f604b470c8a97 = L.circle(
+            var circle_33f1faa02e764bdc974b6fd111202af0 = L.circle(
                 [42.2749, -71.07745],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_de463bfebe2744f588fa8e658e559236);
+            ).addTo(feature_group_cd6c055f318a4edb874ea34706c2c457);
         
     
-            circle_56afda96c91d47e2b16f604b470c8a97.bindTooltip(
+            circle_33f1faa02e764bdc974b6fd111202af0.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>31039035</b></p>
@@ -1006,17 +1048,17 @@
             );
         
     
-            var layer_control_c85a52bbe7a64e9d91cffe23166e9d75 = {
+            var layer_control_521a99d6fe5047039ce970704af4040e = {
                 base_layers : {
                 },
                 overlays :  {
                 },
             };
             L.control.layers(
-                layer_control_c85a52bbe7a64e9d91cffe23166e9d75.base_layers,
-                layer_control_c85a52bbe7a64e9d91cffe23166e9d75.overlays,
+                layer_control_521a99d6fe5047039ce970704af4040e.base_layers,
+                layer_control_521a99d6fe5047039ce970704af4040e.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_7ac914c30c7a4977bf987a4d763cdc94);
+            ).addTo(map_b9c3dd3c6f7b4383b831d9fb2af2e084);
         
 </script>
             </div>
@@ -1074,7 +1116,21 @@
     </script>
     <script>
     
-
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
@@ -1117,16 +1173,15 @@
                 msg_init.style.margin = "0";
             }
 
-            
         }
     )
 
     
     function search_item() { 
-        initOpenState = "False"
-        let sb = document.getElementById('searchbar')
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
         searchList.scrollTop = 0;
 
@@ -1157,8 +1212,9 @@
         }
         
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 

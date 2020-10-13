@@ -8,6 +8,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: center;
+  white-space: pre;
+  padding: 3px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -18,6 +61,7 @@
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -28,20 +72,6 @@
         display: none !important
     }
     
-    
-        .leaflet-pane .leaflet-interactive {
-            transition: fill-opacity .12s ease-in-out;
-            transition: stroke .12s ease-in-out;
-
-        }
-
-        .leaflet-pane .leaflet-interactive:hover {
-            fill-opacity:.8 !important;
-            stroke:white !important;
-
-
-        }
-        
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -421,8 +451,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -432,19 +461,32 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
         
         
     .license-claim-container ul {
         padding-left:18px; 
-        list-style: none;
-        
+        list-style: disc;
+        color: white !important;
     }
 
     .license-claim-container ul li::before {
-      content: "2"
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
       color: white; 
       font-weight: bold; 
     }
@@ -496,7 +538,7 @@
         
         <h3 style='margin-bottom:12px'>License Status Details</h3>
         <p style='font-size:1.2em; margin: 3px 0; color:#EF5350'>
-        <i class="fa fa-warning"></i> Cannot verify <b>1</b> license
+        <i class="fa fa-warning"></i> Cannot verify <b></b> license
             </p>
         
         <table class='listings-status-legend'>
@@ -682,7 +724,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_65a8e9882e6544a694385aca20b14dbd {
+                #map_054769ce49714387a4a3524465a3783f {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -708,13 +750,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_65a8e9882e6544a694385aca20b14dbd" ></div>
+            <div class="folium-map" id="map_054769ce49714387a4a3524465a3783f" ></div>
         
 </body>
 <script>    
     
-            var map_65a8e9882e6544a694385aca20b14dbd = L.map(
-                "map_65a8e9882e6544a694385aca20b14dbd",
+            var map_054769ce49714387a4a3524465a3783f = L.map(
+                "map_054769ce49714387a4a3524465a3783f",
                 {
                     center: [42.34887, -71.0909575],
                     crs: L.CRS.EPSG3857,
@@ -728,24 +770,24 @@
 
         
     
-            var tile_layer_db7e1d517be24f25b702150028cdd745 = L.tileLayer(
+            var tile_layer_8969f325d648419c8384ff8595439266 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_65a8e9882e6544a694385aca20b14dbd);
+            ).addTo(map_054769ce49714387a4a3524465a3783f);
         
     
-            var circle_49e75838a0cf41f6b123ae93be1a4424 = L.circle(
+            var circle_2447cf01e731489899028c5aeae521a8 = L.circle(
                 [42.34887, -71.0909575],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.4646221869771986, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7646221869771985, "radius": 102.05813472000001, "stroke": true, "weight": 2}
-            ).addTo(map_65a8e9882e6544a694385aca20b14dbd);
+            ).addTo(map_054769ce49714387a4a3524465a3783f);
         
     
-            circle_49e75838a0cf41f6b123ae93be1a4424.bindTooltip(
+            circle_2447cf01e731489899028c5aeae521a8.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>51-3</b></p>
         <p style='font-size:1.1em; margin: 3px 0; color:#EF5350'>
-            <i class="fa fa-warning"></i> Cannot verify <b>1</b> license 
+            <i class="fa fa-warning"></i> Cannot verify <b></b> license 
                 </p>
         Host: <b>Together We </b> | Listings: <b>4</b>
         <br><span style='text-align:center; color:#448AFF'>
@@ -755,18 +797,18 @@
             );
         
     
-            var circle_69c5f37c6cf44eefb6c27159d902d772 = L.circle(
+            var circle_a4128763c78b43e89520bb4037ee4e24 = L.circle(
                 [42.34887, -71.0909575],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_65a8e9882e6544a694385aca20b14dbd);
+            ).addTo(map_054769ce49714387a4a3524465a3783f);
         
     
-            circle_69c5f37c6cf44eefb6c27159d902d772.bindTooltip(
+            circle_a4128763c78b43e89520bb4037ee4e24.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>51-3</b></p>
         <p style='font-size:1.1em; margin: 3px 0; color:#EF5350'>
-            <i class="fa fa-warning"></i> Cannot verify <b>1</b> license 
+            <i class="fa fa-warning"></i> Cannot verify <b></b> license 
                 </p>
         Host: <b>Together We </b> | Listings: <b>4</b>
         <br><span style='text-align:center; color:#448AFF'>
@@ -776,18 +818,18 @@
             );
         
     
-            var feature_group_9d322c31118f4b989c598084a7e1451d = L.featureGroup(
+            var feature_group_f286e8ebba634fc4941d00b67b59ab36 = L.featureGroup(
                 {}
-            ).addTo(map_65a8e9882e6544a694385aca20b14dbd);
+            ).addTo(map_054769ce49714387a4a3524465a3783f);
         
     
-            var circle_4d650be4562b4d95b4d0300191b22fb7 = L.circle(
+            var circle_ba6bf979303a4d99853e84c051c92c2b = L.circle(
                 [42.34836, -71.09035],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_9d322c31118f4b989c598084a7e1451d);
+            ).addTo(feature_group_f286e8ebba634fc4941d00b67b59ab36);
         
     
-            circle_4d650be4562b4d95b4d0300191b22fb7.bindTooltip(
+            circle_ba6bf979303a4d99853e84c051c92c2b.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>43922345</b></p>
@@ -810,13 +852,13 @@
             );
         
     
-            var circle_99b3a6eb187f4222a60940d62d2d6698 = L.circle(
+            var circle_e48be9156918488ca8518ed3caf8bd22 = L.circle(
                 [42.34969, -71.09047],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_9d322c31118f4b989c598084a7e1451d);
+            ).addTo(feature_group_f286e8ebba634fc4941d00b67b59ab36);
         
     
-            circle_99b3a6eb187f4222a60940d62d2d6698.bindTooltip(
+            circle_e48be9156918488ca8518ed3caf8bd22.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>43922482</b></p>
@@ -839,13 +881,13 @@
             );
         
     
-            var circle_45843ddfa0834d11a5cc2736754fa9b4 = L.circle(
+            var circle_9aa5d2f576fa4ea582b1528b322e8fcb = L.circle(
                 [42.34828, -71.09091],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_9d322c31118f4b989c598084a7e1451d);
+            ).addTo(feature_group_f286e8ebba634fc4941d00b67b59ab36);
         
     
-            circle_45843ddfa0834d11a5cc2736754fa9b4.bindTooltip(
+            circle_9aa5d2f576fa4ea582b1528b322e8fcb.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>43922703</b></p>
@@ -868,13 +910,13 @@
             );
         
     
-            var circle_836770c1b8b949d18e2bc5f3a9b69f5e = L.circle(
+            var circle_d2c886ef6bbe4a36a898f6e59c775ea7 = L.circle(
                 [42.34915, -71.0921],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57F17", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_9d322c31118f4b989c598084a7e1451d);
+            ).addTo(feature_group_f286e8ebba634fc4941d00b67b59ab36);
         
     
-            circle_836770c1b8b949d18e2bc5f3a9b69f5e.bindTooltip(
+            circle_d2c886ef6bbe4a36a898f6e59c775ea7.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>45098784</b></p>
@@ -897,24 +939,24 @@
             );
         
     
-            var feature_group_9b38aac8c0de417598db10fa1e47a4a9 = L.featureGroup(
+            var feature_group_3f03fe0dc08f462c9cea1c9fc8efc283 = L.featureGroup(
                 {}
-            ).addTo(map_65a8e9882e6544a694385aca20b14dbd);
+            ).addTo(map_054769ce49714387a4a3524465a3783f);
         
     
-            var marker_74c24cd2a2c54f68b1390586e51dd267 = L.marker(
+            var marker_9250e21dc2e443c493e529869c4869b8 = L.marker(
                 [42.3486408, -71.09025919999999],
                 {}
-            ).addTo(feature_group_9b38aac8c0de417598db10fa1e47a4a9);
+            ).addTo(feature_group_3f03fe0dc08f462c9cea1c9fc8efc283);
         
     
-            var icon_48b3fd473c844ec9a6e58feb57538a14 = L.AwesomeMarkers.icon(
+            var icon_da277086e0b64219bd4db3eba607860e = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "building", "iconColor": "#5E35B1", "markerColor": "lightgray", "prefix": "fa"}
             );
-            marker_74c24cd2a2c54f68b1390586e51dd267.setIcon(icon_48b3fd473c844ec9a6e58feb57538a14);
+            marker_9250e21dc2e443c493e529869c4869b8.setIcon(icon_da277086e0b64219bd4db3eba607860e);
         
     
-            marker_74c24cd2a2c54f68b1390586e51dd267.bindTooltip(
+            marker_9250e21dc2e443c493e529869c4869b8.bindTooltip(
                 `<div>
                      <b style='font-size:.88em'>Known STR Building</b><br><b style='font-size:1.2em; color:#5E35B1'>390 Commonwealth Av, Boston MA 02115</b><br>Units: (unknown) | Floors: 9.0 | Source: AirBPDBjn<br><b>Known operators: </b><br>unknown<div style='height:4px'></div><span style='color:#448AFF' >Distance from cluster center: <b>206 ft.</b></span>
                  </div>`,
@@ -922,19 +964,19 @@
             );
         
     
-            var layer_control_4208f679bdaa49b784df682afea18817 = {
+            var layer_control_fe54005f31ea42f386d97e7d5901bf4c = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_9b38aac8c0de417598db10fa1e47a4a9,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_3f03fe0dc08f462c9cea1c9fc8efc283,
                 },
             };
             L.control.layers(
-                layer_control_4208f679bdaa49b784df682afea18817.base_layers,
-                layer_control_4208f679bdaa49b784df682afea18817.overlays,
+                layer_control_fe54005f31ea42f386d97e7d5901bf4c.base_layers,
+                layer_control_fe54005f31ea42f386d97e7d5901bf4c.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_65a8e9882e6544a694385aca20b14dbd);
-            feature_group_9b38aac8c0de417598db10fa1e47a4a9.remove();
+            ).addTo(map_054769ce49714387a4a3524465a3783f);
+            feature_group_3f03fe0dc08f462c9cea1c9fc8efc283.remove();
         
 </script>
             </div>
@@ -992,7 +1034,21 @@
     </script>
     <script>
     
-
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
@@ -1035,16 +1091,15 @@
                 msg_init.style.margin = "0";
             }
 
-            
         }
     )
 
     
     function search_item() { 
-        initOpenState = "False"
-        let sb = document.getElementById('searchbar')
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
         searchList.scrollTop = 0;
 
@@ -1075,8 +1130,9 @@
         }
         
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 

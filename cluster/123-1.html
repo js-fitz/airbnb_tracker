@@ -8,6 +8,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: center;
+  white-space: pre;
+  padding: 3px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -18,6 +61,7 @@
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -28,20 +72,6 @@
         display: none !important
     }
     
-    
-        .leaflet-pane .leaflet-interactive {
-            transition: fill-opacity .12s ease-in-out;
-            transition: stroke .12s ease-in-out;
-
-        }
-
-        .leaflet-pane .leaflet-interactive:hover {
-            fill-opacity:.8 !important;
-            stroke:white !important;
-
-
-        }
-        
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -421,8 +451,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -432,19 +461,32 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
         
         
     .license-claim-container ul {
         padding-left:18px; 
-        list-style: none;
-        
+        list-style: disc;
+        color: white !important;
     }
 
     .license-claim-container ul li::before {
-      content: "2"
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
       color: white; 
       font-weight: bold; 
     }
@@ -669,7 +711,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_8321a77d63c248ed882512cf15a41ea6 {
+                #map_64cc9b4e42df40c0afdff33496cfe96f {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -695,13 +737,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_8321a77d63c248ed882512cf15a41ea6" ></div>
+            <div class="folium-map" id="map_64cc9b4e42df40c0afdff33496cfe96f" ></div>
         
 </body>
 <script>    
     
-            var map_8321a77d63c248ed882512cf15a41ea6 = L.map(
-                "map_8321a77d63c248ed882512cf15a41ea6",
+            var map_64cc9b4e42df40c0afdff33496cfe96f = L.map(
+                "map_64cc9b4e42df40c0afdff33496cfe96f",
                 {
                     center: [42.276943333333335, -71.14029666666666],
                     crs: L.CRS.EPSG3857,
@@ -715,19 +757,19 @@
 
         
     
-            var tile_layer_6da14f6d290442be9f4e441eb1e5f5bd = L.tileLayer(
+            var tile_layer_5f0264022acc419bb767c94a616cc04a = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_8321a77d63c248ed882512cf15a41ea6);
+            ).addTo(map_64cc9b4e42df40c0afdff33496cfe96f);
         
     
-            var circle_756cbc3558364f38b9caa7283d18e211 = L.circle(
+            var circle_f6fb011cfae14213825faa3e50574150 = L.circle(
                 [42.276943333333335, -71.14029666666666],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.4512118715367254, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7512118715367253, "radius": 50.0, "stroke": true, "weight": 2}
-            ).addTo(map_8321a77d63c248ed882512cf15a41ea6);
+            ).addTo(map_64cc9b4e42df40c0afdff33496cfe96f);
         
     
-            circle_756cbc3558364f38b9caa7283d18e211.bindTooltip(
+            circle_f6fb011cfae14213825faa3e50574150.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>123-1</b></p>
@@ -742,13 +784,13 @@
             );
         
     
-            var circle_cdd9eb6f49e84bcfa1e892d683df99e3 = L.circle(
+            var circle_c045fc512c8d4f6a9d8a78cef4c88923 = L.circle(
                 [42.276943333333335, -71.14029666666666],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_8321a77d63c248ed882512cf15a41ea6);
+            ).addTo(map_64cc9b4e42df40c0afdff33496cfe96f);
         
     
-            circle_cdd9eb6f49e84bcfa1e892d683df99e3.bindTooltip(
+            circle_c045fc512c8d4f6a9d8a78cef4c88923.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>123-1</b></p>
@@ -763,18 +805,18 @@
             );
         
     
-            var feature_group_3b09d16ae4ad43bb9181ed0e67a1cb8d = L.featureGroup(
+            var feature_group_7cef8507bec94d4996cac3096d5c97e8 = L.featureGroup(
                 {}
-            ).addTo(map_8321a77d63c248ed882512cf15a41ea6);
+            ).addTo(map_64cc9b4e42df40c0afdff33496cfe96f);
         
     
-            var circle_62a7c4e791b84e738f14810d6d6b1046 = L.circle(
+            var circle_f20f3cf603b54288a5c9713bdcb239ba = L.circle(
                 [42.27689, -71.14041999999998],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_3b09d16ae4ad43bb9181ed0e67a1cb8d);
+            ).addTo(feature_group_7cef8507bec94d4996cac3096d5c97e8);
         
     
-            circle_62a7c4e791b84e738f14810d6d6b1046.bindTooltip(
+            circle_f20f3cf603b54288a5c9713bdcb239ba.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>30312499</b></p>
@@ -795,13 +837,13 @@
             );
         
     
-            var circle_7fbb31bf626f48308635d23e7403a943 = L.circle(
+            var circle_4067ed68022540fcba8669d4bccd2fed = L.circle(
                 [42.27672000000001, -71.14001999999998],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_3b09d16ae4ad43bb9181ed0e67a1cb8d);
+            ).addTo(feature_group_7cef8507bec94d4996cac3096d5c97e8);
         
     
-            circle_7fbb31bf626f48308635d23e7403a943.bindTooltip(
+            circle_4067ed68022540fcba8669d4bccd2fed.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>30312500</b></p>
@@ -822,13 +864,13 @@
             );
         
     
-            var circle_cffd580d0e94408e9ff942c6600328fe = L.circle(
+            var circle_991bc923aaa74838b3b575e1903dd975 = L.circle(
                 [42.27722, -71.14045],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_3b09d16ae4ad43bb9181ed0e67a1cb8d);
+            ).addTo(feature_group_7cef8507bec94d4996cac3096d5c97e8);
         
     
-            circle_cffd580d0e94408e9ff942c6600328fe.bindTooltip(
+            circle_991bc923aaa74838b3b575e1903dd975.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>30317108</b></p>
@@ -849,17 +891,17 @@
             );
         
     
-            var layer_control_2cc6a2aa63e44e57874f373d6ec13065 = {
+            var layer_control_a447de0e0eb94618b2d878e1bcfa9ea1 = {
                 base_layers : {
                 },
                 overlays :  {
                 },
             };
             L.control.layers(
-                layer_control_2cc6a2aa63e44e57874f373d6ec13065.base_layers,
-                layer_control_2cc6a2aa63e44e57874f373d6ec13065.overlays,
+                layer_control_a447de0e0eb94618b2d878e1bcfa9ea1.base_layers,
+                layer_control_a447de0e0eb94618b2d878e1bcfa9ea1.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_8321a77d63c248ed882512cf15a41ea6);
+            ).addTo(map_64cc9b4e42df40c0afdff33496cfe96f);
         
 </script>
             </div>
@@ -917,7 +959,21 @@
     </script>
     <script>
     
-
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
@@ -960,16 +1016,15 @@
                 msg_init.style.margin = "0";
             }
 
-            
         }
     )
 
     
     function search_item() { 
-        initOpenState = "False"
-        let sb = document.getElementById('searchbar')
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
         searchList.scrollTop = 0;
 
@@ -1000,8 +1055,9 @@
         }
         
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 

@@ -8,6 +8,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: center;
+  white-space: pre;
+  padding: 3px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -18,6 +61,7 @@
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -28,20 +72,6 @@
         display: none !important
     }
     
-    
-        .leaflet-pane .leaflet-interactive {
-            transition: fill-opacity .12s ease-in-out;
-            transition: stroke .12s ease-in-out;
-
-        }
-
-        .leaflet-pane .leaflet-interactive:hover {
-            fill-opacity:.8 !important;
-            stroke:white !important;
-
-
-        }
-        
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -421,8 +451,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -432,19 +461,32 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
         
         
     .license-claim-container ul {
         padding-left:18px; 
-        list-style: none;
-        
+        list-style: disc;
+        color: white !important;
     }
 
     .license-claim-container ul li::before {
-      content: "2"
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
       color: white; 
       font-weight: bold; 
     }
@@ -654,7 +696,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_749ad75654cd4b94a4078a346ce9d0a7 {
+                #map_436e48183c384557b4ebafd98ca384c9 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -680,13 +722,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_749ad75654cd4b94a4078a346ce9d0a7" ></div>
+            <div class="folium-map" id="map_436e48183c384557b4ebafd98ca384c9" ></div>
         
 </body>
 <script>    
     
-            var map_749ad75654cd4b94a4078a346ce9d0a7 = L.map(
-                "map_749ad75654cd4b94a4078a346ce9d0a7",
+            var map_436e48183c384557b4ebafd98ca384c9 = L.map(
+                "map_436e48183c384557b4ebafd98ca384c9",
                 {
                     center: [42.35752, -71.07121],
                     crs: L.CRS.EPSG3857,
@@ -700,19 +742,19 @@
 
         
     
-            var tile_layer_789d08aa53ab42548e098d873ff5ea68 = L.tileLayer(
+            var tile_layer_fb18cb3d21a544fd92d11ce0e1339c74 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_749ad75654cd4b94a4078a346ce9d0a7);
+            ).addTo(map_436e48183c384557b4ebafd98ca384c9);
         
     
-            var circle_c8bc21f54d2f4ccb991fa93bbac75c17 = L.circle(
+            var circle_8d7fcf4765df4ffb8e84b04927a14ead = L.circle(
                 [42.35752, -71.07121],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
-            ).addTo(map_749ad75654cd4b94a4078a346ce9d0a7);
+            ).addTo(map_436e48183c384557b4ebafd98ca384c9);
         
     
-            circle_c8bc21f54d2f4ccb991fa93bbac75c17.bindTooltip(
+            circle_8d7fcf4765df4ffb8e84b04927a14ead.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>67-3</b></p>
@@ -733,13 +775,13 @@
             );
         
     
-            var circle_689ee4e516e448daa50caee1bb0e9564 = L.circle(
+            var circle_1ee7a44b03f14dd89bef01dd9fd657df = L.circle(
                 [42.35752, -71.07121],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_749ad75654cd4b94a4078a346ce9d0a7);
+            ).addTo(map_436e48183c384557b4ebafd98ca384c9);
         
     
-            circle_689ee4e516e448daa50caee1bb0e9564.bindTooltip(
+            circle_1ee7a44b03f14dd89bef01dd9fd657df.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>67-3</b></p>
@@ -760,18 +802,18 @@
             );
         
     
-            var feature_group_dc31e098b8fb45a281e7141b7c0d89f8 = L.featureGroup(
+            var feature_group_241a48836b824645af3598ded3970515 = L.featureGroup(
                 {}
-            ).addTo(map_749ad75654cd4b94a4078a346ce9d0a7);
+            ).addTo(map_436e48183c384557b4ebafd98ca384c9);
         
     
-            var circle_2c5b76f983f547a28f2ad8e2b06759dd = L.circle(
+            var circle_4f8294946b7146f493d5599893bd7f63 = L.circle(
                 [42.35752, -71.07121],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_dc31e098b8fb45a281e7141b7c0d89f8);
+            ).addTo(feature_group_241a48836b824645af3598ded3970515);
         
     
-            circle_2c5b76f983f547a28f2ad8e2b06759dd.bindTooltip(
+            circle_4f8294946b7146f493d5599893bd7f63.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>26502776</b></p>
@@ -792,24 +834,24 @@
             );
         
     
-            var feature_group_c4cb3d62ab3b4c899679cc45acb2eb7d = L.featureGroup(
+            var feature_group_b2f30c3981b6400185adb52c62a7c40f = L.featureGroup(
                 {}
-            ).addTo(map_749ad75654cd4b94a4078a346ce9d0a7);
+            ).addTo(map_436e48183c384557b4ebafd98ca384c9);
         
     
-            var marker_15da8b097db14e4ab61c065a94861ee8 = L.marker(
+            var marker_065cc7175af344748e75cbdc470ecbd8 = L.marker(
                 [42.358298, -71.07083539999999],
                 {}
-            ).addTo(feature_group_c4cb3d62ab3b4c899679cc45acb2eb7d);
+            ).addTo(feature_group_b2f30c3981b6400185adb52c62a7c40f);
         
     
-            var icon_d6db36c0c594410d851190182bf082f3 = L.AwesomeMarkers.icon(
+            var icon_636f5bb4803a4a36b82d5c7d9ba75d96 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "building", "iconColor": "#5E35B1", "markerColor": "lightgray", "prefix": "fa"}
             );
-            marker_15da8b097db14e4ab61c065a94861ee8.setIcon(icon_d6db36c0c594410d851190182bf082f3);
+            marker_065cc7175af344748e75cbdc470ecbd8.setIcon(icon_636f5bb4803a4a36b82d5c7d9ba75d96);
         
     
-            marker_15da8b097db14e4ab61c065a94861ee8.bindTooltip(
+            marker_065cc7175af344748e75cbdc470ecbd8.bindTooltip(
                 `<div>
                      <b style='font-size:.88em'>Known STR Building</b><br><b style='font-size:1.2em; color:#5E35B1'>86 Charles Street, Boston MA 02114</b><br>Units: (unknown) | Floors: (unknown) | Source: RichCorpSS<br><b>Known operators: </b><br>Compass , Seamless Transitions<div style='height:4px'></div><span style='color:#448AFF' >Distance from cluster center: <b>301 ft.</b></span>
                  </div>`,
@@ -817,19 +859,19 @@
             );
         
     
-            var marker_7a1261fa75f147a9895584d67f77985d = L.marker(
+            var marker_c61de9fda25b4f50a69432571d1600b9 = L.marker(
                 [42.3584328, -71.0708555],
                 {}
-            ).addTo(feature_group_c4cb3d62ab3b4c899679cc45acb2eb7d);
+            ).addTo(feature_group_b2f30c3981b6400185adb52c62a7c40f);
         
     
-            var icon_39821f5e4485448999b1dc713e7e9007 = L.AwesomeMarkers.icon(
+            var icon_f225f883127349dba05eda7db3e714a1 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "building", "iconColor": "#5E35B1", "markerColor": "lightgray", "prefix": "fa"}
             );
-            marker_7a1261fa75f147a9895584d67f77985d.setIcon(icon_39821f5e4485448999b1dc713e7e9007);
+            marker_c61de9fda25b4f50a69432571d1600b9.setIcon(icon_f225f883127349dba05eda7db3e714a1);
         
     
-            marker_7a1261fa75f147a9895584d67f77985d.bindTooltip(
+            marker_c61de9fda25b4f50a69432571d1600b9.bindTooltip(
                 `<div>
                      <b style='font-size:.88em'>Known STR Building</b><br><b style='font-size:1.2em; color:#5E35B1'>90 Charles Street, Boston MA 02114</b><br>Units: (unknown) | Floors: (unknown) | Source: RichCorpSS<br><b>Known operators: </b><br>Compass <div style='height:4px'></div><span style='color:#448AFF' >Distance from cluster center: <b>346 ft.</b></span>
                  </div>`,
@@ -837,19 +879,19 @@
             );
         
     
-            var marker_bdb0e729053d47b78ef86c3930b8b4ff = L.marker(
+            var marker_f42524161dad44b8a23df243a9d8b36c = L.marker(
                 [42.35846069999999, -71.0709074],
                 {}
-            ).addTo(feature_group_c4cb3d62ab3b4c899679cc45acb2eb7d);
+            ).addTo(feature_group_b2f30c3981b6400185adb52c62a7c40f);
         
     
-            var icon_e8e422b835b54dde8db25c9cd9997ef8 = L.AwesomeMarkers.icon(
+            var icon_2d4e3a38cbf0466d82476f18c6046755 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "building", "iconColor": "#5E35B1", "markerColor": "lightgray", "prefix": "fa"}
             );
-            marker_bdb0e729053d47b78ef86c3930b8b4ff.setIcon(icon_e8e422b835b54dde8db25c9cd9997ef8);
+            marker_f42524161dad44b8a23df243a9d8b36c.setIcon(icon_2d4e3a38cbf0466d82476f18c6046755);
         
     
-            marker_bdb0e729053d47b78ef86c3930b8b4ff.bindTooltip(
+            marker_f42524161dad44b8a23df243a9d8b36c.bindTooltip(
                 `<div>
                      <b style='font-size:.88em'>Known STR Building</b><br><b style='font-size:1.2em; color:#5E35B1'>92 Charles Street, Boston MA 02114</b><br>Units: (unknown) | Floors: (unknown) | Source: RichCorpSS<br><b>Known operators: </b><br>Compass , Seamless Transitions<div style='height:4px'></div><span style='color:#448AFF' >Distance from cluster center: <b>352 ft.</b></span>
                  </div>`,
@@ -857,19 +899,19 @@
             );
         
     
-            var layer_control_6179b6d054ad448fa5e8ab92be4cbdf8 = {
+            var layer_control_a23111e2e97e45ccb0b8d251ee76e132 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_c4cb3d62ab3b4c899679cc45acb2eb7d,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_b2f30c3981b6400185adb52c62a7c40f,
                 },
             };
             L.control.layers(
-                layer_control_6179b6d054ad448fa5e8ab92be4cbdf8.base_layers,
-                layer_control_6179b6d054ad448fa5e8ab92be4cbdf8.overlays,
+                layer_control_a23111e2e97e45ccb0b8d251ee76e132.base_layers,
+                layer_control_a23111e2e97e45ccb0b8d251ee76e132.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_749ad75654cd4b94a4078a346ce9d0a7);
-            feature_group_c4cb3d62ab3b4c899679cc45acb2eb7d.remove();
+            ).addTo(map_436e48183c384557b4ebafd98ca384c9);
+            feature_group_b2f30c3981b6400185adb52c62a7c40f.remove();
         
 </script>
             </div>
@@ -927,7 +969,21 @@
     </script>
     <script>
     
-
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
@@ -970,16 +1026,15 @@
                 msg_init.style.margin = "0";
             }
 
-            
         }
     )
 
     
     function search_item() { 
-        initOpenState = "False"
-        let sb = document.getElementById('searchbar')
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
         searchList.scrollTop = 0;
 
@@ -1010,8 +1065,9 @@
         }
         
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 

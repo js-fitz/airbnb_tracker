@@ -8,6 +8,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: center;
+  white-space: pre;
+  padding: 3px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -18,6 +61,7 @@
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -28,20 +72,6 @@
         display: none !important
     }
     
-    
-        .leaflet-pane .leaflet-interactive {
-            transition: fill-opacity .12s ease-in-out;
-            transition: stroke .12s ease-in-out;
-
-        }
-
-        .leaflet-pane .leaflet-interactive:hover {
-            fill-opacity:.8 !important;
-            stroke:white !important;
-
-
-        }
-        
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -421,8 +451,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -432,19 +461,32 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
         
         
     .license-claim-container ul {
         padding-left:18px; 
-        list-style: none;
-        
+        list-style: disc;
+        color: white !important;
     }
 
     .license-claim-container ul li::before {
-      content: "2"
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
       color: white; 
       font-weight: bold; 
     }
@@ -496,7 +538,7 @@
         
         <h3 style='margin-bottom:12px'>License Status Details</h3>
         <p style='font-size:1.2em; margin: 3px 0; color:#EF5350'>
-        <i class="fa fa-warning"></i> Cannot verify <b>1</b> license
+        <i class="fa fa-warning"></i> Cannot verify <b></b> license
             </p>
         
         <table class='listings-status-legend'>
@@ -631,7 +673,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_6efb723c6d514df1b992387ed4ac9ee6 {
+                #map_951796b19f42433aa2cecfbc068dc96e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -657,13 +699,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_6efb723c6d514df1b992387ed4ac9ee6" ></div>
+            <div class="folium-map" id="map_951796b19f42433aa2cecfbc068dc96e" ></div>
         
 </body>
 <script>    
     
-            var map_6efb723c6d514df1b992387ed4ac9ee6 = L.map(
-                "map_6efb723c6d514df1b992387ed4ac9ee6",
+            var map_951796b19f42433aa2cecfbc068dc96e = L.map(
+                "map_951796b19f42433aa2cecfbc068dc96e",
                 {
                     center: [42.31997, -71.10682],
                     crs: L.CRS.EPSG3857,
@@ -677,24 +719,24 @@
 
         
     
-            var tile_layer_3c65c350ad9c43beac1adb43d97e0179 = L.tileLayer(
+            var tile_layer_d466bc5ed4c946c080ea5b6744ab6c7b = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_6efb723c6d514df1b992387ed4ac9ee6);
+            ).addTo(map_951796b19f42433aa2cecfbc068dc96e);
         
     
-            var circle_cd39537de615475386c7ae92e495001b = L.circle(
+            var circle_3f5a44f4875c49dc98168b95cb6a5240 = L.circle(
                 [42.31997, -71.10682],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
-            ).addTo(map_6efb723c6d514df1b992387ed4ac9ee6);
+            ).addTo(map_951796b19f42433aa2cecfbc068dc96e);
         
     
-            circle_cd39537de615475386c7ae92e495001b.bindTooltip(
+            circle_3f5a44f4875c49dc98168b95cb6a5240.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>35-12</b></p>
         <p style='font-size:1.1em; margin: 3px 0; color:#EF5350'>
-            <i class="fa fa-warning"></i> Cannot verify <b>1</b> license 
+            <i class="fa fa-warning"></i> Cannot verify <b></b> license 
                 </p>
         Host: <b>Lance </b> | Listings: <b>1</b>
         <br><span style='text-align:center; color:#448AFF'>
@@ -704,18 +746,18 @@
             );
         
     
-            var circle_c46598d6680a4529b0574028e98c656f = L.circle(
+            var circle_fc3127cf1f3149dbb0840c576aa97e02 = L.circle(
                 [42.31997, -71.10682],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_6efb723c6d514df1b992387ed4ac9ee6);
+            ).addTo(map_951796b19f42433aa2cecfbc068dc96e);
         
     
-            circle_c46598d6680a4529b0574028e98c656f.bindTooltip(
+            circle_fc3127cf1f3149dbb0840c576aa97e02.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>35-12</b></p>
         <p style='font-size:1.1em; margin: 3px 0; color:#EF5350'>
-            <i class="fa fa-warning"></i> Cannot verify <b>1</b> license 
+            <i class="fa fa-warning"></i> Cannot verify <b></b> license 
                 </p>
         Host: <b>Lance </b> | Listings: <b>1</b>
         <br><span style='text-align:center; color:#448AFF'>
@@ -725,18 +767,18 @@
             );
         
     
-            var feature_group_9dca9600654d418c8c9f3a7a5b1f9abd = L.featureGroup(
+            var feature_group_827e5accd8fe4553872548ada7788ea2 = L.featureGroup(
                 {}
-            ).addTo(map_6efb723c6d514df1b992387ed4ac9ee6);
+            ).addTo(map_951796b19f42433aa2cecfbc068dc96e);
         
     
-            var circle_e61fc032d99949718035b20e56a01b82 = L.circle(
+            var circle_c6d36232434a42f2a76f20d02d0334dc = L.circle(
                 [42.31997, -71.10682],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D32F2F", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_9dca9600654d418c8c9f3a7a5b1f9abd);
+            ).addTo(feature_group_827e5accd8fe4553872548ada7788ea2);
         
     
-            circle_e61fc032d99949718035b20e56a01b82.bindTooltip(
+            circle_c6d36232434a42f2a76f20d02d0334dc.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>44061640</b></p>
@@ -757,17 +799,17 @@
             );
         
     
-            var layer_control_a669efac62a54875af1f2ed420b8069f = {
+            var layer_control_b9a5964c57c44e699be4bbe68558be63 = {
                 base_layers : {
                 },
                 overlays :  {
                 },
             };
             L.control.layers(
-                layer_control_a669efac62a54875af1f2ed420b8069f.base_layers,
-                layer_control_a669efac62a54875af1f2ed420b8069f.overlays,
+                layer_control_b9a5964c57c44e699be4bbe68558be63.base_layers,
+                layer_control_b9a5964c57c44e699be4bbe68558be63.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_6efb723c6d514df1b992387ed4ac9ee6);
+            ).addTo(map_951796b19f42433aa2cecfbc068dc96e);
         
 </script>
             </div>
@@ -825,7 +867,21 @@
     </script>
     <script>
     
-
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
@@ -868,16 +924,15 @@
                 msg_init.style.margin = "0";
             }
 
-            
         }
     )
 
     
     function search_item() { 
-        initOpenState = "False"
-        let sb = document.getElementById('searchbar')
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
         searchList.scrollTop = 0;
 
@@ -908,8 +963,9 @@
         }
         
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 
