@@ -74,7 +74,7 @@
     }
 
     body h4 {
-        font-size:18px;
+        font-size:16px;
         color:white;
         margin: 0 0 10px;
         font-weight:500px;
@@ -151,7 +151,7 @@
     }
 
     .listings-status-legend {
-        margin-bottom:8px;
+        margin-bottom:12px;
         padding: 0 15px
     }
     .listings-status-legend p {
@@ -239,7 +239,7 @@
 
     .search-items { 
        display: none;
-       padding:10px 0;
+       padding:12px 0 12px 8px;
        cursor: pointer;
        border-top: 1px solid white;
        transition:.2s;
@@ -289,6 +289,17 @@
       }
 
 
+    .isd-indicator-search {
+        display:block;
+        position: relative;
+        top:0;
+        right:10px;
+        float:right;
+        color:#E0E0E0;
+    }
+
+
+
     #how-collapse-btn {
       background-color: transparent;
       color: white;
@@ -302,6 +313,42 @@
     }
 
     #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    #license-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #license-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    #listings-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #listings-collapsed {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.2s ease-out;
@@ -373,6 +420,16 @@
 .centroid-list-item a {
         text-decoration:none !important;
         }
+        
+        
+    .license-claim-container ul {
+        padding-left:15px;    
+    }
+
+    .license-claim-container ul li::before {
+      color: white; 
+      font-weight: bold; 
+    }
 
 
     </style>
@@ -402,7 +459,7 @@
         </h3> 
         
         <p class='text-lite'>
-            <b>8<b/> total accommodations
+            <b>8</b> total accommodations
         </p> 
         
         <h3 style='font-size: 1.6em; margin:15px 0 5px'>
@@ -412,13 +469,22 @@
         
         
         
+        <p style='margin-top:15px;'>At or near:</p>
+        <p style='font-size:1.25em; margin-bottom:5px'><b>105 Allston Street, Allston</b></p>
+        <p class='text-lite' style='font-size:.95em; margin:0'>
+                        <b>Source:</b>
+    
+                        Inferred centerpoint of cluster listings</p>
+                    <p style='font-size:.98em'>
+                        Estimated accuracy: <span style='color:#448AFF'>within 450 ft.</span></p>
+                
         <hr class='hr-lite'>
-
-        <h3>License Status Summary</h3>
-        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
-             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
-        </p>
-
+        
+        <h3 style='margin-bottom:12px'>License Status Details</h3>
+        
+        <p style='font-size:1.2em; color:#EF5350'><i class="fa fa-warning"></i> Cannot verify <b>1</b> license</p>
+            
+        
         <table class='listings-status-legend'>
                             
                             <tr style='border-bottom:1px solid #9c9c9c;' >
@@ -461,11 +527,35 @@
                         
                         </table>
         
-        <hr class='hr-lite'>
+            <div id='licenses'></div>
+            <a id="license-collapse-btn" style='margin:15px 0 15px;'>
+                [ + ] Show license details
+            </a>
 
-        <h3 style='margin-bottom:18px'>Listings</h3>
+            <div id="license-collapsed" class='license-claim-container'>
+                    <p style='margin-top:10px;>
+                        </p>
+                        
+                    <div class='license-by-building-container'>
+                        <ul>
+                            
+                    <li>
+                        <p>Exemption: executive suite - <b>Not verified</b> 4 listings</b></p>
+                    </li>
+                </ul>
+            </div>
         
         
+        <hr class='hr-lite' id='listings'>
+        
+        <a id="listings-collapse-btn" style='margin:15px 0'>
+            [ + ] Show listings
+        </a>
+
+        <div id='listings-collapsed'>
+
+            <h3 style='margin:18px 0'>Listings</h3>
+            
         <a href='https://www.airbnb.com/rooms/37171429' target='_blank'>
         <div class='centroid-list-item'>
             
@@ -535,6 +625,8 @@
 
         
 
+        </div>
+
 
 
                 
@@ -568,7 +660,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_b4f40b2d56f7473ca8b951419b1934f9 {
+                #map_107c4efcb2064ea5a3e298431f1c101e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -594,13 +686,13 @@
             </span>
           </div> 
     
-            <div class="folium-map" id="map_b4f40b2d56f7473ca8b951419b1934f9" ></div>
+            <div class="folium-map" id="map_107c4efcb2064ea5a3e298431f1c101e" ></div>
         
 </body>
 <script>    
     
-            var map_b4f40b2d56f7473ca8b951419b1934f9 = L.map(
-                "map_b4f40b2d56f7473ca8b951419b1934f9",
+            var map_107c4efcb2064ea5a3e298431f1c101e = L.map(
+                "map_107c4efcb2064ea5a3e298431f1c101e",
                 {
                     center: [42.349597499999994, -71.1372225],
                     crs: L.CRS.EPSG3857,
@@ -614,19 +706,19 @@
 
         
     
-            var tile_layer_3ef2b761125d492da66fffd6f70a319b = L.tileLayer(
+            var tile_layer_ae0d450abcb1487e8cce7bb11d42f39d = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_b4f40b2d56f7473ca8b951419b1934f9);
+            ).addTo(map_107c4efcb2064ea5a3e298431f1c101e);
         
     
-            var circle_1c24fe1ebc94439db41424a8446eabf1 = L.circle(
+            var circle_30b467640fa945cda1f8cfe62415ffd1 = L.circle(
                 [42.349597499999994, -71.1372225],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.4646221869771986, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7646221869771985, "radius": 128.37593832000002, "stroke": true, "weight": 2}
-            ).addTo(map_b4f40b2d56f7473ca8b951419b1934f9);
+            ).addTo(map_107c4efcb2064ea5a3e298431f1c101e);
         
     
-            circle_1c24fe1ebc94439db41424a8446eabf1.bindTooltip(
+            circle_30b467640fa945cda1f8cfe62415ffd1.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>89-1</b></p>
@@ -638,13 +730,13 @@
             );
         
     
-            var circle_ed9869f3e84742f380c8ac6f36079fec = L.circle(
+            var circle_e12586061d3344c9bb461205ece5bb2a = L.circle(
                 [42.349597499999994, -71.1372225],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_b4f40b2d56f7473ca8b951419b1934f9);
+            ).addTo(map_107c4efcb2064ea5a3e298431f1c101e);
         
     
-            circle_ed9869f3e84742f380c8ac6f36079fec.bindTooltip(
+            circle_e12586061d3344c9bb461205ece5bb2a.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>89-1</b></p>
@@ -656,18 +748,18 @@
             );
         
     
-            var feature_group_a62e7ac9fcd94bbeb6a2798c58a2cc45 = L.featureGroup(
+            var feature_group_7170ae68a476405ea7d069bb0efec341 = L.featureGroup(
                 {}
-            ).addTo(map_b4f40b2d56f7473ca8b951419b1934f9);
+            ).addTo(map_107c4efcb2064ea5a3e298431f1c101e);
         
     
-            var circle_20edee2b93ea4946a4665c8c78b09ff5 = L.circle(
+            var circle_46d72dadcf7b465c881f8882cdf0e0d3 = L.circle(
                 [42.35077, -71.13765],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_a62e7ac9fcd94bbeb6a2798c58a2cc45);
+            ).addTo(feature_group_7170ae68a476405ea7d069bb0efec341);
         
     
-            circle_20edee2b93ea4946a4665c8c78b09ff5.bindTooltip(
+            circle_46d72dadcf7b465c881f8882cdf0e0d3.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37171429</b></p>
@@ -679,7 +771,7 @@
                  <i style='font-size:.9em; color:#E65100';
                        class='fa fa-file-text'></i>
                 <b> Exemption: executive suite</b>
-        <br>License status: <span style='color:#E65100'> <b>Not verified</b> </span>
+        <br>License: <span style='color:#E65100'> <b>Not verified</b> </span>
         
                 <b>Click or see cluster for more details</b></span>
             
@@ -688,13 +780,13 @@
             );
         
     
-            var circle_0c5aebab23344c1cab5c3463b5334968 = L.circle(
+            var circle_7b358b78c4c1415ab45946855d96ae67 = L.circle(
                 [42.34873, -71.13752],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_a62e7ac9fcd94bbeb6a2798c58a2cc45);
+            ).addTo(feature_group_7170ae68a476405ea7d069bb0efec341);
         
     
-            circle_0c5aebab23344c1cab5c3463b5334968.bindTooltip(
+            circle_7b358b78c4c1415ab45946855d96ae67.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37413765</b></p>
@@ -706,7 +798,7 @@
                  <i style='font-size:.9em; color:#E65100';
                        class='fa fa-file-text'></i>
                 <b> Exemption: executive suite</b>
-        <br>License status: <span style='color:#E65100'> <b>Not verified</b> </span>
+        <br>License: <span style='color:#E65100'> <b>Not verified</b> </span>
         
                 <b>Click or see cluster for more details</b></span>
             
@@ -715,13 +807,13 @@
             );
         
     
-            var circle_ac1504841e454af39f59d17fcf2fc48d = L.circle(
+            var circle_545ae5f64ada42e794f16cc09e3d8cc0 = L.circle(
                 [42.34932, -71.13667],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_a62e7ac9fcd94bbeb6a2798c58a2cc45);
+            ).addTo(feature_group_7170ae68a476405ea7d069bb0efec341);
         
     
-            circle_ac1504841e454af39f59d17fcf2fc48d.bindTooltip(
+            circle_545ae5f64ada42e794f16cc09e3d8cc0.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37568228</b></p>
@@ -733,7 +825,7 @@
                  <i style='font-size:.9em; color:#E65100';
                        class='fa fa-file-text'></i>
                 <b> Exemption: executive suite</b>
-        <br>License status: <span style='color:#E65100'> <b>Not verified</b> </span>
+        <br>License: <span style='color:#E65100'> <b>Not verified</b> </span>
         
                 <b>Click or see cluster for more details</b></span>
             
@@ -742,13 +834,13 @@
             );
         
     
-            var circle_1f2415b6877f4f1eb327714db6fa8aae = L.circle(
+            var circle_ec69873a28de496a89b919a00d12c235 = L.circle(
                 [42.34957, -71.13705],
                 {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E65100", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_a62e7ac9fcd94bbeb6a2798c58a2cc45);
+            ).addTo(feature_group_7170ae68a476405ea7d069bb0efec341);
         
     
-            circle_1f2415b6877f4f1eb327714db6fa8aae.bindTooltip(
+            circle_ec69873a28de496a89b919a00d12c235.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>37570017</b></p>
@@ -760,7 +852,7 @@
                  <i style='font-size:.9em; color:#E65100';
                        class='fa fa-file-text'></i>
                 <b> Exemption: executive suite</b>
-        <br>License status: <span style='color:#E65100'> <b>Not verified</b> </span>
+        <br>License: <span style='color:#E65100'> <b>Not verified</b> </span>
         
                 <b>Click or see cluster for more details</b></span>
             
@@ -769,18 +861,18 @@
             );
         
     
-            var layer_control_76ae185f6c404943879531fc5fd308e9 = {
+            var layer_control_86c365e4d4f24d1cad78c7b46f0bbee6 = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_a62e7ac9fcd94bbeb6a2798c58a2cc45,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_7170ae68a476405ea7d069bb0efec341,
                 },
             };
             L.control.layers(
-                layer_control_76ae185f6c404943879531fc5fd308e9.base_layers,
-                layer_control_76ae185f6c404943879531fc5fd308e9.overlays,
+                layer_control_86c365e4d4f24d1cad78c7b46f0bbee6.base_layers,
+                layer_control_86c365e4d4f24d1cad78c7b46f0bbee6.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_b4f40b2d56f7473ca8b951419b1934f9);
+            ).addTo(map_107c4efcb2064ea5a3e298431f1c101e);
         
 </script>
             </div>
@@ -800,7 +892,42 @@
               this.innerHTML = "[ &ndash; ] Learn less... ";
             } 
         });
-        </script>
+    </script>
+    <script>
+    
+        document.getElementById("license-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Show license details";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Hide license details";
+              setTimeout( function (){
+                      location.hash = "#licenses";
+                            }, 250);
+            } 
+            
+        });
+    </script>
+    <script>
+    
+        document.getElementById("listings-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Show listings";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Hide listings";              
+              setTimeout( function (){
+                      location.hash = "#listings";
+                            }, 250);
+            } 
+        });
+    </script>
     <script>
     
 
@@ -808,15 +935,22 @@
     document.getElementById('searchbar').addEventListener("click",
         function(){
                 let x = document.getElementsByClassName('search-items');
-                for (i = 0; i < 10; i++) {  
-                    x[i].style.display="list-item"; 
+                var counter = 0
+                for (i = 0; i < x.length; i++) { 
+                    var dt = x[i].getAttribute("data-type");
+                    if (dt=="cluster") { 
+                        counter = counter + 1
+                        x[i].style.display="list-item"; 
+                    } 
+                    if (counter == 3) {
+                         break;
+                    }
                 } 
-                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.maxHeight = "400px";
                 document.getElementById('search-list').style.padding = "0 15px 15px";
                 let msg_init = document.getElementById('search-init'); 
                 msg_init.style.maxHeight = "150px";
                 msg_init.style.margin = "8px";
-                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
         }
     )
     
@@ -848,6 +982,7 @@
         let input = document.getElementById('searchbar').value;
         input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
+        searchList.scrollTop = 0;
 
         let x = document.getElementsByClassName('search-items'); 
         
@@ -857,18 +992,24 @@
         
         let msg_init = document.getElementById('search-init'); 
         msg_init.style.maxHeight = "0";
-
-
-
+        
         var visible = 0
         
         if (sb !== null && sb.value === "") {
-        
+
+            var counter = 0
             for (i = 0; i < 10; i++) {  
-                x[i].style.display="list-item"; 
-                    visible += 1
+                    var dt = x[i].getAttribute("data-type");
+                    if (dt=="cluster") { 
+                        counter = counter + 1
+                        x[i].style.display="list-item"; 
+                    } 
+                    if (counter == 3) {
+                         break;
+                    }
             } 
         }
+        
         else {
             for (i = 0; i < x.length; i++) {  
                 if (x[i].innerHTML.toLowerCase().includes(input)) { 
@@ -914,12 +1055,15 @@
                     alert.style.margin = "0";
                     
                     searchList.style.padding = "0 15px 15px ";
-                    searchList.style.maxHeight = "271px";                    
+                    searchList.style.maxHeight = "305px";                    
                     }
  
             
           }         
         else {
+            for (i = 0; i < x.length; i++) {  
+                 x[i].style.display="none";
+            } 
             instruct.style.maxHeight = "0";
             instruct.transition = ".2s";
             instruct.style.margin = "0"
