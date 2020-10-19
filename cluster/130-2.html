@@ -2,15 +2,70 @@
     <!DOCTYPE html>
     <html>
     <head>
+      <title>Cluster 130-2</title>
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+    
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+.tooltiptext-3 {
+    margin-top: 46px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: right;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
     body {
         font-family: "Helvetica", Arial, sans-serif;
         padding:0;
         margin:0;
         height:100vh;
         overflow: auto;
+        color: white;
     }
     
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -20,8 +75,7 @@
     .leaflet-popup-close-button {
         display: none !important
     }
-
-
+    
     .centroid-link-btn {
         color:white !important;
         font-size:18px;
@@ -69,7 +123,7 @@
     }
 
     body h4 {
-        font-size:18px;
+        font-size:16px;
         color:white;
         margin: 0 0 10px;
         font-weight:500px;
@@ -146,7 +200,7 @@
     }
 
     .listings-status-legend {
-        margin-bottom:8px;
+        margin-bottom:12px;
         padding: 0 15px
     }
     .listings-status-legend p {
@@ -234,7 +288,7 @@
 
     .search-items { 
        display: none;
-       padding:10px 0;
+       padding:12px 0 12px 8px;
        cursor: pointer;
        border-top: 1px solid white;
        transition:.2s;
@@ -284,6 +338,17 @@
       }
 
 
+    .isd-indicator-search {
+        display:block;
+        position: relative;
+        top:0;
+        right:10px;
+        float:right;
+        color:#E0E0E0;
+    }
+
+
+
     #how-collapse-btn {
       background-color: transparent;
       color: white;
@@ -297,6 +362,42 @@
     }
 
     #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    #license-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #license-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    #listings-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #listings-collapsed {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.2s ease-out;
@@ -354,8 +455,7 @@
     }
 
     
-    
-    
+
     .host-info-link {
         color:#C5B358;
     }
@@ -365,14 +465,35 @@
         color:#a3923e;
     }
     
-.centroid-list-item a {
+    .centroid-list-item a {
         text-decoration:none !important;
         }
+        
+        
+    .license-claim-container ul {
+        padding-left:18px; 
+        list-style: disc;
+        color: white !important;
+    }
+
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
 
 
     </style>
 
-    <head>
+    </head>
     <body>
 
         <div id='page-container'>
@@ -383,7 +504,7 @@
                             <a href='/'>Home</a> &#62;
                             <a href='/clusters.html'>Clusters</a> &#62;
                             <span style='color:#448AFF'>130-2</span>
-                            <a href='/host/Eddie & Nayeli.html' style='color:#9C9C9C'>(Eddie & Nayeli)</a>
+                            <a href='/host/331132678.html' style='color:#9C9C9C'>(Premier Suites)</a>
                         </p>
                     </div>
                     
@@ -392,48 +513,69 @@
         <h2 style='font-size:2.2em; margin:0 0 10px'> Cluster 130-2 </h2>
 
         <h3 style='margin-bottom:5px'>
-            <b>1 listing</b> |
-            0 account</b> 
+            <a href='#listings'><b>1 listing</b></a> |
+            1 account</b> 
         </h3> 
         
         <p class='text-lite'>
-            <b>4<b/> total accommodations
+            <b>2</b> total accommodations
         </p> 
         
         <h3 style='font-size: 1.6em; margin:15px 0 5px'>
-        Host: <a href='/host/102027626.html' class='host-info-link'> Eddie & Nayeli</a> </h3>
+        Host: <a href='/host/331132678.html' class='host-info-link'> Premier Suites</a> </h3>
         
-        
-        
-        
-        
+        <table class='text-lite' style='margin-top:8px' >
+            <tr>
+            <td style='vertical-align:top'>
+                <i class="fa fa-clone" style='color:#EF5350; font-size:1.3em; margin: 5px 10px 0 0'></i>
+            </td>
+            <td>
+            <p>
+                All 1
+                listingin this cluster uses
+                a license also in use by another host:
+            </p>
+            </td>
+        </table>
+            <ul class='host-license-warning'><li>
+                        <p>
+                        <a href='/host/316148588, CorpGroup13.html'>390690 (used by <b>1</b> other 
+                        host) &#8594;</a>
+                           </p></li>
+            </ul>
+        <p style='margin-top:15px;'>Address:</p>
+        <p style='font-size:1.25em; margin-bottom:5px'><b>320 Savin Hill AVE 13 3 Dorchester MA 02125</b></p>
+        <p class='text-lite' style='font-size:.95em; margin:0'>
+                        <b>Source:</b>
+    
+                     Claimed license found in official ISD registry</p>
+                
         <hr class='hr-lite'>
-
-        <h3>License Status Summary</h3>
-        <p class='text-lite' style='font-size:.97em; margin-bottom:0'>
-             Cross-referenced with offical <a target='blank' href='https://www.boston.gov/departments/inspectional-services'>ISD</a> data
-        </p>
-
+        
+        <h3 style='margin-bottom:12px'>License Status Details</h3>
+        <p style='font-size:1.2em; margin: 3px 0; color:#E64A19'>
+        <i class="fa fa-exclamation-triangle"></i> Not found (fabricated)<br>(1 listings)
+            </p>
+        
         <table class='listings-status-legend'>
                             
                             <tr style='border-bottom:1px solid #9c9c9c;' >
                                 <td>  
                                    <p class='text-lite'
                                       style='margin-bottom:8px'>
-                                       listings<p>
+                                       <b>listings</b><p>
                                 </td>
                                 
                                 <td>  
                                 </td>
-                                
+                                                                
                                 <td>
                                     <p class='text-lite'
                                        style='margin-bottom:8px'>
-                                        license</p>
+                                        <b>license</b>
+                                    </p>
                                 </td>
-                            </tr>
-                            
-                                                       
+                                </tr>                           
                             <tr>
                                 
                                 <td style='text-align:right'>  
@@ -444,40 +586,76 @@
                                 <td>  
                                     <p>
                                     <span id='status-icon'
-                                        style="background-color:#2E7D32">
+                                        style="background-color:#E64A19">
                                     </span>
                                 </td>
                                 
                                 <td><p>
-                                    Active
-                                </p></td>
-                                
-                            </tr>
-                        
-                        </table>
+                                    Not found (fabricated)
+                                </p></td></tr></table>
         
-        <hr class='hr-lite'>
+            <div id='licenses' class='license-claim-container'>
+            <a id="license-collapse-btn" style='margin:15px 0 15px;'>
+                [ + ] Show license details
+            </a>
 
-        <h3 style='margin-bottom:18px'>Listings</h3>
+            <div id="license-collapsed">
+                    <p style='margin-top:10px;>
+                        At one address</p>
+                        
+                <div class='license-by-building-container'>
+                    <ul>
+        
+            <li>
+                <p><b>1 unit</b> at 320 Savin Hill AVE 13 3 Dorchester MA 02125</p>
+                <ul>
+        
+                <li>
+                    <p>390690 - <b>Not found (fabricated)</b> (1 listings) </p>
+                </li>
+            
+                 </ul>
+            </li>
+            </div>
+            </div>
         
         
-        <a href='https://www.airbnb.com/rooms/39893738' target='_blank'>
+        <hr class='hr-lite' id='listings'>
+        
+        <a id="listings-collapse-btn" style='margin:15px 0'>
+            [ + ] Show listings
+        </a>
+
+        <div id='listings-collapsed'>
+
+            <h3 style='margin:18px 0 8px'>Listings</h3>
+            <p class='text-lite' style='font-size:14px; margin: 2px 0 120x'>
+                <b>Note:</b> If a listing URL redirect to the Airbnb.com
+                homepage, it suggests the host has removed the listing
+                since the last update from <a href='http://insideairbnb.com/'>InsideAirbnb</a></p>
+            <p style='font-size:.9em;text-align:right'>
+                        <a href='/cluster/130-2—data.csv' download="cluster-130-2_listings.csv">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                            Download cluster data as a CSV </a>
+        <a href='https://www.airbnb.com/rooms/41938564' target='_blank'>
         <div class='centroid-list-item'>
             
-                <p style='font-size:1em'><b>39893738</b></p>
-                <p style='font-size:1.1em'>★ Ashmont Apartment | Close to Subway + Downtown ★</p>
+                <p style='font-size:1em'><b>41938564</b></p>
+                <p style='font-size:1.1em'>406 Last Minute Monthly Discounts! Stay Today!</p>
             
                 <p> <span class='text-lite'>Minimum nights per stay:</span>
                     <b>2</b></p>
                 <p> <span class='text-lite'>License:</span>
-                    <b>398049</b></p>
+                    <b>390690</b> (Not found (fabricated))</p>
                     
-                <a href='https://www.airbnb.com/rooms/39893738'>View listing photos &#8594;</a>
+                <a href='https://www.airbnb.com/rooms/41938564' target='_blank'>View listing photos &#8594;</a>
             
         </div>
         </a>
 
         
+
+        </div>
 
 
 
@@ -512,7 +690,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_8ac950de57c34b2cbbeb7f906fc98f74 {
+                #map_8b708db13904491e88e945c2d313dd8e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -534,21 +712,21 @@
          font-size:12px">
             <span style='margin: 0px;'>
                 <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
-                    2020-09-01 | STR registry: 2020-08-05
+                    2020-08-31 | STR registry: 2020-08-05
             </span>
           </div> 
     
-            <div class="folium-map" id="map_8ac950de57c34b2cbbeb7f906fc98f74" ></div>
+            <div class="folium-map" id="map_8b708db13904491e88e945c2d313dd8e" ></div>
         
 </body>
 <script>    
     
-            var map_8ac950de57c34b2cbbeb7f906fc98f74 = L.map(
-                "map_8ac950de57c34b2cbbeb7f906fc98f74",
+            var map_8b708db13904491e88e945c2d313dd8e = L.map(
+                "map_8b708db13904491e88e945c2d313dd8e",
                 {
-                    center: [42.28982, -71.06748],
+                    center: [42.35446, -71.06104],
                     crs: L.CRS.EPSG3857,
-                    zoom: 17,
+                    zoom: 16,
                     zoomControl: true,
                     preferCanvas: false,
                 }
@@ -558,23 +736,28 @@
 
         
     
-            var tile_layer_d02b0fed64d14bf196c7cae5757e3cd9 = L.tileLayer(
+            var tile_layer_a55ed31bcc0b45908bb5aed9c7a91941 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_8ac950de57c34b2cbbeb7f906fc98f74);
+            ).addTo(map_8b708db13904491e88e945c2d313dd8e);
         
     
-            var circle_8e06bbd27d0948bd88e000b717280c81 = L.circle(
-                [42.28982, -71.06748],
-                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
-            ).addTo(map_8ac950de57c34b2cbbeb7f906fc98f74);
+            var circle_8e4480830b9147a39349ad62caab40e7 = L.circle(
+                [42.35446, -71.06104],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 50.0, "stroke": true, "weight": 2}
+            ).addTo(map_8b708db13904491e88e945c2d313dd8e);
         
     
-            circle_8e06bbd27d0948bd88e000b717280c81.bindTooltip(
+            circle_8e4480830b9147a39349ad62caab40e7.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>130-2</b></p>
-        Host: <b>Eddie & Nayeli </b> | Listings: <b>1</b>
+        <p style='font-size:1.1em; margin: 3px 0; color:#E64A19'>
+            <i class="fa fa-exclamation-triangle"></i> Not found (fabricated)<br>(1 listings) 
+                </p><p style='font-size:1.1em; margin: 3px 0; color:#EF5350'>
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    License shared by multiple hosts</p>
+        Host: <b>Premier Suites </b> | Listings: <b>1</b>
         <br><span style='text-align:center; color:#448AFF'>
         </span>
                  </div>`,
@@ -582,17 +765,22 @@
             );
         
     
-            var circle_c4db163f453a4ce6833088226e008fd1 = L.circle(
-                [42.28982, -71.06748],
+            var circle_2389e375a8d24ece83cea16473b30bde = L.circle(
+                [42.35446, -71.06104],
                 {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
-            ).addTo(map_8ac950de57c34b2cbbeb7f906fc98f74);
+            ).addTo(map_8b708db13904491e88e945c2d313dd8e);
         
     
-            circle_c4db163f453a4ce6833088226e008fd1.bindTooltip(
+            circle_2389e375a8d24ece83cea16473b30bde.bindTooltip(
                 `<div>
                      
         <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>130-2</b></p>
-        Host: <b>Eddie & Nayeli </b> | Listings: <b>1</b>
+        <p style='font-size:1.1em; margin: 3px 0; color:#E64A19'>
+            <i class="fa fa-exclamation-triangle"></i> Not found (fabricated)<br>(1 listings) 
+                </p><p style='font-size:1.1em; margin: 3px 0; color:#EF5350'>
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    License shared by multiple hosts</p>
+        Host: <b>Premier Suites </b> | Listings: <b>1</b>
         <br><span style='text-align:center; color:#448AFF'>
         </span>
                  </div>`,
@@ -600,50 +788,76 @@
             );
         
     
-            var feature_group_2f9a948b49974d3cb8f5bb2b20c14576 = L.featureGroup(
+            var feature_group_5f2eaf0e4bf142f58170f901a24d9987 = L.featureGroup(
                 {}
-            ).addTo(map_8ac950de57c34b2cbbeb7f906fc98f74);
+            ).addTo(map_8b708db13904491e88e945c2d313dd8e);
         
     
-            var circle_6d69fc67c8004ce89bb25a65e29adf2a = L.circle(
-                [42.28982, -71.06748],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2E7D32", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
-            ).addTo(feature_group_2f9a948b49974d3cb8f5bb2b20c14576);
+            var circle_0562e71b002e4e96a99cebf18d04eb5f = L.circle(
+                [42.35446, -71.06104],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_5f2eaf0e4bf142f58170f901a24d9987);
         
     
-            circle_6d69fc67c8004ce89bb25a65e29adf2a.bindTooltip(
+            circle_0562e71b002e4e96a99cebf18d04eb5f.bindTooltip(
                 `<div>
                      
-        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39893738</b></p>
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41938564</b></p>
         Cluster: <span style='color:#448AFF'><b>130-2</b></span> | 
         
-        Host: <span style='color:#665c2c'><b>Eddie & Nayeli </b></span>
+        Host: <span style='color:#665c2c'><b>Premier Suites </b></span>
         
         <br>License:
-                 <i style='font-size:.9em; color:#2E7D32';
+                 <i style='font-size:.9em; color:#E64A19';
                        class='fa fa-file-text'></i>
-                <b> 398049</b>
-        <br>License status: <span style='color:#2E7D32'> <b>Active</b> </span>
+                <b> 390690</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
         
-                <b>Click or see cluster for more details</b></span>
+                <br><b>Click or see cluster for more details</b></span>
             
                  </div>`,
                 {"sticky": true}
             );
         
     
-            var layer_control_6a8649a9a5664e118e4de90ad5d561e0 = {
+            var feature_group_3a90db60b8454e06bba969d626fe0396 = L.featureGroup(
+                {}
+            ).addTo(map_8b708db13904491e88e945c2d313dd8e);
+        
+    
+            var marker_e485cebfce3248af90977e4fe8133216 = L.marker(
+                [42.3548464, -71.0618248],
+                {}
+            ).addTo(feature_group_3a90db60b8454e06bba969d626fe0396);
+        
+    
+            var icon_dacc72c8a89b49f98fd5713ffa912762 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "building", "iconColor": "#5E35B1", "markerColor": "lightgray", "prefix": "fa"}
+            );
+            marker_e485cebfce3248af90977e4fe8133216.setIcon(icon_dacc72c8a89b49f98fd5713ffa912762);
+        
+    
+            marker_e485cebfce3248af90977e4fe8133216.bindTooltip(
+                `<div>
+                     <b style='font-size:.88em'>Known STR Building</b><br><b style='font-size:1.2em; color:#5E35B1'>55 Temple Place, Boston MA 02111</b><br>Units: (unknown) | Floors: 6.0 | Source: AirBPDBjn<br><b>Known operators: </b><br>unknown<div style='height:4px'></div><span style='color:#448AFF' >Distance from cluster center: <b>255 ft.</b></span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_6edeac0e6b8d4defa7517afb3c5b8d6c = {
                 base_layers : {
                 },
                 overlays :  {
-                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        show individual listings\n                        \u003ci class=\u0027fa fa-dot-circle-o\u0027\n                           style=\u0027color:red; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                    \u003c/span\u003e" : feature_group_2f9a948b49974d3cb8f5bb2b20c14576,
+                    "\u003cspan style=\u0027font-size:15px\u0027\u003e\n                        Nearby STR buildings (ADCO database)\n                        \u003ci class=\u0027fa fa-building\u0027\n                           style=\u0027color:#5E35B1; margin: 0 3px;\u0027\u003e\u003c/i\u003e\n                        \u003c/span\u003e" : feature_group_3a90db60b8454e06bba969d626fe0396,
                 },
             };
             L.control.layers(
-                layer_control_6a8649a9a5664e118e4de90ad5d561e0.base_layers,
-                layer_control_6a8649a9a5664e118e4de90ad5d561e0.overlays,
+                layer_control_6edeac0e6b8d4defa7517afb3c5b8d6c.base_layers,
+                layer_control_6edeac0e6b8d4defa7517afb3c5b8d6c.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "topright"}
-            ).addTo(map_8ac950de57c34b2cbbeb7f906fc98f74);
+            ).addTo(map_8b708db13904491e88e945c2d313dd8e);
+            feature_group_3a90db60b8454e06bba969d626fe0396.remove();
         
 </script>
             </div>
@@ -663,23 +877,81 @@
               this.innerHTML = "[ &ndash; ] Learn less... ";
             } 
         });
-        </script>
+    </script>
     <script>
     
-
+        document.getElementById("license-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Show license details";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Hide license details";
+              setTimeout( function (){
+                      location.hash = "#licenses";
+                            }, 250);
+            } 
+            
+        });
+    </script>
+    <script>
+    
+        document.getElementById("listings-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Show listings";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Hide listings";              
+              setTimeout( function (){
+                      location.hash = "#listings";
+                            }, 250);
+            } 
+        });
+    </script>
+    <script>
+    
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
     
     document.getElementById('searchbar').addEventListener("click",
         function(){
+                initOpenState = "True"
                 let x = document.getElementsByClassName('search-items');
-                for (i = 0; i < 10; i++) {  
-                    x[i].style.display="list-item"; 
+                var counter = 0
+                for (i = 0; i < x.length; i++) { 
+                    var dt = x[i].getAttribute("data-type");
+                    if (dt=="cluster") { 
+                        counter = counter + 1
+                        x[i].style.display="list-item"; 
+                    } 
+                    if (counter == 3) {
+                         break;
+                    }
                 } 
-                document.getElementById('search-list').style.maxHeight = "271px";
+                document.getElementById('search-list').style.maxHeight = "400px";
                 document.getElementById('search-list').style.padding = "0 15px 15px";
                 let msg_init = document.getElementById('search-init'); 
                 msg_init.style.maxHeight = "150px";
                 msg_init.style.margin = "8px";
-                document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 20px rgba(0,0,0,0.6)";
+                
         }
     )
     
@@ -687,7 +959,7 @@
     document.getElementById('searchbar').addEventListener("focusout",
         function(){
             let input = document.getElementById('searchbar').value;
-            if (input==""){
+            if (input=="" && initOpenState !== "True"){
                 document.getElementById('search-list').style.maxHeight = "0";
                 document.getElementById('search-list').style.padding = "0 15px";
             
@@ -695,22 +967,22 @@
                 for (i = 0; i < x.length; i++) {  
                     x[i].style.display="none"; 
                 } 
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "0";
+                msg_init.style.margin = "0";
             }
-            let msg_init = document.getElementById('search-init'); 
-            msg_init.style.maxHeight = "0";
-            msg_init.style.margin = "0";
-            document.getElementsByClassName('search-list').style.boxShadow = "inset 0 0 0 rgba(0,0,0,0.5)";
-            
+
         }
     )
 
     
     function search_item() { 
+        initOpenState = "False";
         
-        let sb = document.getElementById('searchbar')
+        let sb = document.getElementById('searchbar');
         let input = document.getElementById('searchbar').value;
-        input=input.toLowerCase(); 
         let searchList = document.getElementById('search-list');
+        searchList.scrollTop = 0;
 
         let x = document.getElementsByClassName('search-items'); 
         
@@ -720,21 +992,28 @@
         
         let msg_init = document.getElementById('search-init'); 
         msg_init.style.maxHeight = "0";
-
-
-
+        
         var visible = 0
         
         if (sb !== null && sb.value === "") {
-        
+
+            var counter = 0
             for (i = 0; i < 10; i++) {  
-                x[i].style.display="list-item"; 
-                    visible += 1
+                    var dt = x[i].getAttribute("data-type");
+                    if (dt=="cluster") { 
+                        counter = counter + 1
+                        x[i].style.display="list-item"; 
+                    } 
+                    if (counter == 3) {
+                         break;
+                    }
             } 
         }
+        
         else {
-            for (i = 0; i < x.length; i++) {  
-                if (x[i].innerHTML.toLowerCase().includes(input)) { 
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
                     x[i].style.display="list-item"; 
                     visible += 1
                 } 
@@ -777,12 +1056,15 @@
                     alert.style.margin = "0";
                     
                     searchList.style.padding = "0 15px 15px ";
-                    searchList.style.maxHeight = "271px";                    
+                    searchList.style.maxHeight = "305px";                    
                     }
  
             
           }         
         else {
+            for (i = 0; i < x.length; i++) {  
+                 x[i].style.display="none";
+            } 
             instruct.style.maxHeight = "0";
             instruct.transition = ".2s";
             instruct.style.margin = "0"

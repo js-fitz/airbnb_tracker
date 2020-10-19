@@ -1,0 +1,2856 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Cluster 7-0</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    
+    
+/* Tooltip container */
+.tooltip {
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.tooltiptext-2 {
+    margin-top: 25px !important;
+}
+
+.tooltiptext-3 {
+    margin-top: 46px !important;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  color: #fff;
+  text-align: right;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background-color : #424242;
+  /* Position the tooltip text */
+  margin: 3px 0 0 0 ;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+        font-family: "Helvetica", Arial, sans-serif;
+        padding:0;
+        margin:0;
+        height:100vh;
+        overflow: auto;
+        color: white;
+    }
+    
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        background-color:#448AFF !important;
+        }
+        
+    .leaflet-popup-close-button {
+        display: none !important
+    }
+    
+    .centroid-link-btn {
+        color:white !important;
+        font-size:18px;
+        padding:15px 0;
+        line-height:1.2em
+        }
+        
+
+
+    body a {
+        color: #E3F2FD;
+        text-decoration:none;
+        transition:.1s;
+    }
+    body a:hover {
+        color: #448AFF;
+        text-decoration: underline
+    }
+    
+    body a:active {
+        color: #D4D4D4;
+    }
+
+    body h1 {
+         color: white;
+         font-size:24px;
+         margin-top:0;
+    }
+
+    body h2 {
+        color:#448AFF;
+        font-size:22px;
+        line-height:1.4em;
+        font-weight:400px;
+        margin: 8px 0 8px;
+        font-weight:bold;
+    }
+
+    body h3 {
+        color:white;
+        font-size:18px;
+        margin: 0 0 8px;
+        font-weight:400px;
+        font-weight:500px;
+    }
+
+    body h4 {
+        font-size:16px;
+        color:white;
+        margin: 0 0 10px;
+        font-weight:500px;
+    }
+
+    body p {
+        font-size:16px;
+        line-height:1.4em;
+        color:white;
+        margin: 0 0 8px;
+    }
+
+    body .text-lite {
+        color:#E0E0E0;
+        font-size: .92 em;
+    }
+
+    hr {
+        border: .6px solid white;
+        margin: 15px 0
+        style='margin:20px'
+    }
+    
+    .hr-lite {
+        border-color: #9c9c9c;
+    }
+
+
+    #page-container {
+        padding: 0;
+        display:block;
+        height: 100%;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .sidebar-container {
+        position:fixed;
+        display: block;
+        height: 100vh;
+        width:400px;
+        overflow:auto;
+    }
+
+    .nav-banner {
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:9;
+        margin:0;
+        width:400px;
+        background-color:#191919;
+        overflow:auto;
+    }
+    
+    .nav-banner p {
+        margin:4px 8px;
+        width:max-content;
+        padding
+    }
+
+    .sidebar {
+        width:400px;
+        top: 25px;
+        position:fixed;
+        height:calc(100vh - 25px);
+        display:block;
+        background-color: #2b2b2b;
+        #border: 5px solid #4a4a4a;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding:30px;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .listings-status-legend {
+        margin-bottom:12px;
+        padding: 0 15px
+    }
+    .listings-status-legend p {
+        margin:0;
+    }
+    .listings-status-legend td {
+        padding: 10px 5px 0;
+    }
+
+    #status-icon {
+        height:15px;
+        width:15px;
+        display:inline-block;
+        border: 1.5px solid white;
+        border-radius:50%;
+        margin: 0 5px;
+    }
+
+    #map-container {
+        position:fixed;
+        top:0;
+        right:0;
+        display: block;
+        height:100vh;
+        width: calc(100% - 400px)
+    }
+
+    iframe {
+        position:fixed;
+        border:none;
+        right:0;
+        top:0;
+        height:100%;
+        width: calc(100% - 400px)
+    }
+
+    #search-container {
+        height: auto;
+        margin:0 0 10px;
+        width:100%;
+        padding:0;
+        transition: .2s ease-in-out;    
+        }
+
+
+    #search-list{
+        width: 100%
+    }
+
+    #searchbar {
+            background-color:#424242;
+            width: calc(100%) !important; 
+            border-radius: 5px;
+            border: 1.5px solid #448AFF !important;
+            padding:10px;
+            margin:0;
+            font-size:18px;
+            color:white;
+        } 
+
+
+    ::placeholder {
+            font-size:18px;
+            font-weight: bold;
+            color:#82B1FF;
+            opacity: 1 !important; 
+            margin:0
+        }
+
+    #search-message-container{
+    max-width:265;
+    }
+
+    #search-list{ 
+        display:block;
+        width: 100%;
+        margin:0;
+        font-size: 16px;
+        max-height:250px;
+        list-style-type: none;
+        padding: 0 15px;
+        overflow:auto;
+        transition: .2s ease-in-out;
+       }
+
+    .search-items { 
+       display: none;
+       padding:12px 0 12px 8px;
+       cursor: pointer;
+       border-top: 1px solid white;
+       transition:.2s;
+      } 
+
+    .search-items:hover {
+        background-color: #424242 !important;
+    }
+
+    .search-items p {
+        margin-bottom:2px
+    }
+
+    #search-prompt {
+        display: block;
+        overflow: hidden;
+        max-height: 150px;
+        margin: 0px 0px 5px;
+        max-height: 150px;
+        
+        transition: .2s;
+        font-size: 0.95em;
+      }
+
+    #search-instruct {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-alert {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+
+      }
+    #search-init {
+        overflow: hidden;
+        max-height: 0;
+        transition: .2s;
+        padding: 0 8px;
+        margin:0;
+      }
+
+
+    .isd-indicator-search {
+        display:block;
+        position: relative;
+        top:0;
+        right:10px;
+        float:right;
+        color:#E0E0E0;
+    }
+
+
+
+    #how-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #how-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    #license-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #license-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    #listings-collapse-btn {
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;  
+    }
+
+    #listings-collapsed {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    
+    
+    .centroid-list-item {
+        background-color: #424242;
+        margin: 10px 0;
+        border-radius:8px;
+        padding:10px;
+        cursor:pointer;
+        transition:.2s;
+        border: 1.5px solid #424242;
+
+    }
+    
+    .centroid-list-item:hover {
+        border-color: #448AFF;
+        background-color: #333333;
+    }
+    
+    .centroid-list-item b {
+        color: #448AFF;
+        margin-bottom:2px;
+    }
+    
+    .centroid-list-item p {
+        font-size: .98em;
+        margin-bottom:2px;
+    }
+    .centroid-list-item a {
+        font-size: .96em;
+        text-decoration:none !important;
+    }
+    
+    .centroid-list-item a:hover {
+    }
+    
+    .high-conf-btn {
+        background-color: #424242;
+        margin: 15px 0;
+        border-radius:8px;
+        padding:8px 15px;
+        cursor:pointer;
+        transition:.15s;
+        border: 1.5px solid #424242;
+    }
+    
+    .high-conf-btn:hover {
+        background-color: #448AFF;
+    }
+    .high-conf-btn a:hover {
+        color: white !important;
+    }
+
+    
+
+    .host-info-link {
+        color:#C5B358;
+    }
+    
+    
+    .host-info-link:hover {
+        color:#a3923e;
+    }
+    
+    .centroid-list-item a {
+        text-decoration:none !important;
+        }
+        
+        
+    .license-claim-container ul {
+        padding-left:18px; 
+        list-style: disc;
+        color: white !important;
+    }
+
+    
+    .host-license-warning ul {
+        padding-left:18px; 
+        list-style: disc;
+        font-size:14px !important;
+        color: white !important 
+    }
+    
+    .host-license-warning ul li::before {
+      content: "2";
+      color: white; 
+      font-weight: bold; 
+    }
+
+
+    </style>
+
+    </head>
+    <body>
+
+        <div id='page-container'>
+            <div class='sidebar-container'>
+                    
+                    <div class='nav-banner'>
+                        <p>
+                            <a href='/'>Home</a> &#62;
+                            <a href='/clusters.html'>Clusters</a> &#62;
+                            <span style='color:#448AFF'>7-0</span>
+                            <a href='/host/CorpGroup11.html' style='color:#9C9C9C'>(Lance)</a>
+                        </p>
+                    </div>
+                    
+                <div class='sidebar'>
+                    
+        <h2 style='font-size:2.2em; margin:0 0 10px'> Cluster 7-0 </h2>
+
+        <h3 style='margin-bottom:5px'>
+            <a href='#listings'><b>42 listings</b></a> |
+            1 account</b> 
+        </h3> 
+        
+        <p class='text-lite'>
+            <b>161</b> total accommodations
+        </p> 
+        
+        <h3 style='font-size: 1.6em; margin:15px 0 5px'>
+        Host: <a href='/host/CorpGroup11.html' class='host-info-link'> Lance</a> </h3>
+        
+        <p style='margin-top:15px;'>Address:</p>
+        <p style='font-size:1.25em; margin-bottom:5px'><b>239 </b></p>
+        <p class='text-lite' style='font-size:.95em; margin:0'>
+                        <b>Source:</b>
+    
+                     Claimed license found in official ISD registry</p>
+                
+        <hr class='hr-lite'>
+        
+        <h3 style='margin-bottom:12px'>License Status Details</h3>
+        <p style='font-size:1.2em; margin: 3px 0; color:#FF9800'>
+        <i class="fa fa-question-circle-o"></i> No license claimed<br>(33 listings)
+            </p>
+        
+        <table class='listings-status-legend'>
+                            
+                            <tr style='border-bottom:1px solid #9c9c9c;' >
+                                <td>  
+                                   <p class='text-lite'
+                                      style='margin-bottom:8px'>
+                                       <b>listings</b><p>
+                                </td>
+                                
+                                <td>  
+                                </td>
+                                                                
+                                <td>
+                                    <p class='text-lite'
+                                       style='margin-bottom:8px'>
+                                        <b>license</b>
+                                    </p>
+                                </td>
+                                </tr>                           
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    33 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#FF9800">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    No license claimed
+                                </p></td></tr>                           
+                            <tr>
+                                
+                                <td style='text-align:right'>  
+                                    <p>
+                                    9 x</p> 
+                                </td>
+                                
+                                <td>  
+                                    <p>
+                                    <span id='status-icon'
+                                        style="background-color:#E64A19">
+                                    </span>
+                                </td>
+                                
+                                <td><p>
+                                    Not found (fabricated)
+                                </p></td></tr></table>
+        
+            <div id='licenses' class='license-claim-container'>
+            <a id="license-collapse-btn" style='margin:15px 0 15px;'>
+                [ + ] Show license details
+            </a>
+
+            <div id="license-collapsed">
+                    <p style='margin-top:10px;>
+                        At one address</p>
+                        
+                <div class='license-by-building-container'>
+                    <ul>
+        
+            <li>
+                <p><b>1 unit</b> at 239 Boston ST 07 Dorchester MA 02125</p>
+                <ul>
+        
+                <li>
+                    <p>010678 - <b>Not found (fabricated)</b> (9 listings) </p>
+                </li>
+            
+                 </ul>
+            </li>
+            </div>
+            </div>
+        
+        
+        <hr class='hr-lite' id='listings'>
+        
+        <a id="listings-collapse-btn" style='margin:15px 0'>
+            [ + ] Show listings
+        </a>
+
+        <div id='listings-collapsed'>
+
+            <h3 style='margin:18px 0 8px'>Listings</h3>
+            <p class='text-lite' style='font-size:14px; margin: 2px 0 120x'>
+                <b>Note:</b> If a listing URL redirect to the Airbnb.com
+                homepage, it suggests the host has removed the listing
+                since the last update from <a href='http://insideairbnb.com/'>InsideAirbnb</a></p>
+            <p style='font-size:.9em;text-align:right'>
+                        <a href='/cluster/7-0—data.csv' download="cluster-7-0_listings.csv">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                            Download cluster data as a CSV </a>
+        <a href='https://www.airbnb.com/rooms/18711' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>18711</b></p>
+                <p style='font-size:1.1em'>The Dorset Redline | 3BR 1BA | Walk to Redline for Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/18711' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/530983' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>530983</b></p>
+                <p style='font-size:1.1em'>The Grand View Redline | 5BR 2BA | Victorian Home near Boston Medical and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/530983' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/533114' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>533114</b></p>
+                <p style='font-size:1.1em'>The Sawyer RedLine | 2BR 2.5BA | 1st Floor unit on Redline to Mass General and BMC!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/533114' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/533152' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>533152</b></p>
+                <p style='font-size:1.1em'>The Penthouse Redline | 2BR 1BA | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/533152' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/561769' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>561769</b></p>
+                <p style='font-size:1.1em'>The Sky View Redline | 3BR 1BA | Mass General and Boston Medical!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/561769' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/579605' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>579605</b></p>
+                <p style='font-size:1.1em'>The Mayhew Redline | 2BR 1BA | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/579605' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/601763' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>601763</b></p>
+                <p style='font-size:1.1em'>The Alameda 2 Commuter Rail | 2BR 1BA | Brookline Area, free parking near Faulkner!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/601763' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/3539510' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>3539510</b></p>
+                <p style='font-size:1.1em'>The Roseclair | 3BR 1BA | 2nd Floor near UMass Boston Redline T station!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/3539510' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/21861361' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>21861361</b></p>
+                <p style='font-size:1.1em'>Sunset 206 GreenLine | 1BR 1BA | Walk to Beth Israel Deaconess and the GreenLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/21861361' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/21861781' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>21861781</b></p>
+                <p style='font-size:1.1em'>Sunset 306 GreenLine | 1BR 1BA | Walk to Dana Farber and the GreenLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/21861781' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/21861961' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>21861961</b></p>
+                <p style='font-size:1.1em'>Sunset 506 GreenLine | 1BR 1BA | Walk to Boston Children's and the GreenLine Trolley!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/21861961' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/21862054' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>21862054</b></p>
+                <p style='font-size:1.1em'>Sunset 404 GreenLine | 1BR 1BA | Walk to Brigham and Women's and GreenLine Trolley!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/21862054' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/21862176' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>21862176</b></p>
+                <p style='font-size:1.1em'>Sunset 604 GreenLine | 1BR 1BA | Falkner Hospital and the GreenLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/21862176' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/23567704' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>23567704</b></p>
+                <p style='font-size:1.1em'>The Washington 2 Orangeline| 3BR 2BA | Emerald Necklace walking distance to the Orangeline!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>45</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/23567704' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/23567927' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>23567927</b></p>
+                <p style='font-size:1.1em'>The Washington 3 OrangeLine | 3BR 2BA | Forest Hills and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>35</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/23567927' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/24826742' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>24826742</b></p>
+                <p style='font-size:1.1em'>Sunset 110 GreenLine | 2BR 1.5BA | Single Family Home walkable to BI and BW Hospitals!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/24826742' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/32309630' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>32309630</b></p>
+                <p style='font-size:1.1em'>The Strathmore 8 Greenline | 1BR 1BA | Cleveland Circle, BC and Dana Farber!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>31</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/32309630' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/33467259' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>33467259</b></p>
+                <p style='font-size:1.1em'>The Strathmore 2 Greenline | 3BR  2BA  Bi-level | Cleveland Circle, BC and Brigham and Women's!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/33467259' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/38215747' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>38215747</b></p>
+                <p style='font-size:1.1em'>The Strathmore 15 Greenline | 1 Bed 1 Bath | Cleveland Circle, BC and Beth Israel!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>31</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/38215747' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39098616' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39098616</b></p>
+                <p style='font-size:1.1em'>The Biltmore 1 OrangeLine | 3BR 2B | Forest Hills and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/39098616' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/39099155' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>39099155</b></p>
+                <p style='font-size:1.1em'>The Saint Peter Home OrangeLine | 3BD 2BA | Walk to Whole Foods and OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/39099155' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40756256' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40756256</b></p>
+                <p style='font-size:1.1em'>The Biltmore Bedroom A OrangeLine | Queen Bedroom with SmartTv | Forest Hills and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/40756256' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/40779678' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>40779678</b></p>
+                <p style='font-size:1.1em'>The Biltmore Bedroom B OrangeLine | Queen Bedroom with SmartTv | Whole Foods and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/40779678' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41522854' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41522854</b></p>
+                <p style='font-size:1.1em'>The Washington 3 North OrangeLine | Queen bed with lots of light | Forest Hills and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41522854' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41526811' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41526811</b></p>
+                <p style='font-size:1.1em'>The Washington 3 Master OrangeLine | Queen Bedroom with en-suite Bath | Forest Hills and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41526811' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41527393' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41527393</b></p>
+                <p style='font-size:1.1em'>The Washington 3 South OrangeLine | Queen bed with lots of light | Forest Hills and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41527393' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41645010' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41645010</b></p>
+                <p style='font-size:1.1em'>The GV Twin Bedroom Redline | Cozy Twin Room with lots of light | Walk to Redline for Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41645010' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41645478' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41645478</b></p>
+                <p style='font-size:1.1em'>The GV Parlor Bedroom Redline | 1st Floor w/Queen |  Walk to Redline for Mass General and Boston Medical!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41645478' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41666852' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41666852</b></p>
+                <p style='font-size:1.1em'>The GV Blue Bedroom Redline | Queen Bed with fabulous views | Walk to Redline for Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41666852' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41706168' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41706168</b></p>
+                <p style='font-size:1.1em'>The GV Master Bedroom Redline | Queen Bedroom with tons of light | Walk to RedLine for Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41706168' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41799161' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41799161</b></p>
+                <p style='font-size:1.1em'>The Roseclair Bedroom 2 Redline | Queen bed in quiet room | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41799161' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41876953' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41876953</b></p>
+                <p style='font-size:1.1em'>The Roseclair Bedroom 1 Redline | Queen bed in Large Room | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41876953' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41876957' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41876957</b></p>
+                <p style='font-size:1.1em'>The Roseclair Bedroom 3 Redline | Queen bed in Large Room | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>Missing</b> (No license claimed)</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41876957' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41907280' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41907280</b></p>
+                <p style='font-size:1.1em'>The GV Yellow Bedroom Redline | Queen Bed with in room TV  | Walk to Redline for Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>29</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41907280' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/41931127' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>41931127</b></p>
+                <p style='font-size:1.1em'>The Biltmore Bedroom C OrangeLine | Queen Bedroom with SmartTv | Whole Foods and Faulkner on OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/41931127' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/42376848' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>42376848</b></p>
+                <p style='font-size:1.1em'>The Redlands 1 Commuter Rail | 2BR 1BA | Brookline Area, Faulkner and walk to shopping!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>31</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/42376848' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/42870400' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>42870400</b></p>
+                <p style='font-size:1.1em'>The Dorset Bedroom 1 Redline |  Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/42870400' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/42870430' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>42870430</b></p>
+                <p style='font-size:1.1em'>The Dorset Bedroom 2 | Queen bed in quiet room | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/42870430' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/42870478' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>42870478</b></p>
+                <p style='font-size:1.1em'>The Dorset Bedroom 3 | Queen bed in Large Room | Walk to the Redline for UMass and Mass General!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>32</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/42870478' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/44061637' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>44061637</b></p>
+                <p style='font-size:1.1em'>The Saint Peter | Bedroom A | Walk to Whole Foods and OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/44061637' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/44061640' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>44061640</b></p>
+                <p style='font-size:1.1em'>The Saint Peter Home OrangeLine | Bedroom B | Walk to Whole Foods and OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/44061640' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+        <a href='https://www.airbnb.com/rooms/44061641' target='_blank'>
+        <div class='centroid-list-item'>
+            
+                <p style='font-size:1em'><b>44061641</b></p>
+                <p style='font-size:1.1em'>The Saint Peter Home OrangeLine | Bedroom C | Walk to Whole Foods and OrangeLine!</p>
+            
+                <p> <span class='text-lite'>Minimum nights per stay:</span>
+                    <b>30</b></p>
+                <p> <span class='text-lite'>License:</span>
+                    <b>010678</b> (Not found (fabricated))</p>
+                    
+                <a href='https://www.airbnb.com/rooms/44061641' target='_blank'>View listing photos &#8594;</a>
+            
+        </div>
+        </a>
+
+        
+
+        </div>
+
+
+
+                
+                </div>
+                
+            </div>
+
+            <div id='map-container'>
+                <!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ecdd397614374335acf5fece267ac733 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+         <div style="
+         position: fixed; z-index:699; 
+         bottom: 16px; right: 0; width: auto; height: auto; 
+         background-color:white;
+         border-bottom:1px solid #DEDEDE;
+         opacity: .7;
+         padding: 3px 8px;
+         font-size:12px">
+            <span style='margin: 0px;'>
+                <a target='blank' href='insideairbnb.com'>InsideAirbnb</a>:
+                    2020-09-01 | STR registry: 2020-08-05
+            </span>
+          </div> 
+    
+            <div class="folium-map" id="map_ecdd397614374335acf5fece267ac733" ></div>
+        
+</body>
+<script>    
+    
+            var map_ecdd397614374335acf5fece267ac733 = L.map(
+                "map_ecdd397614374335acf5fece267ac733",
+                {
+                    center: [42.31889333333332, -71.0931619047619],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 16,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_fe43563f2a454b2da4b910d0e5a0966a = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_ecdd397614374335acf5fece267ac733);
+        
+    
+            var circle_d1a049d00e4f4efda7a80bc0329e1073 = L.circle(
+                [42.31889333333332, -71.0931619047619],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.566125676067052, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8661256760670519, "radius": 3771.97708392, "stroke": true, "weight": 2}
+            ).addTo(map_ecdd397614374335acf5fece267ac733);
+        
+    
+            circle_d1a049d00e4f4efda7a80bc0329e1073.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>7-0</b></p>
+        <p style='font-size:1.1em; margin: 3px 0; color:#FF9800'>
+            <i class="fa fa-question-circle-o"></i> No license claimed<br>(33 listings) </p>
+        Host: <b>Lance </b> | Listings: <b>42</b>
+        <br><span style='text-align:center; color:#448AFF'>
+        </span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_049fa7122a5e42289cbf81996f4b88ef = L.circle(
+                [42.31889333333332, -71.0931619047619],
+                {"bubblingMouseEvents": true, "color": "#448AFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#448AFF", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.7, "radius": 6, "stroke": true, "weight": 4}
+            ).addTo(map_ecdd397614374335acf5fece267ac733);
+        
+    
+            circle_049fa7122a5e42289cbf81996f4b88ef.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#448AFF'>Cluster <b>7-0</b></p>
+        <p style='font-size:1.1em; margin: 3px 0; color:#FF9800'>
+            <i class="fa fa-question-circle-o"></i> No license claimed<br>(33 listings) </p>
+        Host: <b>Lance </b> | Listings: <b>42</b>
+        <br><span style='text-align:center; color:#448AFF'>
+        </span>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var feature_group_b1da758b51ab476fa0167775a28b16ea = L.featureGroup(
+                {}
+            ).addTo(map_ecdd397614374335acf5fece267ac733);
+        
+    
+            var circle_071eae15a3b541daa2b8fd87c1fd9752 = L.circle(
+                [42.32212, -71.06096],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_071eae15a3b541daa2b8fd87c1fd9752.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>18711</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_82fa3835c07949d0a76e93309a8a7348 = L.circle(
+                [42.31368, -71.0612],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_82fa3835c07949d0a76e93309a8a7348.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>530983</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c3f12ad7ec344ee8bc19c1eafa7225f7 = L.circle(
+                [42.3122, -71.0611],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_c3f12ad7ec344ee8bc19c1eafa7225f7.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>533114</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_02867d8cbc1941fc8f7be659be15febd = L.circle(
+                [42.32212, -71.06096],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_02867d8cbc1941fc8f7be659be15febd.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>533152</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_9911cc0abb5a4ccfb078ed6e9f770e5f = L.circle(
+                [42.31371, -71.06126],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_9911cc0abb5a4ccfb078ed6e9f770e5f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>561769</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_fe3e8ad83d744ba5b4df91f9eb33a96c = L.circle(
+                [42.32212, -71.06095],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_fe3e8ad83d744ba5b4df91f9eb33a96c.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>579605</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8a7db0c10d1c478eaa2eb2bdf590cbfa = L.circle(
+                [42.29192000000001, -71.15406999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_8a7db0c10d1c478eaa2eb2bdf590cbfa.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>601763</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_0fc95802468c432b97052f23af1ec650 = L.circle(
+                [42.32213, -71.06094],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_0fc95802468c432b97052f23af1ec650.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>3539510</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_daf57bb7ca2b4343a0467d622dc4d56a = L.circle(
+                [42.3317, -71.10945],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_daf57bb7ca2b4343a0467d622dc4d56a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>21861361</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_334e8e9aec6840168afafd98f02b42a0 = L.circle(
+                [42.33191, -71.10906],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_334e8e9aec6840168afafd98f02b42a0.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>21861781</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e23d994840924730a8ba244f1e719aff = L.circle(
+                [42.33185, -71.10906],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_e23d994840924730a8ba244f1e719aff.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>21861961</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e486c56ee4994590bb1ba8fb5f332e22 = L.circle(
+                [42.3309, -71.10923000000003],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_e486c56ee4994590bb1ba8fb5f332e22.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>21862054</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2690590f3c7449a59afc0ae2bbd1fcd6 = L.circle(
+                [42.3309, -71.10923000000003],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_2690590f3c7449a59afc0ae2bbd1fcd6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>21862176</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2af140762cd44501a03c15e180e08a72 = L.circle(
+                [42.30846, -71.10579],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_2af140762cd44501a03c15e180e08a72.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>23567704</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_328c59b84a1f4534b3f6f8c981826b05 = L.circle(
+                [42.30973, -71.11514],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_328c59b84a1f4534b3f6f8c981826b05.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>23567927</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_89b1a4b1f6d046edbd75837cbe4dac6b = L.circle(
+                [42.32972, -71.10843],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_89b1a4b1f6d046edbd75837cbe4dac6b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>24826742</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_902b37667d284cdd90178a09c05f001d = L.circle(
+                [42.33931, -71.15122],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_902b37667d284cdd90178a09c05f001d.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>32309630</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cf2e95908ee744c99042145df476bade = L.circle(
+                [42.33931, -71.15122],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_cf2e95908ee744c99042145df476bade.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>33467259</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_7f6c935276b747309584fd41194f2ebf = L.circle(
+                [42.33931, -71.15122],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_7f6c935276b747309584fd41194f2ebf.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>38215747</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4b74fba892184a69b455a865b70dff45 = L.circle(
+                [42.31321, -71.10815],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_4b74fba892184a69b455a865b70dff45.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39098616</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6489e5f3822b4286b47805d126a530b6 = L.circle(
+                [42.31895, -71.10783],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_6489e5f3822b4286b47805d126a530b6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>39099155</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4b0c9d5c076a4b4b9a7bfc20841dd0cc = L.circle(
+                [42.31321, -71.10815],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_4b0c9d5c076a4b4b9a7bfc20841dd0cc.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40756256</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c320b28faab640788e167c1156bc6b60 = L.circle(
+                [42.31321, -71.10815],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_c320b28faab640788e167c1156bc6b60.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>40779678</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_eae9f09b78c74585976870cfb86443cb = L.circle(
+                [42.30841, -71.10575],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_eae9f09b78c74585976870cfb86443cb.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41522854</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_90c00d61df5145be858178f418c225db = L.circle(
+                [42.30741, -71.10606],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_90c00d61df5145be858178f418c225db.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41526811</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_ffe4fff2b7974509a6b9645a6ded5d97 = L.circle(
+                [42.30905, -71.10479000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_ffe4fff2b7974509a6b9645a6ded5d97.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41527393</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cda86b2bcd9847a1b73e0032eeef17f8 = L.circle(
+                [42.31384, -71.06113],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_cda86b2bcd9847a1b73e0032eeef17f8.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41645010</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_cb07c034d5ea445592dc00d8a88ca395 = L.circle(
+                [42.31384, -71.06113],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_cb07c034d5ea445592dc00d8a88ca395.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41645478</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_c7e742b8a5754c7e8ee181b06b2e395b = L.circle(
+                [42.31384, -71.06113],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_c7e742b8a5754c7e8ee181b06b2e395b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41666852</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e487bdf1ebdd4dd7a511c3bc2ada6bfa = L.circle(
+                [42.31384, -71.06113],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_e487bdf1ebdd4dd7a511c3bc2ada6bfa.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41706168</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_aa2b4df4e4854329ab879d5ef7eaa005 = L.circle(
+                [42.32307, -71.06071],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_aa2b4df4e4854329ab879d5ef7eaa005.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41799161</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_4f225e584c81482fb6f9d5bf9ec1135f = L.circle(
+                [42.32319, -71.06012],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_4f225e584c81482fb6f9d5bf9ec1135f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41876953</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_090d09cebf444b1d95c4ea25d56ecec6 = L.circle(
+                [42.32258, -71.06116],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF9800", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_090d09cebf444b1d95c4ea25d56ecec6.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41876957</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#FF9800';
+                       class='fa fa-file-text'></i>
+                <b> Missing</b>
+        <br>License: <span style='color:#FF9800'> <b>No license claimed</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_2772f8a33f2344278afaef71596c6ae4 = L.circle(
+                [42.31271, -71.06153],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_2772f8a33f2344278afaef71596c6ae4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41907280</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_a87d040a13e84493bd0569d9b4fa40b4 = L.circle(
+                [42.3126, -71.10757],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_a87d040a13e84493bd0569d9b4fa40b4.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>41931127</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_f210153eb0694cb8a07db3f2c1891d77 = L.circle(
+                [42.29268, -71.1531],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_f210153eb0694cb8a07db3f2c1891d77.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42376848</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_8abc51e48051463ebb4d3ed2bd9a0f00 = L.circle(
+                [42.32096, -71.05991999999998],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_8abc51e48051463ebb4d3ed2bd9a0f00.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42870400</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_d449cb807c7043238a1dccd8ca0eca9f = L.circle(
+                [42.32262, -71.06192],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_d449cb807c7043238a1dccd8ca0eca9f.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42870430</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_5d58cc8685de4cdab4fdd2a04fd9726a = L.circle(
+                [42.32328, -71.05993000000002],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_5d58cc8685de4cdab4fdd2a04fd9726a.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>42870478</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_36d428f3d4074c5a8682957f828ee3a2 = L.circle(
+                [42.31857, -71.10763],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_36d428f3d4074c5a8682957f828ee3a2.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>44061637</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_e2615fd4ef474a3caa706b256325c339 = L.circle(
+                [42.31997, -71.10682],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_e2615fd4ef474a3caa706b256325c339.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>44061640</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_6fc68acaad5e40948ecdeefcae52257b = L.circle(
+                [42.31938, -71.1085],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E64A19", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_b1da758b51ab476fa0167775a28b16ea);
+        
+    
+            circle_6fc68acaad5e40948ecdeefcae52257b.bindTooltip(
+                `<div>
+                     
+        <p style='font-size:1.25em; margin:0; color:#BF0000'>Listing <b>44061641</b></p>
+        Cluster: <span style='color:#448AFF'><b>7-0</b></span> | 
+        
+        Host: <span style='color:#665c2c'><b>Lance </b></span>
+        
+        <br>License:
+                 <i style='font-size:.9em; color:#E64A19';
+                       class='fa fa-file-text'></i>
+                <b> 010678</b>
+        <br>License: <span style='color:#E64A19'> <b>Not found (fabricated)</b> </span>
+        
+                <br><b>Click or see cluster for more details</b></span>
+            
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_00b3e9adf4f64ae0b8828ad5628b2064 = {
+                base_layers : {
+                },
+                overlays :  {
+                },
+            };
+            L.control.layers(
+                layer_control_00b3e9adf4f64ae0b8828ad5628b2064.base_layers,
+                layer_control_00b3e9adf4f64ae0b8828ad5628b2064.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_ecdd397614374335acf5fece267ac733);
+        
+</script>
+            </div>
+
+        </div>
+        
+        <script>
+            
+        document.getElementById("how-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Learn more... ";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Learn less... ";
+            } 
+        });
+    </script>
+    <script>
+    
+        document.getElementById("license-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Show license details";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Hide license details";
+              setTimeout( function (){
+                      location.hash = "#licenses";
+                            }, 250);
+            } 
+            
+        });
+    </script>
+    <script>
+    
+        document.getElementById("listings-collapse-btn"
+            ).addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+              this.innerHTML = "[ + ] Show listings";
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              this.innerHTML = "[ &ndash; ] Hide listings";              
+              setTimeout( function (){
+                      location.hash = "#listings";
+                            }, 250);
+            } 
+        });
+    </script>
+    <script>
+    
+        
+    function search_res(container, value) {
+    
+        var item = container.toLowerCase().replace(/\s+/g, '');                
+        var val = value.toLowerCase().replace(/\s+/g, '');
+        var returnValue = false;
+        var pos = item.indexOf(val);
+        if (pos >= 0) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+    
+    </script>
+    <script>
+    
+    document.getElementById('searchbar').addEventListener("click",
+        function(){
+                initOpenState = "True"
+                let x = document.getElementsByClassName('search-items');
+                var counter = 0
+                for (i = 0; i < x.length; i++) { 
+                    var dt = x[i].getAttribute("data-type");
+                    if (dt=="cluster") { 
+                        counter = counter + 1
+                        x[i].style.display="list-item"; 
+                    } 
+                    if (counter == 3) {
+                         break;
+                    }
+                } 
+                document.getElementById('search-list').style.maxHeight = "400px";
+                document.getElementById('search-list').style.padding = "0 15px 15px";
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "150px";
+                msg_init.style.margin = "8px";
+                
+        }
+    )
+    
+    
+    document.getElementById('searchbar').addEventListener("focusout",
+        function(){
+            let input = document.getElementById('searchbar').value;
+            if (input=="" && initOpenState !== "True"){
+                document.getElementById('search-list').style.maxHeight = "0";
+                document.getElementById('search-list').style.padding = "0 15px";
+            
+                let x = document.getElementsByClassName('search-items');
+                for (i = 0; i < x.length; i++) {  
+                    x[i].style.display="none"; 
+                } 
+                let msg_init = document.getElementById('search-init'); 
+                msg_init.style.maxHeight = "0";
+                msg_init.style.margin = "0";
+            }
+
+        }
+    )
+
+    
+    function search_item() { 
+        initOpenState = "False";
+        
+        let sb = document.getElementById('searchbar');
+        let input = document.getElementById('searchbar').value;
+        let searchList = document.getElementById('search-list');
+        searchList.scrollTop = 0;
+
+        let x = document.getElementsByClassName('search-items'); 
+        
+        let instruct = document.getElementById('search-instruct'); 
+        let alert = document.getElementById('search-alert'); 
+        let s_init = document.getElementById('search-init'); 
+        
+        let msg_init = document.getElementById('search-init'); 
+        msg_init.style.maxHeight = "0";
+        
+        var visible = 0
+        
+        if (sb !== null && sb.value === "") {
+
+            var counter = 0
+            for (i = 0; i < 10; i++) {  
+                    var dt = x[i].getAttribute("data-type");
+                    if (dt=="cluster") { 
+                        counter = counter + 1
+                        x[i].style.display="list-item"; 
+                    } 
+                    if (counter == 3) {
+                         break;
+                    }
+            } 
+        }
+        
+        else {
+            for (i = 0; i < x.length; i++) {
+            
+                if ( search_res(x[i].getAttribute("search-data"), input) ) { 
+                    x[i].style.display="list-item"; 
+                    visible += 1
+                } 
+                else { 
+                    x[i].style.display="none";
+                } 
+             } 
+        }
+
+        if (sb.value !== "") {
+                if (visible==0) {
+                    instruct.style.maxHeight = "0";
+                    instruct.transition = ".2";
+                    instruct.style.margin = "0";
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    
+                    alert.style.maxHeight = "150px";
+                    alert.style.margin = "8px";
+                   
+                    
+                    searchList.style.padding = "0";
+                    searchList.style.maxHeight = "0";
+                    
+
+                    }
+                else {
+                    instruct.innerHTML = "<b>" + visible.toString() + "</b> results" ;
+                    instruct.style.maxHeight = "150px";
+                    instruct.transition = "0";
+                    instruct.style.margin = "8px";
+                    
+                    
+                    s_init.style.maxHeight = "0";
+                    s_init.transition = ".2s";
+                    s_init.style.margin = "0";
+                    alert.style.maxHeight = "0";
+                    alert.transition = ".2s";
+                    alert.style.margin = "0";
+                    
+                    searchList.style.padding = "0 15px 15px ";
+                    searchList.style.maxHeight = "305px";                    
+                    }
+ 
+            
+          }         
+        else {
+            for (i = 0; i < x.length; i++) {  
+                 x[i].style.display="none";
+            } 
+            instruct.style.maxHeight = "0";
+            instruct.transition = ".2s";
+            instruct.style.margin = "0"
+            alert.style.maxHeight = "0";
+            alert.transition = ".2s";
+            alert.style.margin = "0";
+            s_init.style.maxHeight = "0";
+            s_init.style.margin = "0";
+            searchList.style.maxHeight = "0";
+            searchList.style.padding = "0";
+                    }       
+        }
+
+    
+        </script>
+
+    </body>
+
+    </html>
+    
